@@ -28,3 +28,7 @@ while True:
 			if "!test" in message:
 				sendMessage(s, commands.get('test'))
 				break
+			if "!commands" in message:
+				sendMessage(s, user + commands.get('commands'))
+			if "!twitter" in message:
+				sendMessage(s, commands.get('twitter'))
