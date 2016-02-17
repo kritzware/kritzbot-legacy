@@ -1,6 +1,6 @@
 import string
 
-from Read import getUser, getMessage
+from Read import getUser, getMessage, uptime
 from TheSocket import openSocket, sendMessage
 from Initialize import joinRoom
 from Commands import commands
@@ -34,3 +34,6 @@ while True:
 				sendMessage(s, commands.get('twitter'))
 			if "!discord" in message:
 				sendMessage(s, commands.get('discord'))
+			if "!uptime" in message:
+				#uptime()
+				sendMessage(s, uptime())
