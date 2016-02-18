@@ -3,6 +3,7 @@ import threading
 
 from TheSocket import sendMessage
 from Commands import commands
+from Read import add_points
 
 def joinRoom(s):
 	readbuffer = ""
@@ -20,7 +21,7 @@ def joinRoom(s):
 	def auto_message():
 		threading.Timer(240, auto_message).start()
 		sendMessage(s, commands.get('twitter'))
-
+		add_points()
 	auto_message()
 	
 def loadingComplete(line):

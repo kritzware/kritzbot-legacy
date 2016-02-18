@@ -4,6 +4,7 @@ import urllib.request
 import requests
 import pymysql
 import re
+import random
 
 from pytz import timezone
 from datetime import datetime, timedelta, date, time
@@ -26,10 +27,10 @@ def get_points(check_user):
 
 	check_db = connection.cursor()
 	count = check_db.execute("SELECT COUNT(*) FROM table1")
-	print(count) # prints no. of rows
+	#print(count) # prints no. of rows
 	check_db.execute("SELECT user_id from table1")
 	data = check_db.fetchall() 
-	print(data) # print user_id rows
+	#print(data) # print user_id rows
 
 	for x in range(0, count + 1):
 
@@ -51,6 +52,36 @@ def get_points(check_user):
 			format_checkpoints = re.findall('\d+', str(return_points))
 			result_checkpoints = (check_user + " has " + format_points[0] + " points")
 			return(str(result_checkpoints))
+
+	connection.close()
+
+def add_points():
+
+	pointnum = 16 # 4 points per minute
+	check_db = connection.cursor()
+	check_db.execute("UPDATE table1 set points = points + " + str(pointnum))
+
+def roulette(check_user, gamble):
+
+	check_db = connection.cursor()
+
+	int_gamble = int(re.search(r'\d+', gamble).group())
+	#print(int_gamble)
+
+	result = int_gamble * 2
+	#print(result)
+
+	roll = random.randrange(1, 3)
+	if(roll == 1):
+		check_db.execute("UPDATE table1 set points = points + " + str(result) + " where user_id = '" + str(check_user) + "' ")
+		return(check_user + " gambled " + str(int_gamble) + " points and won " + str(result) + " points! PogChamp")
+	if(roll == 2):
+		check_db.execute("UPDATE table1 set points = points - " + str(result) + " where user_id = '" + str(check_user) + "'")
+		return(check_user + " gambled " + str(int_gamble) + " points and lost " + str(result) + " points! BibleThump")
+
+	#ADD POINTS
+	#UPDATE table1 set points = points + 10 where user_id = 'kritzware';
+
 
 	# for x in data:
 	# 	if check_user not in data:
@@ -88,7 +119,7 @@ def get_points(check_user):
 	# 	print("adding new user to db")
 	# 	return check_user + " has 0 points FeelsBadMan"
  
-	connection.close()
+	
 
 
 def uptime():
