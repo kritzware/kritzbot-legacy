@@ -1,6 +1,6 @@
 import string
 
-from Read import getUser, getMessage, uptime
+from Read import getUser, getMessage, uptime, get_points
 from TheSocket import openSocket, sendMessage
 from Initialize import joinRoom
 from Commands import commands
@@ -37,3 +37,5 @@ while True:
 			if "!uptime" in message:
 				#uptime()
 				sendMessage(s, uptime())
+			if "!points" in message:
+				sendMessage(s, get_points(user))

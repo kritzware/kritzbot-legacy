@@ -4,3 +4,7 @@ commands = {
 	'twitter': 'Make sure to follow Skowalz on twitter for the latest updates! twitter.com/skowalz PogChamp',
 	'discord': 'Join the discord to chat with other viewers! https://discord.gg/0dlGiuDScFukCO8y HeyGuys'
 }
+
+quotes = {
+	
+}
