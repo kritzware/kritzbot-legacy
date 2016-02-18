@@ -46,7 +46,7 @@ def get_points(check_user):
 	# 	print("user points found")
 	# 	return check_user + " has" + points + " points"
 	# else:
-	# 	check_db.execute("INSERT INTO table1 VALUES ( '" + check_user + "', " + str(0) + " )")
+	# 	check_db.execute("INSERT into table1 VALUES ( '" + check_user + "', " + str(0) + " )")
 	# 	print("adding new user to db")
 	# 	return check_user + " has 0 points FeelsBadMan"
  
