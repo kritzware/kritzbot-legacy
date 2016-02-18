@@ -1,5 +1,9 @@
 import string
+import threading
+
 from TheSocket import sendMessage
+from Commands import commands
+
 def joinRoom(s):
 	readbuffer = ""
 	Loading = True
@@ -13,8 +17,15 @@ def joinRoom(s):
 			Loading = loadingComplete(line)
 	sendMessage(s, "/me has booted up, joining chat MrDestructoid")
 	
+	def auto_message():
+		threading.Timer(240, auto_message).start()
+		sendMessage(s, commands.get('twitter'))
+
+	auto_message()
+	
 def loadingComplete(line):
 	if("End of /NAMES list" in line):
 		return False
 	else:
 		return True
+

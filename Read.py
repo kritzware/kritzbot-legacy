@@ -100,7 +100,7 @@ def uptime():
 	latestbroadcast = data['videos'][0]['recorded_at']
 	online = True
 
-	print("Broadcast start: " + latestbroadcast)
+	#print("Broadcast start: " + latestbroadcast)
 
 	timeformat = "%Y-%m-%dT%H:%M:%SZ"
 	startdate = datetime.strptime(latestbroadcast, timeformat)
@@ -116,7 +116,7 @@ def uptime():
 	minutes = str(combineddate)[2:4]
 
 	if(online):
-		print(combineddate)
+		#print(combineddate)
 		return(user_channel + " has been live for " + hours + " hrs, " + minutes + " mins")
 	else:
 		return(user_channel + " is not streaming at the moment FeelsBadMan")

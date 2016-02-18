@@ -37,8 +37,6 @@ while True:
 			if "!admin" in message:
 				sendMessage(s, commands.get('admin'))
 				break
-			if "!test" in message:
-				sendMessage(s, commands.get('test'))
 			if "!commands" in message or "!help" in message:
 				sendMessage(s, user + commands.get('commands'))
 				break
