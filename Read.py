@@ -25,18 +25,55 @@ def getMessage(line):
 def get_points(check_user):
 
 	check_db = connection.cursor()
+	count = check_db.execute("SELECT COUNT(*) FROM table1")
+	print(count) # prints no. of rows
 	check_db.execute("SELECT user_id from table1")
+	data = check_db.fetchall() 
+	print(data) # print user_id rows
 
-	data = check_db.fetchall()
+	for x in range(0, count + 1):
 
-	check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
-	points = check_db.fetchall()
+		if data[x] != str(check_user):
+
+			check_db.execute("INSERT ignore into table1 VALUES ( '" + check_user + "', " + str(0) + " )")
+			check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
+			points = check_db.fetchone()
+
+			format_points = re.findall('\d+', str(points))
+			result_points = (check_user + " has " + format_points[0] + " points")
+			return(str(result_points))
+
+		if data[x] == str(check_user):
+
+			check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
+			return_points = check_db.fetchone()
+
+			format_checkpoints = re.findall('\d+', str(return_points))
+			result_checkpoints = (check_user + " has " + format_points[0] + " points")
+			return(str(result_checkpoints))
+
+	# for x in data:
+	# 	if check_user not in data:
+	# 		print("user not found, adding to database")
+	# 		check_db.execute("INSERT into table1 VALUES ( '" + check_user + "', " + str(0) + " )")
+	# 		check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
+			
+	# 		new_points = check_db.fetchone()
+	# 		strnew_points = str(new_points)
+
+	# 		format_newpoints = re.findall('\d+', strnew_points)
+	# 		new_result = (check_user + " has " + format_newpoints[0] + " points")
+	# 		return(strnew_points)
+
+	# else:
+	# 	check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
+
+	# 	points = check_db.fetchall()
+	# 	strpoints = str(points)
 	
-	strpoints = str(points)
-	formatp = re.findall('\d+', strpoints)
-
-	result = (check_user + " has " + formatp[0] + " points")
-	return(result)
+	# 	formatp = re.findall('\d+', strpoints)
+	# 	result = (check_user + " has " + formatp[0] + " points")
+	# 	return(result)
 
 	# result = check_user + " has {} " + " points".format(points[0:3])
 	# print(result)
@@ -64,12 +101,6 @@ def uptime():
 	online = True
 
 	print("Broadcast start: " + latestbroadcast)
-
-	#testing different time approach
-	#url2 = 'https://api.twitch.tv/kraken/videos/' + latestbroadcast
-	#req2 = urllib.request.urlopen(url2)
-	#data2 = json.loads(req.read().decode('UTF-8'))
-	#starttimestring = data2['recorded_at']
 
 	timeformat = "%Y-%m-%dT%H:%M:%SZ"
 	startdate = datetime.strptime(latestbroadcast, timeformat)

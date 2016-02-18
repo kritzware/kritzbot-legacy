@@ -23,6 +23,7 @@ while True:
 			user = getUser(line)
 			message = getMessage(line)
 			print(user + " typed :" + message)
+
 			if "!admin" in message:
 				sendMessage(s, commands.get('admin'))
 				break
