@@ -42,7 +42,7 @@ def get_points(check_user):
 			format_points = re.findall('\d+', str(points))
 			result_points = (check_user + " has " + format_points[0] + " points")
 			return(str(result_points))
-
+ 
 		if data[x] == str(check_user):
 
 			check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")

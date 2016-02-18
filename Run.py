@@ -24,6 +24,16 @@ while True:
 			message = getMessage(line)
 			print(user + " typed :" + message)
 
+			# advanced commands
+			if "!uptime" in message:
+				#uptime()
+				sendMessage(s, uptime())
+			if "!localtime" in message:
+				sendMessage(s, localtime())
+			if "!points" in message:
+				sendMessage(s, get_points(user))
+
+			# basic commands
 			if "!admin" in message:
 				sendMessage(s, commands.get('admin'))
 				break
@@ -36,10 +46,7 @@ while True:
 				sendMessage(s, commands.get('twitter'))
 			if "!discord" in message:
 				sendMessage(s, commands.get('discord'))
-			if "!uptime" in message:
-				#uptime()
-				sendMessage(s, uptime())
-			if "!localtime" in message:
-				sendMessage(s, localtime())
-			if "!points" in message:
-				sendMessage(s, get_points(user))
+			if "!spooky" in message:
+				sendMessage(s, commands.get('spooky'))
+			if "!coloring" in message:
+				sendMessage(s, commands.get('coloring'))
