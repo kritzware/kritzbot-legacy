@@ -1,6 +1,6 @@
 import string
 
-from Read import getUser, getMessage, uptime, get_points
+from Read import getUser, getMessage, uptime, get_points, localtime
 from TheSocket import openSocket, sendMessage
 from Initialize import joinRoom
 from Commands import commands
@@ -16,6 +16,7 @@ while True:
 		
 		for line in temp:
 			print(line)
+
 			if "PING" in line:
 				s.send(bytes(line.replace("PING", "PONG"), 'UTF-8'))
 				break
@@ -27,9 +28,9 @@ while True:
 				break
 			if "!test" in message:
 				sendMessage(s, commands.get('test'))
-				break
 			if "!commands" in message or "!help" in message:
 				sendMessage(s, user + commands.get('commands'))
+				break
 			if "!twitter" in message:
 				sendMessage(s, commands.get('twitter'))
 			if "!discord" in message:
@@ -37,5 +38,7 @@ while True:
 			if "!uptime" in message:
 				#uptime()
 				sendMessage(s, uptime())
+			if "!localtime" in message:
+				sendMessage(s, localtime())
 			if "!points" in message:
 				sendMessage(s, get_points(user))

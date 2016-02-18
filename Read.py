@@ -5,6 +5,7 @@ import requests
 import pymysql
 import re
 
+from pytz import timezone
 from datetime import datetime, timedelta, date, time
 from Settings import CHANNEL, connection
 from TheSocket import openSocket, sendMessage
@@ -88,3 +89,11 @@ def uptime():
 		return(user_channel + " has been live for " + hours + " hrs, " + minutes + " mins")
 	else:
 		return(user_channel + " is not streaming at the moment FeelsBadMan")
+
+def localtime():
+
+	local_time = timezone('US/Eastern')
+	time = datetime.now(local_time)
+	time_format = time.strftime('%H:%M:%S')
+	time_format_str = "Local time: " + str(time_format) + " EST"
+	return(time_format_str)
