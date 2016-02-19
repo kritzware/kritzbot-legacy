@@ -151,7 +151,7 @@ def followage(follower):
 	get_age = urllib.request.urlopen(url)
 	output = get_age.read()
 	output_string = output.decode('UTF-8')
-	return(str(follower) + " has been following for " + output_string)
+	return(str(follower) + " has been following for " + output_string + "! SeemsGood")
 
 def uptime():
 
