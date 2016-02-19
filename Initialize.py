@@ -16,13 +16,14 @@ def joinRoom(s):
 		for line in temp:
 			print(line)
 			Loading = loadingComplete(line)
-	# sendMessage(s, "/me has booted up, joining chat MrDestructoid")
+	sendMessage(s, "/me has booted up, joining chat MrDestructoid")
 	
-	# def auto_message():
-	# 	threading.Timer(240, auto_message).start()
-	# 	sendMessage(s, commands.get('twitter'))
-	# 	add_points()
-	# auto_message()
+	def auto_message():
+		threading.Timer(240, auto_message).start()
+		sendMessage(s, commands.get('twitter'))
+	auto_message()
+
+	
 	
 def loadingComplete(line):
 	if("End of /NAMES list" in line):

@@ -4,9 +4,7 @@ commands = {
 	'twitter': 'Make sure to follow Skowalz on twitter for the latest updates! twitter.com/skowalz PogChamp',
 	'discord': 'Join the discord to chat with other viewers! https://discord.gg/0dlGiuDScFukCO8y HeyGuys',
 	'spooky': "Hold me chat, I'm scared! WutFace WutFace WutFace",
-	'coloring': 'Grab a coffee & ease into the day :) Expect me here weekday mornings from about 6:15AM - 7:00AM EST. Dope-ass coloring pages from >> http://etsy.me/1KbIzqO',
-	'rekt': '☐ Not REKT ☑ REKT EleGiggle',
-	'donger': "Here's a donger for you ( ° ͜ʖ͡°)╭∩╮"
+	'coloring': 'Grab a coffee & ease into the day :) Expect me here weekday mornings from about 6:15AM - 7:00AM EST. Dope-ass coloring pages from >> http://etsy.me/1KbIzqO'
 }
 
 quotes = {

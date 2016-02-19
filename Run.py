@@ -57,7 +57,3 @@ while True:
 				sendMessage(s, commands.get('spooky'))
 			if "!coloring" in message:
 				sendMessage(s, commands.get('coloring'))
-			if "!rekt" in message:
-				sendMessage(s, commands.get('rekt'))
-			if "!donger" in message:
-				sendMessage(s, commands.get('donger'))
