@@ -58,7 +58,7 @@ def get_points(check_user):
 			check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
 			return_points = check_db.fetchone()
 
-			format_checkpoints = re.findall('\d+', str(return_points))
+			format_checkpoints = re.findall('[+-]?\d+(?:\.\d+)?', str(return_points))
 			result_checkpoints = (check_user + " has " + format_points[0] + " points")
 			return(str(result_checkpoints))
 
@@ -74,8 +74,23 @@ def roulette(check_user, gamble):
 
 	check_db = connection.cursor()
 
-	int_gamble = int(re.search(r'\d+', gamble).group())
-	#print(int_gamble)
+	int_gamble = int(re.search(r'\-?\d+', gamble).group())
+
+	print(int_gamble)
+
+	if(int(int_gamble) <= 0):
+		print("test")
+		return(check_user + " you cannot gamble 0 or less points.")
+
+	# check if user has enough points to gamble
+	check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
+	return_points = check_db.fetchone()
+	format_checkpoints = re.findall('[+-]?\d+(?:\.\d+)?', str(return_points))
+	print(format_checkpoints[0])
+	print(int(format_checkpoints[0]))
+
+	if(int(int_gamble) > int(format_checkpoints[0])):
+		return("Sorry " + check_user + ", you don't have enough points.")
 
 	result = int_gamble * 2
 	#print(result)
@@ -86,9 +101,9 @@ def roulette(check_user, gamble):
 		#return(check_user + " gambled " + str(int_gamble) + " points and won " + str(result) + " points! PogChamp")
 		return(check_user + " won " + str(result) + " points! PogChamp")
 	if(roll == 2):
-		check_db.execute("UPDATE table1 set points = points - " + str(result) + " where user_id = '" + str(check_user) + "' and points > 0")
+		check_db.execute("UPDATE table1 set points = points - " + str(int_gamble) + " WHERE user_id = '" + str(check_user) + "' ")
 		#return(check_user + " gambled " + str(int_gamble) + " points and lost " + str(result) + " points! BibleThump")
-		return(check_user + " lost " + str(result) + " points! BibleThump")
+		return(check_user + " lost " + str(int_gamble) + " points! BibleThump")
 
 	#ADD POINTS
 	#UPDATE table1 set points = points + 10 where user_id = 'kritzware';
