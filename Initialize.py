@@ -19,7 +19,7 @@ def joinRoom(s):
 	sendMessage(s, "/me has booted up, joining chat MrDestructoid")
 	
 	def auto_message():
-		threading.Timer(240, auto_message).start()
+		threading.Timer(600, auto_message).start()
 		sendMessage(s, commands.get('twitter'))
 	auto_message()
 
