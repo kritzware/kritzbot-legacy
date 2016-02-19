@@ -145,8 +145,13 @@ def roulette(check_user, gamble):
 	# 	print("adding new user to db")
 	# 	return check_user + " has 0 points FeelsBadMan"
  
-	
+def followage(follower):
 
+	url = "https://api.rtainc.co/twitch/followers/length?channel=" + CHANNEL + "&name=" + str(follower)
+	get_age = urllib.request.urlopen(url)
+	output = get_age.read()
+	output_string = output.decode('UTF-8')
+	return(str(follower) + " has been following for " + output_string)
 
 def uptime():
 

@@ -1,7 +1,7 @@
 import string
 import re
 
-from Read import getUser, getMessage, uptime, get_points, localtime, roulette
+from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage
 from TheSocket import openSocket, sendMessage
 from Initialize import joinRoom
 from Commands import commands
@@ -25,8 +25,6 @@ while True:
 			message = getMessage(line)
 			print(user + " typed :" + message)
 
-			
-
 			# advanced commands
 			if "!uptime" in message:
 				#uptime()
@@ -35,6 +33,8 @@ while True:
 				sendMessage(s, localtime())
 			if "!points" in message:
 				sendMessage(s, get_points(user))
+			if "!followage" in message:
+				sendMessage(s, followage(user))
 
 			# roulette
 			amount = re.findall('\d+', message)
