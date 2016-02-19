@@ -66,9 +66,14 @@ def get_points(check_user):
 
 def add_points():
 
-	pointnum = 16 # 4 points per minute
+	pointnum = 2 # 2 points per minute
 	check_db = connection.cursor()
 	check_db.execute("UPDATE table1 set points = points + " + str(pointnum))
+
+def add_points_user(user, pointnum):
+
+	check_db = connection.cursor()
+	check_db.execute("UPDATE table1 set points = points + " + str(pointnum) + " where user_id = '" + str(user) + "' ")
 
 def roulette(check_user, gamble):
 
@@ -104,46 +109,6 @@ def roulette(check_user, gamble):
 		check_db.execute("UPDATE table1 set points = points - " + str(int_gamble) + " WHERE user_id = '" + str(check_user) + "' ")
 		#return(check_user + " gambled " + str(int_gamble) + " points and lost " + str(result) + " points! BibleThump")
 		return(check_user + " lost " + str(int_gamble) + " points! BibleThump")
-
-	#ADD POINTS
-	#UPDATE table1 set points = points + 10 where user_id = 'kritzware';
-
-
-	# for x in data:
-	# 	if check_user not in data:
-	# 		print("user not found, adding to database")
-	# 		check_db.execute("INSERT into table1 VALUES ( '" + check_user + "', " + str(0) + " )")
-	# 		check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
-			
-	# 		new_points = check_db.fetchone()
-	# 		strnew_points = str(new_points)
-
-	# 		format_newpoints = re.findall('\d+', strnew_points)
-	# 		new_result = (check_user + " has " + format_newpoints[0] + " points")
-	# 		return(strnew_points)
-
-	# else:
-	# 	check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
-
-	# 	points = check_db.fetchall()
-	# 	strpoints = str(points)
-	
-	# 	formatp = re.findall('\d+', strpoints)
-	# 	result = (check_user + " has " + formatp[0] + " points")
-	# 	return(result)
-
-	# result = check_user + " has {} " + " points".format(points[0:3])
-	# print(result)
-	# return(str(result))
-
-	# if check_user in check_db.fetchall():
-	# 	points = check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
-	# 	print("user points found")
-	# 	return check_user + " has" + points + " points"
-	# else:
-	# 	check_db.execute("INSERT into table1 VALUES ( '" + check_user + "', " + str(0) + " )")
-	# 	print("adding new user to db")
-	# 	return check_user + " has 0 points FeelsBadMan"
  
 def followage(follower):
 
@@ -152,6 +117,38 @@ def followage(follower):
 	output = get_age.read()
 	output_string = output.decode('UTF-8')
 	return(str(follower) + " has been following for " + output_string + "! SeemsGood")
+
+def raffle(user, draw):
+
+	print(draw)
+
+	url = 'https://tmi.twitch.tv/group/user/' + CHANNEL + '/chatters'
+	req = urllib.request.urlopen(url)
+	data = json.loads(req.read().decode('UTF-8'))
+	normal_viewers = data['chatters']['viewers']
+	mods = data['chatters']['moderators']
+
+	winner = random.choice(normal_viewers)
+	if(winner == 'nightbot'):
+		winner = random.choice(normal_viewers)
+		add_points_user(winner, draw)
+		return("The winner is " + winner + " !! PogChamp")
+	add_points_user(winner, draw)
+	return("The winner is " + winner + " !! PogChamp")
+
+
+def mod_check(user):
+
+	url = 'https://tmi.twitch.tv/group/user/' + CHANNEL + '/chatters'
+	req = urllib.request.urlopen(url)
+	data = json.loads(req.read().decode('UTF-8'))
+	mods = data['chatters']['moderators']
+	
+	for n in mods:
+		if(n == user):
+			return(True)
+		else:
+			return(False)
 
 def uptime():
 

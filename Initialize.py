@@ -23,7 +23,10 @@ def joinRoom(s):
 		sendMessage(s, commands.get('twitter'))
 	auto_message()
 
-
+	def points_timer():
+		threading.Timer(60, points_timer).start()
+		add_points()
+	points_timer()
 	
 def loadingComplete(line):
 	if("End of /NAMES list" in line):

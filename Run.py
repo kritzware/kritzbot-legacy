@@ -1,7 +1,8 @@
 import string
 import re
+import time
 
-from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage
+from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, mod_check
 from TheSocket import openSocket, sendMessage
 from Initialize import joinRoom
 from Commands import commands
@@ -41,6 +42,22 @@ while True:
 				sendMessage(s, get_points(user))
 			if "!followage" in message:
 				sendMessage(s, followage(user))
+
+			# raffle
+			raffle_amount = re.findall('\d+', message)
+			y = str(raffle_amount)
+			if ("!raffle") in message:
+				if(mod_check(user)):
+					new_y = int(re.search(r'\-?\d+', y).group())
+					output = "Raffle for " + str(new_y) + " points has begun. Type Kappa to enter!"
+					sendMessage(s, str(output))
+					time.sleep(15)
+					sendMessage(s, "The raffle ends in 15 seconds!")
+					time.sleep(15)
+					sendMessage(s, raffle(user, new_y))
+				else:
+					sendMessage(s, "Only mods can set raffles FailFish")
+
 
 			# roulette
 			amount = re.findall('\d+', message)
