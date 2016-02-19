@@ -23,11 +23,10 @@ def joinRoom(s):
 		sendMessage(s, commands.get('twitter'))
 	auto_message()
 
-	
+
 	
 def loadingComplete(line):
 	if("End of /NAMES list" in line):
 		return False
 	else:
 		return True
-

@@ -18,8 +18,14 @@ while True:
 		for line in temp:
 			print(line)
 
-			if "PING" in line:
-				s.send(bytes(line.replace("PING", "PONG"), 'UTF-8'))
+			if "PING :tmi.twitch.tv" in line:
+				#s.send(bytes(line.replace("PING", "PONG"), 'UTF-8'))
+				response = "PONG :tmi.twitch.tv\r\n"
+				print(response)
+				#print(response)
+				bytes_response = str.encode(response)
+				#print(bytes_response)
+				s.send(bytes_response)
 				break
 			user = getUser(line)
 			message = getMessage(line)
@@ -45,10 +51,8 @@ while True:
 			# basic commands
 			if "!admin" in message:
 				sendMessage(s, commands.get('admin'))
-				break
 			if "!commands" in message or "!help" in message:
 				sendMessage(s, user + commands.get('commands'))
-				break
 			if "!twitter" in message:
 				sendMessage(s, commands.get('twitter'))
 			if "!discord" in message:
