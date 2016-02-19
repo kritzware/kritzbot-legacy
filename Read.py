@@ -39,9 +39,18 @@ def get_points(check_user):
 			check_db.execute("INSERT ignore into table1 VALUES ( '" + check_user + "', " + str(0) + " )")
 			check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
 			points = check_db.fetchone()
+			#print(points)
 
-			format_points = re.findall('\d+', str(points))
+			format_points = re.findall('[+-]?\d+(?:\.\d+)?', str(points))
+			#print(format_points)
+
 			result_points = (check_user + " has " + format_points[0] + " points")
+
+			if(int(format_points[0]) < 0):
+				print(int(format_points[0]))
+				negative_checkpoints = (check_user + " has -" + format_points[0] + " points BabyRage")
+				return(str(negative_checkpoints))		
+
 			return(str(result_points))
  
 		if data[x] == str(check_user):
@@ -74,10 +83,12 @@ def roulette(check_user, gamble):
 	roll = random.randrange(1, 3)
 	if(roll == 1):
 		check_db.execute("UPDATE table1 set points = points + " + str(result) + " where user_id = '" + str(check_user) + "' ")
-		return(check_user + " gambled " + str(int_gamble) + " points and won " + str(result) + " points! PogChamp")
+		#return(check_user + " gambled " + str(int_gamble) + " points and won " + str(result) + " points! PogChamp")
+		return(check_user + " won " + str(result) + " points! PogChamp")
 	if(roll == 2):
-		check_db.execute("UPDATE table1 set points = points - " + str(result) + " where user_id = '" + str(check_user) + "'")
-		return(check_user + " gambled " + str(int_gamble) + " points and lost " + str(result) + " points! BibleThump")
+		check_db.execute("UPDATE table1 set points = points - " + str(result) + " where user_id = '" + str(check_user) + "' and points > 0")
+		#return(check_user + " gambled " + str(int_gamble) + " points and lost " + str(result) + " points! BibleThump")
+		return(check_user + " lost " + str(result) + " points! BibleThump")
 
 	#ADD POINTS
 	#UPDATE table1 set points = points + 10 where user_id = 'kritzware';
