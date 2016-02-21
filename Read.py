@@ -140,6 +140,25 @@ def followage(follower):
 	output_string = output.decode('UTF-8')
 	return(str(follower) + " has been following for " + output_string + "! SeemsGood")
 
+def first():
+
+	check_db = connection.cursor()
+	check_db.execute("SELECT MAX(points) FROM table1")
+	first_points = check_db.fetchone()
+	# print(first_points)
+	format_first_points = re.findall('[+-]?\d+(?:\.\d+)?', str(first_points))
+	# print(format_first_points)
+
+	check_db.execute("SELECT user_id from table1 WHERE points = " + format_first_points[0])
+	first_user = check_db.fetchone()
+	# print(first_user)
+
+	output = str(first_user[0]) + " has the most points: " + str(format_first_points[0])
+	return(output)
+
+def enter_raffle(user, message):
+	x = 1
+
 def raffle(user, draw):
 
 	print(draw)
