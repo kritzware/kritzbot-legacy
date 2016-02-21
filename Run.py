@@ -60,11 +60,12 @@ while True:
 
 
 			# roulette
-			amount = re.findall('\d+', message)
+			amount = re.findall('\-?\d+', message)
 			x = str(amount)
 
 			# print("check this to see if int: ", x)
 			# print(type(x))
+			# print(x)
 
 			if ("!roulette") in message:
 				if(roulette(user, x) == False):

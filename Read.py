@@ -105,21 +105,21 @@ def roulette(check_user, gamble):
 	# print("This is the int: ", int_gamble)
 
 	if(int(int_gamble) <= 0):
-		#print("test")
+		# print("test")
 		return(check_user + " you cannot gamble 0 or less points.")
 
 	# check if user has enough points to gamble
 	check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
 	return_points = check_db.fetchone()
 	format_checkpoints = re.findall('[+-]?\d+(?:\.\d+)?', str(return_points))
-	#print(format_checkpoints[0])
-	#print(int(format_checkpoints[0]))
+	# print(format_checkpoints[0])
+	# print(int(format_checkpoints[0]))
 
 	if(int(int_gamble) > int(format_checkpoints[0])):
 		return("Sorry " + check_user + ", you don't have enough points.")
 
 	result = int_gamble * 2
-	#print(result)
+	# print(result)
 
 	roll = random.randrange(1, 3)
 	if(roll == 1):
