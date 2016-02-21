@@ -102,7 +102,7 @@ def roulette(check_user, gamble):
 
 	int_gamble = int(re.search(r'\-?\d+', gamble).group())
 
-	print("This is the int: ", int_gamble)
+	# print("This is the int: ", int_gamble)
 
 	if(int(int_gamble) <= 0):
 		#print("test")
