@@ -13,7 +13,7 @@ Twitch chat bot, written with Python, currently operating in [twitch.tv/skowalz]
 | `!localtime` | Local time: 07:28:08 EST | Everyone |
 | `!roulette 50` | {user} gambled 50 points and won/loss 100 points! ![](https://static-cdn.jtvnw.net/emoticons/v1/88/1.0) | Everyone |
 | `!points` | {user} has 300 points | Everyone |
-| `!raffle 10` | Raffle for 10 points has begun. Type ![](https://static-cdn.jtvnw.net/emoticons/v1/25/1.0) to enter! | Moderator
+| `!raffle 10 {entry}` | Raffle for 10 points has begun. Type {entry} to enter! | Moderator
 | `!followage` | {user} has been following for 10 months, 2 weeks! ![](https://static-cdn.jtvnw.net/emoticons/v1/64138/1.0) | Everyone |
 | `!spooky` | Hold me chat, I'm scared! ![](https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0) ![](https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0) ![](https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0) | Everyone |
 | `!first` | {user_with_most_points} has the most points: 4813 | Everyone |

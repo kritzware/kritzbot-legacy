@@ -72,8 +72,13 @@ def check_points(user, points):
 
 	return_points = check_db.fetchone()
 	format_points = re.findall('[+-]?\d+(?:\.\d+)?', str(return_points))
+	format_points_int = int(format_points[0])
 
-	if(points > format_points[0]):
+	# print(format_points)
+	# print(format_points_int)
+	# print(int(points))
+
+	if(int(points) <= format_points_int):
 		return True
 	else:
 		return False

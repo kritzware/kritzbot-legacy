@@ -4,7 +4,8 @@ import random
 import datetime
 import time
 
-from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, mod_check, first, duel, check_points
+from Read import (getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, mod_check, first, duel, check_points,
+check_int )
 from TheSocket import openSocket, sendMessage, sendWhisper
 from Initialize import joinRoom
 from Commands import commands
@@ -105,13 +106,18 @@ while True:
 				temp_user.append(opponent)
 
 				duel_amount = re.findall('\d+', message)
+				# print(duel_amount[0])
+				check_value = message.rsplit(" ")[2]
 
-				if(check_points(user, duel_amount[0])):
-					output = opponent + ", " + user + " has challenged you to " + duel_amount[0] + " points. Type !accept to duel"
-					sendMessage(s, output)
-					state = True
+				if(check_int(check_value)):
+					if(check_points(user, duel_amount[0])):
+						output = opponent + ", " + user + " has challenged you to " + duel_amount[0] + " points. Type !accept to duel"
+						sendMessage(s, output)
+						state = True
+					else:
+						sendMessage(s, "Sorry, " + user + " you don't have enough points for that BabyRage")
 				else:
-					sendMessage(s, "Sorry, " + user + " you don't have enough points for that BabyRage")
+					sendMessage(s, user + ", you can only enter integer values.")
 			# print(temp_user)
 			# print(user)
 			if((state) and ("!accept" in message) and (user == temp_user[0])):
