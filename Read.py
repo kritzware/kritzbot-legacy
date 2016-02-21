@@ -65,6 +65,19 @@ def get_points(check_user):
 
 	connection.close()
 
+def check_points(user, points):
+
+	check_db = connection.cursor()
+	check_db.execute("SELECT points from table1 where user_id = '" + str(user) + "'")
+
+	return_points = check_db.fetchone()
+	format_points = re.findall('[+-]?\d+(?:\.\d+)?', str(return_points))
+
+	if(points > format_points[0]):
+		return True
+	else:
+		return False
+
 def add_points():
 
 	pointnum = 2 # 2 points per minute
@@ -117,7 +130,7 @@ def roulette(check_user, gamble):
 	# print(int(format_checkpoints[0]))
 
 	if(int(int_gamble) > int(format_checkpoints[0])):
-		return("Sorry " + check_user + ", you don't have enough points.")
+		return("Sorry " + check_user + ", you don't have enough points for that BabyRage")
 
 	result = int_gamble * 2
 	# print(result)
