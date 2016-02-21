@@ -75,13 +75,34 @@ def add_points_user(user, pointnum):
 	check_db = connection.cursor()
 	check_db.execute("UPDATE table1 set points = points + " + str(pointnum) + " where user_id = '" + str(user) + "' ")
 
+def check_int(value):
+	try:
+		value = int(value)
+		return True
+	except ValueError:
+		return False
+
+def check_int_re(value):
+	check_ints = re.findall('\d+', value)
+	if not check_ints:
+		# value is not an int
+		return False
+	else:
+		# value is an int
+		return True
+
 def roulette(check_user, gamble):
 
 	check_db = connection.cursor()
 
+	if(check_int_re(gamble) == False):
+		# return if user input is not an int
+		roulette_true = False
+		return(roulette_true)
+
 	int_gamble = int(re.search(r'\-?\d+', gamble).group())
 
-	print(int_gamble)
+	print("This is the int: ", int_gamble)
 
 	if(int(int_gamble) <= 0):
 		#print("test")
@@ -109,6 +130,7 @@ def roulette(check_user, gamble):
 		check_db.execute("UPDATE table1 set points = points - " + str(int_gamble) + " WHERE user_id = '" + str(check_user) + "' ")
 		#return(check_user + " gambled " + str(int_gamble) + " points and lost " + str(result) + " points! BibleThump")
 		return(check_user + " lost " + str(int_gamble) + " points! BibleThump")
+
  
 def followage(follower):
 

@@ -3,7 +3,7 @@ import re
 import time
 
 from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, mod_check
-from TheSocket import openSocket, sendMessage
+from TheSocket import openSocket, sendMessage, sendWhisper
 from Initialize import joinRoom
 from Commands import commands
 
@@ -62,8 +62,18 @@ while True:
 			# roulette
 			amount = re.findall('\d+', message)
 			x = str(amount)
+
+			# print("check this to see if int: ", x)
+			# print(type(x))
+
 			if ("!roulette") in message:
-				sendMessage(s, roulette(user, x))
+				if(roulette(user, x) == False):
+					roulette_error = user + ", you can only enter integer values."
+					sendMessage(s, roulette_error)
+					#sendWhisper(s, user, roulette_error)
+				else:
+					sendMessage(s, roulette(user, x))
+
 
 			# basic commands
 			if "!admin" in message:

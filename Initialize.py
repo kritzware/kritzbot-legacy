@@ -16,7 +16,8 @@ def joinRoom(s):
 		for line in temp:
 			print(line)
 			Loading = loadingComplete(line)
-	sendMessage(s, "/me has booted up, joining chat MrDestructoid")
+	# message on joining the current channel
+	# sendMessage(s, "/me has booted up, joining chat MrDestructoid")
 	
 	def auto_message():
 		threading.Timer(600, auto_message).start()
