@@ -1,16 +1,23 @@
 import string
 import re
+import random
+import datetime
 import time
 
-from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, mod_check, first, enter_raffle, duel
+from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, mod_check, first, duel
 from TheSocket import openSocket, sendMessage, sendWhisper
 from Initialize import joinRoom
 from Commands import commands
+from temp import raffle_users
+from Settings import ADMIN
 
 s = openSocket()
 joinRoom(s)
 readbuffer = ""
 temp_user = []
+raffle_active = False
+send_raffle_state = False
+state = False
 
 while True:
 		readbuffer = readbuffer + s.recv(1024).decode('UTF-8')
@@ -46,35 +53,43 @@ while True:
 			if "!first" in message:
 				sendMessage(s, first())
 
+			def time_up():
+				time.sleep(15)
+				sendMessage(s, "The raffle ends in 15 seconds!")
+				time.sleep(15)
+				time_up_time = datetime.datetime.now()
+				return time_up_time
+
 			# raffle
-			raffle_active = False
 			raffle_amount = re.findall('\d+', message)
 			y = str(raffle_amount)
 			if ("!raffle") in message:
 				if(mod_check(user)):
+					enter_confirm = message.rsplit(" ")[2]
+					# print(enter_confirm)
 					new_y = int(re.search(r'\-?\d+', y).group())
-					output = "Raffle for " + str(new_y) + " points has begun. Type Kappa to enter!"
+					output = "Raffle for " + str(new_y) + " points has begun. Type " + enter_confirm + " to enter!"
 					sendMessage(s, str(output))
+					#startTime = datetime.datetime.now()
 					raffle_active = True
-					while(raffle_active):
-						time.sleep(15)
-						sendMessage(s, "The raffle ends in 15 seconds!")
-						time.sleep(15)
-						sendMessage(s, raffle(user, new_y))
-						raffle_active = False
+					time_up()
+					# print(raffle_users)
 				else:
 					sendMessage(s, "Only mods can set raffles FailFish")
-			enter_raffle(user, message)
 
+			# collect raffle users
+			if((raffle_active) and (str(enter_confirm) in message) and (user != ADMIN)):
+				# print(user, " added to entrees")
+				raffle_users.append(user)
+				# print(raffle_users)
+				sendMessage(s, raffle(new_y))
 
 			# roulette
 			amount = re.findall('\-?\d+', message)
 			x = str(amount)
-
 			# print("check this to see if int: ", x)
 			# print(type(x))
 			# print(x)
-
 			if ("!roulette") in message:
 				if(roulette(user, x) == False):
 					roulette_error = user + ", you can only enter integer values."
@@ -100,7 +115,7 @@ while True:
 				# print("duel accepted")
 				sendMessage(s, duel(user, opponent, duel_amount[0]))
 				temp_user.remove(opponent)
-				print(temp_user)
+				# print(temp_user)
 
 
 			# basic commands

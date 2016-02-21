@@ -10,6 +10,7 @@ from pytz import timezone
 from datetime import datetime, timedelta, date, time
 from Settings import CHANNEL, connection
 from TheSocket import openSocket, sendMessage
+from temp import raffle_users
 
 def getUser(line):
 
@@ -160,55 +161,46 @@ def duel(user, opponent, points):
 
 	check_db = connection.cursor()
 
-	win = int(points) * 2
+	win = int(points)
 
 	roll = random.randrange(1, 3)
 	if(roll == 1):
 		print(user)
 		check_db.execute("UPDATE table1 set points = points + " + str(points) + " WHERE user_id = '" + str(user) + "' ")
 		check_db.execute("UPDATE table1 set points = points - " + str(points) + " WHERE user_id = '" + str(opponent) + "' ")
-		return(user + " won the duel! They win " + str(win) + " points PogChamp")
+		return(user + " won the duel! They get " + str(win) + " points PogChamp")
 	if(roll == 2):
 		print(opponent)
 		check_db.execute("UPDATE table1 set points = points + " + str(points) + " WHERE user_id = '" + str(opponent) + "' ")
 		check_db.execute("UPDATE table1 set points = points - " + str(points) + " WHERE user_id = '" + str(user) + "' ")
-		return(opponent + " won the duel! They win " + str(win) + " points PogChamp")
+		return(opponent + " won the duel! They get " + str(win) + " points PogChamp")
 
 
-def enter_raffle(user, message):
-	x = 1
+def raffle(draw):
 
-def raffle(user, draw):
-
-	print(draw)
-
-	url = 'https://tmi.twitch.tv/group/user/' + CHANNEL + '/chatters'
-	req = urllib.request.urlopen(url)
-	data = json.loads(req.read().decode('UTF-8'))
-	normal_viewers = data['chatters']['viewers']
-	mods = data['chatters']['moderators']
-
-	winner = random.choice(normal_viewers)
-	if(winner == 'nightbot'):
-		winner = random.choice(normal_viewers)
-		add_points_user(winner, draw)
-		return("The winner is " + winner + " !! PogChamp")
+	raffle_users_sorted = list(set(raffle_users))
+	print(raffle_users_sorted)
+	winner = random.choice(raffle_users_sorted)
+	
 	add_points_user(winner, draw)
 	return("The winner is " + winner + " !! PogChamp")
-
 
 def mod_check(user):
 
 	url = 'https://tmi.twitch.tv/group/user/' + CHANNEL + '/chatters'
-	req = urllib.request.urlopen(url)
-	data = json.loads(req.read().decode('UTF-8'))
-	mods = data['chatters']['moderators']
-	
-	for n in mods:
-		if(n == user):
-			return(True)
-		else:
-			return(False)
+	try:
+		req = urllib.request.urlopen(url)
+		data = json.loads(req.read().decode('UTF-8'))
+		mods = data['chatters']['moderators']
+		for n in mods:
+			if(n == user):
+				return(True)
+			else:
+				return(False)
+
+	except urllib.error.URLError as e:
+		print(e.reason)
+		return("Error: Twitch API down")
 
 def uptime():
 
