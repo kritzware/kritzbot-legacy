@@ -2,7 +2,7 @@ import string
 import re
 import time
 
-from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, mod_check, first, enter_raffle
+from Read import getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, mod_check, first, enter_raffle, duel
 from TheSocket import openSocket, sendMessage, sendWhisper
 from Initialize import joinRoom
 from Commands import commands
@@ -81,6 +81,60 @@ while True:
 					#sendWhisper(s, user, roulette_error)
 				else:
 					sendMessage(s, roulette(user, x))
+
+
+			# state = False
+
+			if "!duel" in message:
+				#state = True
+				opponent = message.rsplit(" ")[1]
+				duel_amount = re.findall('\d+', message)
+				output = opponent + ", " + user + " has challenged you to " + duel_amount[0] + " points. Type !accept to duel"
+				sendMessage(s, output)
+				state = True
+
+				
+			if((state) and ("!accept" in message)):
+				state = False
+				print("duel accepted")
+				sendMessage(s, duel(user, opponent, duel_amount[0]))
+
+			# duels
+			# global duelstate
+			# duelstate = False
+
+			# print("original state: ", duelstate)
+
+			# def state():
+			# 	global duelstate
+			# 	duelstate = True
+			# 	return duelstate
+
+			# def state_false():
+			# 	global duelstate
+			# 	duelstate = False
+			# 	return duelstate
+
+			# if("!duel" in message):
+				
+
+
+			# 	duelstate = state()
+			# 	print("state updated to: ", duelstate)
+
+			# print("new state: ", duelstate)
+
+			# if "!accept" in message:
+			# 	print("value after !accept: ", duelstate)
+			# 	if duelstate == True:
+
+			# 		print("duel accepted by: ", opponent)
+			# 		duelstate = state_false()
+			# 		print("state reverted to: ", duelstate)
+
+			# 	else:
+			# 		print("no duel active")
+
 
 
 			# basic commands

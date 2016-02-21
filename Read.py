@@ -156,6 +156,25 @@ def first():
 	output = str(first_user[0]) + " has the most points: " + str(format_first_points[0])
 	return(output)
 
+def duel(user, opponent, points):
+
+	check_db = connection.cursor()
+
+	win = int(points) * 2
+
+	roll = random.randrange(1, 3)
+	if(roll == 1):
+		print(user)
+		check_db.execute("UPDATE table1 set points = points + " + str(points) + " WHERE user_id = '" + str(user) + "' ")
+		check_db.execute("UPDATE table1 set points = points - " + str(points) + " WHERE user_id = '" + str(opponent) + "' ")
+		return(user + " won the duel! They win " + str(win) + " points PogChamp")
+	if(roll == 2):
+		print(opponent)
+		check_db.execute("UPDATE table1 set points = points + " + str(points) + " WHERE user_id = '" + str(opponent) + "' ")
+		check_db.execute("UPDATE table1 set points = points - " + str(points) + " WHERE user_id = '" + str(user) + "' ")
+		return(opponent + " won the duel! They win " + str(win) + " points PogChamp")
+
+
 def enter_raffle(user, message):
 	x = 1
 
