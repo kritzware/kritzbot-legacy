@@ -65,11 +65,11 @@ while True:
 
 			class cooldownTimer(Thread):
 				def run(self):
-					print("timer started")
+					# print("timer started")
 					time.sleep(30)
-					print(user, " removed from cooldown list")
+					# print(user, " removed from cooldown list")
 					cooldown.remove(user)
-					print(cooldown)
+					# print(cooldown)
 
 			def run():
 				cooldownTimer().start()
@@ -114,7 +114,7 @@ while True:
 					#auto_cooldown(user)
 					sendMessage(s, roulette(user, x))
 					cooldown.append(user)
-					print(user, " added to cooldown list")
+					# print(user, " added to cooldown list")
 					run()
 
 			# duels
@@ -150,20 +150,22 @@ while True:
 				temp_user.remove(format_opponent)
 				# print(temp_user)
 
-			if "test" in message:
-				print(cooldown)
-
 
 			# basic commands
 			if "!admin" in message:
-				sendMessage(s, commands.get('admin'))
+				sendMessage(s, "/me " + commands.get('admin'))
 			if "!commands" in message or "!help" in message:
-				sendMessage(s, user + commands.get('commands'))
+				sendMessage(s, "/me " + user + commands.get('commands'))
 			if "!twitter" in message:
-				sendMessage(s, commands.get('twitter'))
+				sendMessage(s, "/me " + commands.get('twitter'))
 			if "!discord" in message:
-				sendMessage(s, commands.get('discord'))
+				sendMessage(s, "/me " + commands.get('discord'))
 			if "!spooky" in message:
-				sendMessage(s, commands.get('spooky'))
+				sendMessage(s, "/me " + commands.get('spooky'))
 			if "!coloring" in message:
-				sendMessage(s, commands.get('coloring'))
+				sendMessage(s, "/me " + commands.get('coloring'))
+			if "!donger" in message:
+				try:
+					sendMessage(s, "/me " + commands.get('donger'))
+				except:
+					pass
