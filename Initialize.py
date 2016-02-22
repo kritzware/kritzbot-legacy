@@ -4,6 +4,7 @@ import threading
 from TheSocket import sendMessage
 from Commands import commands
 from Read import add_points
+from temp import cooldown
 
 def joinRoom(s):
 	readbuffer = ""
@@ -21,13 +22,14 @@ def joinRoom(s):
 	
 	def auto_message():
 		threading.Timer(600, auto_message).start()
-		sendMessage(s, commands.get('twitter'))
+		sendMessage(s, "/me " + commands.get('twitter'))
 	auto_message()
 
 	def points_timer():
 		threading.Timer(60, points_timer).start()
 		add_points()
 	points_timer()
+
 	
 def loadingComplete(line):
 	if("End of /NAMES list" in line):

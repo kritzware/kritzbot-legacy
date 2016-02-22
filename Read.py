@@ -45,11 +45,11 @@ def get_points(check_user):
 			format_points = re.findall('[+-]?\d+(?:\.\d+)?', str(points))
 			#print(format_points)
 
-			result_points = (check_user + " has " + format_points[0] + " points")
+			result_points = ("/me " + check_user + " has " + format_points[0] + " points")
 
 			if(int(format_points[0]) < 0):
 				#print(int(format_points[0]))
-				negative_checkpoints = (check_user + " has -" + format_points[0] + " points BabyRage")
+				negative_checkpoints = ("/me " + check_user + " has -" + format_points[0] + " points BabyRage")
 				return(str(negative_checkpoints))		
 
 			return(str(result_points))
@@ -60,10 +60,32 @@ def get_points(check_user):
 			return_points = check_db.fetchone()
 
 			format_checkpoints = re.findall('[+-]?\d+(?:\.\d+)?', str(return_points))
-			result_checkpoints = (check_user + " has " + format_points[0] + " points")
+			result_checkpoints = ("/me " + check_user + " has " + format_points[0] + " points")
 			return(str(result_checkpoints))
 
 	connection.close()
+
+def check_user(user):
+
+	check_db = connection.cursor()
+	check_db.execute("SELECT user_id FROM table1")
+
+	users = [row[0] for row in check_db.fetchall()]
+
+	in_db = user in users
+
+	if in_db:
+		# print(user + " is in table")
+		return(True)
+	else:
+		# print(user + " not in table: adding to db")
+		check_db.execute("INSERT into table1 VALUES ( '" + user + "', " + str(0) + " )")
+		return(True)
+
+def bttv_quick_check(user):
+
+	new_user = user.replace('@', '')
+	return new_user
 
 def check_points(user, points):
 
@@ -72,7 +94,11 @@ def check_points(user, points):
 
 	return_points = check_db.fetchone()
 	format_points = re.findall('[+-]?\d+(?:\.\d+)?', str(return_points))
-	format_points_int = int(format_points[0])
+
+	try:
+		format_points_int = int(format_points[0])
+	except IndexError:
+		format_points_int = 0
 
 	# print(format_points)
 	# print(format_points_int)
@@ -125,7 +151,7 @@ def roulette(check_user, gamble):
 
 	if(int(int_gamble) <= 0):
 		# print("test")
-		return(check_user + " you cannot gamble 0 or less points.")
+		return("/me " + check_user + " you cannot gamble 0 or less points.")
 
 	# check if user has enough points to gamble
 	check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
@@ -135,7 +161,7 @@ def roulette(check_user, gamble):
 	# print(int(format_checkpoints[0]))
 
 	if(int(int_gamble) > int(format_checkpoints[0])):
-		return("Sorry " + check_user + ", you don't have enough points for that BabyRage")
+		return("/me " + "Sorry " + check_user + ", you don't have enough points for that BabyRage")
 
 	result = int_gamble * 2
 	# print(result)
@@ -144,11 +170,11 @@ def roulette(check_user, gamble):
 	if(roll == 1):
 		check_db.execute("UPDATE table1 set points = points + " + str(result) + " where user_id = '" + str(check_user) + "' ")
 		#return(check_user + " gambled " + str(int_gamble) + " points and won " + str(result) + " points! PogChamp")
-		return(check_user + " won " + str(result) + " points! PogChamp")
+		return("/me " + check_user + " won " + str(result) + " points! PogChamp")
 	if(roll == 2):
 		check_db.execute("UPDATE table1 set points = points - " + str(int_gamble) + " WHERE user_id = '" + str(check_user) + "' ")
 		#return(check_user + " gambled " + str(int_gamble) + " points and lost " + str(result) + " points! BibleThump")
-		return(check_user + " lost " + str(int_gamble) + " points! BibleThump")
+		return("/me " + check_user + " lost " + str(int_gamble) + " points! BibleThump")
 
  
 def followage(follower):
@@ -157,7 +183,7 @@ def followage(follower):
 	get_age = urllib.request.urlopen(url)
 	output = get_age.read()
 	output_string = output.decode('UTF-8')
-	return(str(follower) + " has been following for " + output_string + "! SeemsGood")
+	return("/me " + str(follower) + " has been following for " + output_string + "! SeemsGood")
 
 def first():
 
@@ -172,7 +198,7 @@ def first():
 	first_user = check_db.fetchone()
 	# print(first_user)
 
-	output = str(first_user[0]) + " has the most points: " + str(format_first_points[0])
+	output = str("/me " + first_user[0]) + " has the most points: " + str(format_first_points[0])
 	return(output)
 
 def duel(user, opponent, points):
@@ -181,17 +207,23 @@ def duel(user, opponent, points):
 
 	win = int(points)
 
-	roll = random.randrange(1, 3)
-	if(roll == 1):
-		print(user)
-		check_db.execute("UPDATE table1 set points = points + " + str(points) + " WHERE user_id = '" + str(user) + "' ")
-		check_db.execute("UPDATE table1 set points = points - " + str(points) + " WHERE user_id = '" + str(opponent) + "' ")
-		return(user + " won the duel! They get " + str(win) + " points PogChamp")
-	if(roll == 2):
-		print(opponent)
-		check_db.execute("UPDATE table1 set points = points + " + str(points) + " WHERE user_id = '" + str(opponent) + "' ")
-		check_db.execute("UPDATE table1 set points = points - " + str(points) + " WHERE user_id = '" + str(user) + "' ")
-		return(opponent + " won the duel! They get " + str(win) + " points PogChamp")
+	if(api_request_chatters_check(opponent, "viewers") or api_request_chatters_check(opponent, "moderators")):
+		if(check_user(user) and check_user(opponent)):
+			roll = random.randrange(1, 3)
+			if(roll == 1):
+				print(user)
+				check_db.execute("UPDATE table1 set points = points + " + str(points) + " WHERE user_id = '" + str(user) + "' ")
+				check_db.execute("UPDATE table1 set points = points - " + str(points) + " WHERE user_id = '" + str(opponent) + "' ")
+				return("/me " + user + " won the duel! They get " + str(win) + " points PogChamp")
+			if(roll == 2):
+				print(opponent)
+				check_db.execute("UPDATE table1 set points = points + " + str(points) + " WHERE user_id = '" + str(opponent) + "' ")
+				check_db.execute("UPDATE table1 set points = points - " + str(points) + " WHERE user_id = '" + str(user) + "' ")
+				return("/me " + opponent + " won the duel! They get " + str(win) + " points PogChamp")
+		else:
+			return("/me " + "Fatal error occured WutFace")
+	else:
+		return("/me " + "Error: User not found WutFace")
 
 
 def raffle(draw):
@@ -201,24 +233,27 @@ def raffle(draw):
 	winner = random.choice(raffle_users_sorted)
 	
 	add_points_user(winner, draw)
-	return("The winner is " + winner + " !! PogChamp")
+	return("/me " + "The winner is " + winner + " !! PogChamp")	
 
-def mod_check(user):
+def api_request_chatters_check(user, user_class):
 
+	user_class_str = str(user_class)
 	url = 'https://tmi.twitch.tv/group/user/' + CHANNEL + '/chatters'
+	# print(url)
 	try:
 		req = urllib.request.urlopen(url)
 		data = json.loads(req.read().decode('UTF-8'))
-		mods = data['chatters']['moderators']
-		for n in mods:
+		chatters = data['chatters'][user_class_str]
+		for n in chatters:
 			if(n == user):
+				print("user found in class", user_class)
 				return(True)
 			else:
 				return(False)
-
 	except urllib.error.URLError as e:
+		print("API error:")
 		print(e.reason)
-		return("Error: Twitch API down")
+		return("/me " + "Error: Twitch API down BabyRage")
 
 def uptime():
 
@@ -246,14 +281,14 @@ def uptime():
 
 	if(online):
 		#print(combineddate)
-		return(user_channel + " has been live for " + hours + " hrs, " + minutes + " mins")
+		return("/me " + user_channel + " has been live for " + hours + " hrs, " + minutes + " mins")
 	else:
-		return(user_channel + " is not streaming at the moment FeelsBadMan")
+		return("/me " + user_channel + " is not streaming at the moment FeelsBadMan")
 
 def localtime():
 
 	local_time = timezone('US/Eastern')
 	time = datetime.now(local_time)
 	time_format = time.strftime('%H:%M:%S')
-	time_format_str = "Local time: " + str(time_format) + " EST"
+	time_format_str = "/me " + "Local time: " + str(time_format) + " EST"
 	return(time_format_str)

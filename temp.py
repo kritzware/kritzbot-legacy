@@ -1,1 +1,2 @@
 raffle_users = []
+cooldown = []
