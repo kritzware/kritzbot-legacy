@@ -4,6 +4,8 @@ import random
 import datetime
 import time
 
+from threading import Thread
+
 from Read import (getUser, getMessage, uptime, get_points, localtime, roulette, followage, raffle, first, duel, check_points,
 check_int, bttv_quick_check, api_request_chatters_check )
 from TheSocket import openSocket, sendMessage, sendWhisper
@@ -61,6 +63,17 @@ while True:
 				time_up_time = datetime.datetime.now()
 				return time_up_time
 
+			class cooldownTimer(Thread):
+				def run(self):
+					print("timer started")
+					time.sleep(30)
+					print(user, " removed from cooldown list")
+					cooldown.remove(user)
+					print(cooldown)
+
+			def run():
+				cooldownTimer().start()
+
 			# raffle
 			raffle_amount = re.findall('\d+', message)
 			y = str(raffle_amount)
@@ -100,9 +113,9 @@ while True:
 					#print("add user to cooldown")
 					#auto_cooldown(user)
 					sendMessage(s, roulette(user, x))
-
-			if "test" in message:
-				print(cooldown)
+					cooldown.append(user)
+					print(user, " added to cooldown list")
+					run()
 
 			# duels
 			if "!duel" in message:
@@ -136,6 +149,9 @@ while True:
 				sendMessage(s, duel(user, format_opponent, point_message))
 				temp_user.remove(format_opponent)
 				# print(temp_user)
+
+			if "test" in message:
+				print(cooldown)
 
 
 			# basic commands
