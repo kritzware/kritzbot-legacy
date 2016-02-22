@@ -164,6 +164,8 @@ while True:
 				sendMessage(s, "/me " + commands.get('spooky'))
 			if "!coloring" in message:
 				sendMessage(s, "/me " + commands.get('coloring'))
+			if "!bot" in message:
+				sendMessage(s, "/me " + commands.get('bot'))
 			if "!donger" in message:
 				try:
 					sendMessage(s, "/me " + commands.get('donger'))

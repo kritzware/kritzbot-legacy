@@ -18,3 +18,5 @@ Twitch chat bot, written with Python, currently operating in [twitch.tv/skowalz]
 | `!spooky` | Hold me chat, I'm scared! ![](https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0) ![](https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0) ![](https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0) | Everyone |
 | `!first` | {user_with_most_points} has the most points: 4813 | Everyone |
 | `!coloring` | Grab a coffee & ease into the day ![](https://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-ebf60cd72f7aa600-24x18.png) Expect me here weekday mornings from about 6:15AM - 7:00AM EST. Dope-ass coloring pages from >> http://etsy.me/1KbIzqO | Everyone
+| `!donger` | ᕙ༼ຈل͜ຈ༽ᕗ. ʜᴀʀᴅᴇʀ,﻿ ʙᴇᴛᴛᴇʀ, ғᴀsᴛᴇʀ, ᴅᴏɴɢᴇʀ .ᕙ༼ຈل͜ຈ༽ᕗ | Everyone |
+| `!bot` | I'm not real.. ![](https://cdn.betterttv.net/emote/566c9fc265dbbdab32ec053b/1x) | Everyone |

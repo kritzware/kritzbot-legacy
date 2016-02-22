@@ -6,6 +6,7 @@ commands = {
 	'spooky': "Hold me chat, I'm scared! WutFace WutFace WutFace",
 	'coloring': 'Grab a coffee & ease into the day :) Expect me here weekday mornings from about 6:15AM - 7:00AM EST. Dope-ass coloring pages from >> http://etsy.me/1KbIzqO',
 	'donger' : 'ᕙ༼ຈل͜ຈ༽ᕗ. ʜᴀʀᴅᴇʀ,﻿ ʙᴇᴛᴛᴇʀ, ғᴀsᴛᴇʀ, ᴅᴏɴɢᴇʀ .ᕙ༼ຈل͜ຈ༽ᕗ',
+	'bot' : "I'm not real.. FeelsBadMan",
 }
 
 quotes = {
