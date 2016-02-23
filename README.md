@@ -1,5 +1,7 @@
 # PyBot
-Twitch chat bot, written with Python, currently operating in [twitch.tv/skowalz](http://www.twitch.tv/skowalz)
+**Beta 1.1** Twitch chat bot, written with Python, currently operating in [twitch.tv/skowalz](http://www.twitch.tv/skowalz)
+
+**Beta 1.2** coming soon with new features, including; control webpage, audio/image commands, and many more features!
 
 #### View the current commands here:
 
