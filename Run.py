@@ -56,12 +56,12 @@ while True:
 			if "!first" in message:
 				sendMessage(s, first())
 
-			def time_up():
-				time.sleep(15)
-				sendMessage(s, "/me " + "The raffle ends in 15 seconds!")
-				time.sleep(15)
-				time_up_time = datetime.datetime.now()
-				return time_up_time
+			# def time_up():
+			# 	time.sleep(15)
+			# 	sendMessage(s, "/me " + "The raffle ends in 15 seconds!")
+			# 	time.sleep(15)
+			# 	time_up_time = datetime.datetime.now()
+			# 	return time_up_time
 
 			class cooldownTimer(Thread):
 				def run(self):
@@ -74,29 +74,29 @@ while True:
 			def run():
 				cooldownTimer().start()
 
-			# raffle
-			raffle_amount = re.findall('\d+', message)
-			y = str(raffle_amount)
-			if ("!raffle") in message:
-				if(api_request_chatters_check(user, "moderators")):
-					enter_confirm = message.rsplit(" ")[2]
-					# print(enter_confirm)
-					new_y = int(re.search(r'\-?\d+', y).group())
-					output = "/me " + "Raffle for " + str(new_y) + " points has begun. Type " + enter_confirm + " to enter!"
-					sendMessage(s, str(output))
-					#startTime = datetime.datetime.now()
-					raffle_active = True
-					time_up()
-					# print(raffle_users)
-				else:
-					sendMessage(s, "/me " + "Only mods can set raffles FailFish")
+			# # raffle
+			# raffle_amount = re.findall('\d+', message)
+			# y = str(raffle_amount)
+			# if ("!raffle") in message:
+			# 	if(api_request_chatters_check(user, "moderators")):
+			# 		enter_confirm = message.rsplit(" ")[2]
+			# 		# print(enter_confirm)
+			# 		new_y = int(re.search(r'\-?\d+', y).group())
+			# 		output = "/me " + "Raffle for " + str(new_y) + " points has begun. Type " + enter_confirm + " to enter!"
+			# 		sendMessage(s, str(output))
+			# 		#startTime = datetime.datetime.now()
+			# 		raffle_active = True
+			# 		time_up()
+			# 		# print(raffle_users)
+			# 	else:
+			# 		sendMessage(s, "/me " + "Only mods can set raffles FailFish")
 
-			# collect raffle users
-			if((raffle_active) and (str(enter_confirm) in message) and (user != ADMIN)):
-				# print(user, " added to entrees")
-				raffle_users.append(user)
-				# print(raffle_users)
-				sendMessage(s, raffle(new_y))
+			# # collect raffle users
+			# if((raffle_active) and (str(enter_confirm) in message) and (user != ADMIN)):
+			# 	# print(user, " added to entrees")
+			# 	raffle_users.append(user)
+			# 	# print(raffle_users)
+			# 	sendMessage(s, raffle(new_y))
 
 			# roulette
 			amount = re.findall('\-?\d+', message)
@@ -117,38 +117,38 @@ while True:
 					# print(user, " added to cooldown list")
 					run()
 
-			# duels
-			if "!duel" in message:
-				#state = True
-				opponent = message.rsplit(" ")[1]
-				format_opponent = bttv_quick_check(opponent)
-				# print("after bttv check: ", format_opponent)
-				temp_user.append(format_opponent)
+			# # duels
+			# if "!duel" in message:
+			# 	#state = True
+			# 	opponent = message.rsplit(" ")[1]
+			# 	format_opponent = bttv_quick_check(opponent)
+			# 	# print("after bttv check: ", format_opponent)
+			# 	temp_user.append(format_opponent)
 
-				point_message = message.rsplit(" ")[2]
+			# 	point_message = message.rsplit(" ")[2]
 
-				#this is the old method, moved to var point_message
-				#duel_amount = re.findall('\d+', message)
+			# 	#this is the old method, moved to var point_message
+			# 	#duel_amount = re.findall('\d+', message)
 				
-				check_value = message.rsplit(" ")[2]
+			# 	check_value = message.rsplit(" ")[2]
 
-				if(check_int(check_value)):
-					if(check_points(user, point_message)):
-						output = "/me " + format_opponent + ", " + user + " has challenged you to " + point_message + " points. Type !accept to duel"
-						sendMessage(s, output)
-						state = True
-					else:
-						sendMessage(s, "/me " + "Sorry " + user + ", you don't have enough points for that BabyRage")
-				else:
-					sendMessage(s, "/me " + user + ", you can only enter integer values.")
-			# print(temp_user)
-			# print(user)
-			if((state) and ("!accept" in message) and (user == temp_user[0])):
-				state = False
-				# print("duel accepted")
-				sendMessage(s, duel(user, format_opponent, point_message))
-				temp_user.remove(format_opponent)
-				# print(temp_user)
+			# 	if(check_int(check_value)):
+			# 		if(check_points(user, point_message)):
+			# 			output = "/me " + format_opponent + ", " + user + " has challenged you to " + point_message + " points. Type !accept to duel"
+			# 			sendMessage(s, output)
+			# 			state = True
+			# 		else:
+			# 			sendMessage(s, "/me " + "Sorry " + user + ", you don't have enough points for that BabyRage")
+			# 	else:
+			# 		sendMessage(s, "/me " + user + ", you can only enter integer values.")
+			# # print(temp_user)
+			# # print(user)
+			# if((state) and ("!accept" in message) and (user == temp_user[0])):
+			# 	state = False
+			# 	# print("duel accepted")
+			# 	sendMessage(s, duel(user, format_opponent, point_message))
+			# 	temp_user.remove(format_opponent)
+			# 	# print(temp_user)
 
 
 			# basic commands
