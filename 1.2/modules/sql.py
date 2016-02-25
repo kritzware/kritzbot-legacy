@@ -2,7 +2,7 @@ import pymysql
 import re
 
 # external py files
-from settings import db_host, db_user, db_pass, db_name, db_autocommit
+from modules.settings import db_host, db_user, db_pass, db_name, db_autocommit
 
 connection = pymysql.connect(
 	host = db_host,

@@ -5,9 +5,9 @@ from datetime import datetime, timedelta, date, time
 from pytz import timezone
 
 # external py files
-from settings import twitch_irc
-from basic_commands import commands, update_commands, friends
-from sql import (db_add_user,
+from modules.settings import twitch_irc
+from modules.basic_commands import commands, update_commands, friends
+from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
 	db_add_points_global,
@@ -49,7 +49,7 @@ def roulette(user, points):
 			return(wisp + "{} you cannot gamble 0 or less points.".format(user))
 
 		user_points = db_get_points_user_int(user)
-		print(user_points)
+		# print("[INFO] >>> User points: {}".format(user_points))
 		if int_points > user_points:
 			return(wisp + "Sorry {}, you don't have enough points BabyRage".format(user))
 

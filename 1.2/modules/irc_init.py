@@ -2,7 +2,7 @@ import string
 import threading
 
 # external py files
-from irc_socket import sendMessage
+from modules.irc_socket import sendMessage
 
 version = "version 1.2"
 

@@ -3,7 +3,7 @@ import string
 import time
 
 # external py files
-from settings import twitch_irc
+from modules.settings import twitch_irc
 
 def openSocket():
 

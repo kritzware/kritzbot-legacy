@@ -1,8 +1,9 @@
 import time
-
 from threading import Thread
 
 # external py files
+from modules.irc_socket import openSocket, sendMessage
+from modules.irc_init import joinRoom
 from bot import (get_user,
 	get_message,
 	local_time,
@@ -13,16 +14,15 @@ from bot import (get_user,
 	roulette,
 	check_int,
 	get_int)
-from irc_socket import openSocket, sendMessage
-from irc_init import joinRoom
-from sql import (db_add_user,
+from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
 	db_add_points_global,
 	db_check_user,
 	db_get_points_user,
 	db_get_points_user_first)
-from temp import cooldown
+from modules.temp import cooldown
+from modules.timers import cooldownTimer
 
 # connection to the irc server is created
 s = openSocket()
@@ -46,15 +46,21 @@ while True:
 				break
 			user = get_user(line)
 			message = get_message(line)
-			print(user + " typed :" + message)
+			print("[MESSAGE] >>> " + user + " typed :" + message)
 
-			### TIMERS ###
+			### TIMER ###
+
 			class cooldownTimer(Thread):
+
 				def run(self):
-					time.sleep(440)
-					cooldown.remove(user)
+					time.sleep(15)
+					print("[INFO] >>> Removed from cooldown array user: {}".format(cooldown[0]))
+					cooldown.pop(0)
+					print("[INFO] >>> Users in cooldown ", cooldown)
+
 			def run():
-				cooldownTimer().start()
+					print("[INFO] >>> Cooldown timer started for roulette user: {}".format(user))
+					cooldownTimer().start()
 
 			### STRING EXTRACTION ###
 			try:
@@ -71,6 +77,7 @@ while True:
 			if "!roulette" in message and user not in cooldown:
 				sendMessage(s, roulette(user, char_2))
 				cooldown.append(user)
+				print("[INFO] >>> ", cooldown)
 				run()
 
 			### ADVANCED COMMANDS ###
