@@ -6,7 +6,7 @@ from modules.irc_socket import openSocket, sendMessage
 from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
-	followage)
+	followage, streamer)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -56,6 +56,7 @@ while True:
 
 			### STRING EXTRACTION ###
 			try:
+				char_1 = word_n(message, 0)
 				char_2 = word_n(message, 1)
 				only_int = get_int(message)
 			except:
@@ -79,6 +80,9 @@ while True:
 			if "!followage" in message:
 				print("[COMMAND] >>> !followage")
 				sendMessage(s, followage(user))
+
+			if "!streamer" in message:
+				sendMessage(s, streamer(char_2))
 
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:
@@ -106,7 +110,7 @@ while True:
 				except:
 					pass
 
-			### STREAMERS###
+			# ### STREAMERS###
 			if "!streamer acorn" in message:
 				sendMessage(s, streamer_acorn())
 			if "!streamer geek" in message:

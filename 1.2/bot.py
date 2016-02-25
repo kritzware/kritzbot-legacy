@@ -1,5 +1,6 @@
 import random
 import re
+import string
 
 from datetime import datetime, timedelta, date, time
 from pytz import timezone
@@ -113,11 +114,22 @@ def update_command(key, user):
 		if keys == key:
 			return wisp + str(values)
 
+def streamer(user):
+
+	acorn = "acorn"
+	geek = "geek"
+
+	if user.strip() == acorn.strip() or user.strip() == geek.strip():
+		return ''
+	else:
+		output = wisp + "Check out {} at twitch.tv/{} VaultBoy".format(user, user)
+		return output
+
 def streamer_acorn():
-	return friends.get('acorn')
+	return wisp + friends.get('acorn')
 
 def streamer_geek():
-	return friends.get('geek')
+	return wisp + friends.get('geek')
 
 ### INT/STRING CHECKER FUNCTIONS ###
 
