@@ -2,19 +2,19 @@ import threading
 
 # external py files
 from bot import (get_user,
-				 get_message,
-				 local_time,
-				 basic_command,
-				 update_command)
+	get_message,
+	local_time,
+	basic_command,
+	update_command)
 from irc_socket import openSocket, sendMessage
 from irc_init import joinRoom
 from sql import (db_add_user,
-				 db_add_points_user,
-				 db_minus_points_user,
-				 db_add_points_global,
-				 db_check_user,
-				 db_get_points_user,
-				 db_get_points_user_first)
+	db_add_points_user,
+	db_minus_points_user,
+	db_add_points_global,
+	db_check_user,
+	db_get_points_user,
+	db_get_points_user_first)
 
 # connection to the irc server is created
 s = openSocket()
