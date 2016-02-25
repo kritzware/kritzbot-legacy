@@ -101,5 +101,5 @@ def check_int(string):
 	try:
 		string = int(string)
 		return True
-	except ValueError:
+	except(ValueError, TypeError):
 		return False

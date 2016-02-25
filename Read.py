@@ -58,7 +58,7 @@ def get_points(check_user):
 
 			check_db.execute("SELECT points from table1 where user_id = '" + check_user + "'")
 			return_points = check_db.fetchone()
-
+			
 			format_checkpoints = re.findall('[+-]?\d+(?:\.\d+)?', str(return_points))
 			result_checkpoints = ("/me " + check_user + " has " + format_points[0] + " points")
 			return(str(result_checkpoints))
