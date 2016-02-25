@@ -15,6 +15,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first,
 	db_get_points_user_int)
+from modules.getjson import getJSON
 
 wisp = "/me "
 
@@ -31,6 +32,30 @@ def get_message(line):
 	seperate = line.split(":", 2)
 	message = seperate[2]
 	return message
+
+def uptime():
+
+	data = getJSON('https://api.twitch.tv/kraken/channels/' + twitch_irc.get('CHANNEL') + '/videos?limit=1&broadcasts=true')
+	latest_stream = data['videos'][0]['recorded_at']
+	online = True
+
+	timeformat = "%Y-%m-%dT%H:%M:%SZ"
+	start_date = datetime.strptime(latest_stream, timeformat)
+	current_date = datetime.utcnow()
+	output_date = current_date - start_date - timedelta(microseconds=current_date.microsecond)
+
+	online_check = getJSON('https://api.twitch.tv/kraken/streams/' + twitch_irc.get('CHANNEL'))
+	if(online_check['stream'] == None):
+		online = False
+
+	hours = str(output_date)[:1]
+	minutes = str(output_date)[2:4]
+
+	if(online):
+		return(wisp + "{} has been live for {} hrs, {} mins".format(twitch_irc.get('CHANNEL'), hours, minutes))
+	else:
+		return(wisp + "{} is not streaming at the moment FeelsBadMan".format(twitch_irc.get('CHANNEL')))
+
 
 # get the local time of the streamer
 def local_time():
@@ -83,7 +108,6 @@ def streamer(key):
 
 	#print(key)
 	return ''
-
 
 ### INT/STRING CHECKER FUNCTIONS ###
 

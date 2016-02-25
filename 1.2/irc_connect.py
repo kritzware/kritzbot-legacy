@@ -13,7 +13,8 @@ from bot import (get_user,
 	streamer,
 	roulette,
 	check_int,
-	get_int)
+	get_int,
+	uptime)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -22,7 +23,6 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first)
 from modules.temp import cooldown
-from modules.timers import cooldownTimer
 
 # connection to the irc server is created
 s = openSocket()
@@ -50,17 +50,17 @@ while True:
 
 			### TIMER ###
 
-			class cooldownTimer(Thread):
+			class rouletteTimer(Thread):
 
 				def run(self):
-					time.sleep(15)
+					time.sleep(440)
 					print("[INFO] >>> Removed from cooldown array user: {}".format(cooldown[0]))
 					cooldown.pop(0)
 					print("[INFO] >>> Users in cooldown ", cooldown)
 
 			def run():
 					print("[INFO] >>> Cooldown timer started for roulette user: {}".format(user))
-					cooldownTimer().start()
+					rouletteTimer().start()
 
 			### STRING EXTRACTION ###
 			try:
@@ -83,21 +83,30 @@ while True:
 			### ADVANCED COMMANDS ###
 			if "!streamer" in message:
 				sendMessage(s, str(streamer(char_2)))
+			if "!uptime" in message:
+				sendMessage(s, uptime())
 
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:
+				print("[COMMAND] >>> !localtime")
 				sendMessage(s, local_time())
 			if "!admin" in message:
+				print("[COMMAND] >>> !admin")
 				sendMessage(s, basic_command('admin', user))
 			if "!help" in message or "!commands" in message:
+				print("[COMMAND] >>> !help")
 				sendMessage(s, basic_command('help', user))
 			if "!twitter" in message:
+				print("[COMMAND] >>> !twitter")
 				sendMessage(s, basic_command('twitter', user))
 			if "!spooky" in message:
+				print("[COMMAND] >>> !spooky")
 				sendMessage(s, basic_command('spooky', user))
 			if "!bot" in message:
+				print("[COMMAND] >>> !bot")
 				sendMessage(s, basic_command('bot', user))
 			if "!donger" in message:
+				print("[COMMAND] >>> !donger")
 				try:
 					sendMessage(s, basic_command('donger', user))
 				except:
@@ -105,4 +114,5 @@ while True:
 
 			### UPDATE COMMANDS ###
 			if "!coloring" in message:
+				print("[COMMAND] >>> !coloring")
 				sendMessage(s, update_command('coloring', user))

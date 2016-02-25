@@ -22,4 +22,4 @@ def sendMessage(s, message):
 
 	messageTemp = "PRIVMSG #" + twitch_irc.get('CHANNEL') + " :" + message
 	s.send(bytes(messageTemp + "\r\n", 'UTF-8'))
-	print("Sent: " + messageTemp)
+	print("[SENT] >>> ", messageTemp)
