@@ -68,6 +68,12 @@ def db_get_points_user(user):
 			output = ("/me " + user + " has " + format_points + " points")
 			return output
 
+def db_get_points_user_int(user):
+
+	points = pybot.execute("SELECT points from table1 where user_id = '" + str(user) + "'")
+	get_points = pybot.fetchone()
+	return int(db_format(get_points))
+
 def db_check_user(user):
 
 	pybot.execute("SELECT user_id FROM table1")

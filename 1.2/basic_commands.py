@@ -10,3 +10,8 @@ commands = {
 update_commands = {
 	'coloring': 'Grab a coffee & ease into the day :) Expect me here weekday mornings from about 6:15AM - 7:00AM EST. Dope-ass coloring pages from >> http://etsy.me/1KbIzqO'
 }
+
+friends = {
+	'acorn': 'Check out Acornbandit! twitch.tv/acornbandit RaccAttack',
+	'geek': 'Check out TheGeekGeneration! twitch.tv/thegeekgeneration Poooound',
+}

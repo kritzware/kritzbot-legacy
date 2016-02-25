@@ -1,11 +1,18 @@
-import threading
+import time
+
+from threading import Thread
 
 # external py files
 from bot import (get_user,
 	get_message,
 	local_time,
 	basic_command,
-	update_command)
+	update_command,
+	word_n,
+	streamer,
+	roulette,
+	check_int,
+	get_int)
 from irc_socket import openSocket, sendMessage
 from irc_init import joinRoom
 from sql import (db_add_user,
@@ -15,6 +22,7 @@ from sql import (db_add_user,
 	db_check_user,
 	db_get_points_user,
 	db_get_points_user_first)
+from temp import cooldown
 
 # connection to the irc server is created
 s = openSocket()
@@ -40,11 +48,34 @@ while True:
 			message = get_message(line)
 			print(user + " typed :" + message)
 
+			### TIMERS ###
+			class cooldownTimer(Thread):
+				def run(self):
+					time.sleep(440)
+					cooldown.remove(user)
+			def run():
+				cooldownTimer().start()
+
+			### STRING EXTRACTION ###
+			try:
+				char_2 = word_n(message, 1)
+				only_int = get_int(message)
+			except:
+				pass
+
 			#### POINT BASED COMMANDS ###
 
 			# returns how many points a user owns
 			if "!points" in message:
 				sendMessage(s, db_get_points_user(user))
+			if "!roulette" in message and user not in cooldown:
+				sendMessage(s, roulette(user, char_2))
+				cooldown.append(user)
+				run()
+
+			### ADVANCED COMMANDS ###
+			if "!streamer" in message:
+				sendMessage(s, str(streamer(char_2)))
 
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:
