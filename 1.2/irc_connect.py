@@ -4,17 +4,9 @@ from threading import Thread
 # external py files
 from modules.irc_socket import openSocket, sendMessage
 from modules.irc_init import joinRoom
-from bot import (get_user,
-	get_message,
-	local_time,
-	basic_command,
-	update_command,
-	word_n,
-	streamer,
-	roulette,
-	check_int,
-	get_int,
-	uptime)
+from bot import (get_user, get_message, local_time, basic_command, update_command,
+	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
+	followage)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -40,7 +32,7 @@ while True:
 
 			if "PING :tmi.twitch.tv" in line:
 				response = "PONG :tmi.twitch.tv\r\n"
-				print(response)
+				print("[IRC] >>> ", response)
 				bytes_response = str.encode(response)
 				s.send(bytes_response)
 				break
@@ -81,10 +73,12 @@ while True:
 				run()
 
 			### ADVANCED COMMANDS ###
-			if "!streamer" in message:
-				sendMessage(s, str(streamer(char_2)))
 			if "!uptime" in message:
+				print("[COMMAND] >>> !uptime")
 				sendMessage(s, uptime())
+			if "!followage" in message:
+				print("[COMMAND] >>> !followage")
+				sendMessage(s, followage(user))
 
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:
@@ -112,7 +106,14 @@ while True:
 				except:
 					pass
 
+			### STREAMERS###
+			if "!streamer acorn" in message:
+				sendMessage(s, streamer_acorn())
+			if "!streamer geek" in message:
+				sendMessage(s, streamer_geek())
+
 			### UPDATE COMMANDS ###
 			if "!coloring" in message:
 				print("[COMMAND] >>> !coloring")
 				sendMessage(s, update_command('coloring', user))
+

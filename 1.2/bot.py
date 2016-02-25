@@ -15,7 +15,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first,
 	db_get_points_user_int)
-from modules.getjson import getJSON
+from modules.getjson import getJSON, getJSON_text
 
 wisp = "/me "
 
@@ -66,6 +66,15 @@ def local_time():
 	output = "{} Local time: {} EST".format(wisp, format_time)
 	return output
 
+def followage(user):
+
+	try:
+		data = getJSON_text("https://api.rtainc.co/twitch/followers/length?channel=" + twitch_irc.get('CHANNEL') + "&name=" + user)
+		return(wisp + "{} has been following for {}! SeemsGood".format(user, data))
+	except Exception as e:
+		print("[ERROR] >>> ", e)
+		return("{} is not following this channel! BibleThump".format(user))
+
 def roulette(user, points):
 
 	if(check_int(points)):
@@ -104,10 +113,11 @@ def update_command(key, user):
 		if keys == key:
 			return wisp + str(values)
 
-def streamer(key):
+def streamer_acorn():
+	return friends.get('acorn')
 
-	#print(key)
-	return ''
+def streamer_geek():
+	return friends.get('geek')
 
 ### INT/STRING CHECKER FUNCTIONS ###
 
