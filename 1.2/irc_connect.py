@@ -82,7 +82,7 @@ while True:
 				sendMessage(s, followage(user))
 
 			if "!streamer" in message:
-				sendMessage(s, streamer(char_2))
+				sendMessage(s, streamer(user, char_2))
 
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:
@@ -111,13 +111,12 @@ while True:
 					pass
 
 			# ### STREAMERS###
-			if "!streamer acorn" in message:
-				sendMessage(s, streamer_acorn())
-			if "!streamer geek" in message:
-				sendMessage(s, streamer_geek())
+			# if "!streamer acorn" in message:
+			# 	sendMessage(s, streamer_acorn(user))
+			# if "!streamer geek" in message:
+			# 	sendMessage(s, streamer_geek(user))
 
 			### UPDATE COMMANDS ###
 			if "!coloring" in message:
 				print("[COMMAND] >>> !coloring")
 				sendMessage(s, update_command('coloring', user))
-

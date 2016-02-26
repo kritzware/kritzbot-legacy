@@ -16,9 +16,10 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first,
 	db_get_points_user_int)
-from modules.getjson import getJSON, getJSON_text
+from modules.api import getJSON, getJSON_text, check_user_class
 
 wisp = "/me "
+denied = wisp + " only mods can do that FailFish"
 
 # get a user from the irc server
 def get_user(line):
@@ -114,22 +115,38 @@ def update_command(key, user):
 		if keys == key:
 			return wisp + str(values)
 
-def streamer(user):
+def streamer(user, friend):
 
-	acorn = "acorn"
-	geek = "geek"
+	if(check_user_class(user, "moderators")):
 
-	if user.strip() == acorn.strip() or user.strip() == geek.strip():
-		return ''
+		print(check_user_class(user, "moderators"))
+
+		acorn = "acorn"
+		geek = "geek"
+
+		if friend.strip() == acorn.strip():
+			return wisp + friends.get('acorn')
+		if friend.strip() == geek.strip():
+			return wisp + friends.get('geek')
+		else:
+			output = wisp + "Check out {} at twitch.tv/{} VaultBoy".format(friend, friend)
+			return output
 	else:
-		output = wisp + "Check out {} at twitch.tv/{} VaultBoy".format(user, user)
-		return output
+		return denied + " from streamer(user)"
 
-def streamer_acorn():
-	return wisp + friends.get('acorn')
+def streamer_acorn(user):
 
-def streamer_geek():
-	return wisp + friends.get('geek')
+	if(check_user_class(user, "moderators")):
+		return wisp + friends.get('acorn')
+	else:
+		return denied + " from streamer_acorn(user)"
+
+def streamer_geek(user):
+
+	if(check_user_class(user, "moderators")):
+		return wisp + friends.get('geek')
+	else:
+		return denied
 
 ### INT/STRING CHECKER FUNCTIONS ###
 

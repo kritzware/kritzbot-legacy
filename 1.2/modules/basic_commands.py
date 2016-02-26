@@ -15,3 +15,7 @@ friends = {
 	'acorn': 'You should (definitely) go check out the lovely AcornBandit over at twitch.tv/acornbandit RaccAttack',
 	'geek': 'You should (definitely) go check out the lovely GeekGeneration over at twitch.tv/thegeekgeneration Poooound',
 }
+
+quotes = {
+	'rebound': '"rebound it like your last relationship!" - skowalz 2k16'
+}
