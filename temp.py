@@ -1,2 +1,0 @@
-raffle_users = []
-cooldown = []

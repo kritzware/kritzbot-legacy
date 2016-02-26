@@ -1,0 +1,27 @@
+{
+  "name": "pybot",
+  "version": "1.2.0",
+  "description": "Twitch chat bot written in Python",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisBluhm/PyBot.git"
+  },
+  "keywords": [
+    "twitch",
+    "chat",
+    "bot"
+  ],
+  "author": "Louis Bluhm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LouisBluhm/PyBot/issues"
+  },
+  "homepage": "https://github.com/LouisBluhm/PyBot#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
