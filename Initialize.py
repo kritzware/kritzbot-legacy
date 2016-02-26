@@ -20,10 +20,10 @@ def joinRoom(s):
 	# message on joining the current channel
 	# sendMessage(s, "/me has booted up, joining chat MrDestructoid")
 	
-	def auto_message():
-		threading.Timer(600, auto_message).start()
-		sendMessage(s, "/me " + commands.get('twitter'))
-	auto_message()
+	# def auto_message():
+	# 	threading.Timer(600, auto_message).start()
+	# 	sendMessage(s, "/me " + commands.get('twitter'))
+	# auto_message()
 
 	def points_timer():
 		threading.Timer(60, points_timer).start()
