@@ -68,10 +68,13 @@ while True:
 			if "!points" in message:
 				sendMessage(s, db_get_points_user(user))
 			if "!roulette" in message and user not in cooldown:
-				sendMessage(s, roulette(user, char_2))
-				cooldown.append(user)
-				print("[INFO] >>> ", cooldown)
-				run()
+				if(check_int(char_2)):
+					sendMessage(s, roulette(user, char_2))
+					cooldown.append(user)
+					print("[INFO] >>> ", cooldown)
+					run()
+				else:
+					sendMessage(s, "You can only enter int values {} BabyRage".format(user))
 
 			### ADVANCED COMMANDS ###
 			if "!uptime" in message:
@@ -80,6 +83,13 @@ while True:
 			if "!followage" in message:
 				print("[COMMAND] >>> !followage")
 				sendMessage(s, followage(user))
+			if "!top" in message:
+				print("[COMMAND] >>> !top")
+				sendMessage(s, db_get_points_user_first()) 
+			if "!followage" in message:
+				print("[COMMAND] >>> !followage")
+				sendMessage(s, followage(user))
+				break
 
 			if "!streamer" in message:
 				sendMessage(s, streamer(user, char_2))

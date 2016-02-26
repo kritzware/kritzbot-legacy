@@ -88,14 +88,14 @@ def db_check_user(user):
 		db_add_points_user(user, 0)
 		return True
 
-def db_get_points_user_first(user):
+def db_get_points_user_first():
 
-	pybot.execute("SELECT MAX(points) FROM tabl1")
+	pybot.execute("SELECT MAX(points) FROM table1")
 	most_points = pybot.fetchone()
 	format_most_points = db_format(str(most_points))
 	pybot.execute("SELECT user_id from table1 WHERE points = " + format_most_points)
 	most_user = pybot.fetchone()
-	output = str("/me " + most_user[0] + " has the most points: " + str(format_most_points))
+	output = str("/me " + most_user[0] + " has the most points: " + str(format_most_points) + " PogChamp")
 	return(output)
 
 # format parameter value to get first int result

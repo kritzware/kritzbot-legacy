@@ -70,12 +70,12 @@ def local_time():
 
 def followage(user):
 
-	try:
-		data = getJSON_text("https://api.rtainc.co/twitch/followers/length?channel=" + twitch_irc.get('CHANNEL') + "&name=" + user)
-		return(wisp + "{} has been following for {}! SeemsGood".format(user, data))
-	except Exception as e:
-		print("[ERROR] >>> ", e)
-		return("{} is not following this channel! BibleThump".format(user))
+	#try:
+	data = getJSON_text("https://api.rtainc.co/twitch/followers/length?channel=" + twitch_irc.get('CHANNEL') + "&name=" + user)
+	return(wisp + "{} has been following for {}! SeemsGood".format(user, data))
+	#except Exception as e:
+	#	print("[ERROR] >>> ", e)
+	#	return("{} is not following this channel! BibleThump".format(user))
 
 def roulette(user, points):
 
