@@ -105,12 +105,6 @@ def duel(user, opponent, points):
 	win = int(points)
 	roll = random.randrange(1, 3)
 
-	print(user)
-	print(opponent)
-
-	print(check_user_class(opponent.lower(), "viewers"))
-	print(check_user_class(opponent.lower(), "moderators"))
-
 	if(check_user_class(opponent.lower(), "viewers") or check_user_class(opponent.lower(), "moderators")):
 		if(db_check_user(user)) and db_check_user(opponent):
 			if(roll == 1):
@@ -124,7 +118,7 @@ def duel(user, opponent, points):
 				db_minus_points_user(user, win)
 				return("{} won the duel and gets {} points! PogChamp".format(opponent, win))
 	else:
-		return("{} not found in chat!".format(opponent))
+		return("{} not found in chat! BabyRage".format(opponent))
 
 def basic_command(key, user):
 

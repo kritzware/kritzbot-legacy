@@ -16,7 +16,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user_first)
 from modules.temp import cooldown
 
-from modules.api import check_user_class
+from modules.api import check_user_class, get_latest_follower
 
 # connection to the irc server is created
 s = openSocket()
@@ -84,7 +84,7 @@ while True:
 				if(check_int(char_3)):
 					sendMessage(s, str(duel(user, char_2, char_3)))
 				else:
-					sendMessage(s, "error")
+					sendMessage(s, "Error: No amount specified")
 
 
 			### ADVANCED COMMANDS ###
@@ -110,6 +110,9 @@ while True:
 
 			if "!streamer" in message:
 				sendMessage(s, streamer(user, char_2))
+
+			if "!test" in message:
+				sendMessage(s, get_latest_follower())
 
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:
