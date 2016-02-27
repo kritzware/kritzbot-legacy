@@ -7,7 +7,7 @@ from modules.irc_socket import openSocket, sendMessage
 from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
-	followage, streamer, duel, quote, addquote, bttv_user_replace)
+	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -16,7 +16,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first)
 from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, 
-	raffle_state, raffle_entries)
+	raffle_state, raffle_entries, raffle_amount)
 from modules.settings import twitch_irc
 from modules.api import check_user_class, get_latest_follower
 
@@ -61,8 +61,16 @@ while True:
 			class raffleTimer(Thread):
 
 				def run(self):
-					time.sleep(30)
-					raffle_state = True
+					print("raffle timer started")
+					time.sleep(15)
+					sendMessage(s, "The raffle ends in 15 seconds!")
+					time.sleep(15)
+					raffle_state = False
+					print("[DEBUG] >>> raffle timer stopped")
+					sendMessage(s, raffle())
+
+			def raffle_run():
+					raffleTimer().start()
 
 			### STRING EXTRACTION ###
 			try:
@@ -94,21 +102,24 @@ while True:
 				if(check_user_class(user, "moderators")) and check_int(raffle_points):
 					print("[DEBUG] >>> {} started a raffle for {} points".format(user, raffle_points))
 					raffle_state = True
+					raffle_amount.append(raffle_points)
 					sendMessage(s, "A raffle has started for {} points! Type !join to enter PogChamp".format(raffle_points))
+					raffle_run()
 
 			if "!join" in message and raffle_state:
 				raffle_entries.append(user)
-
+			if "!join" in message and raffle_state == False:
+				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
 			if "!test" in message:
 				print(raffle_entries)
 
 
 			if "!duel" in message:
-				test = re.match('(\w+\s\w+)', message)
-				if(test) == None:					
-					sendMessage(s, "You didn't specify an amount {}! FailFish".format(user))
-					break
+				#test = re.match('(\w+\s\w+)', char_2[:-1])
+				#if(test) == None:					
+				#	sendMessage(s, "You didn't specify an amount {}! FailFish".format(user))
+				#	break
 				if(check_int(char_3)):
 					opponent = char_2
 					format_opponent = bttv_user_replace(opponent)

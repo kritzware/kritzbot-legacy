@@ -17,7 +17,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user_first,
 	db_get_points_user_int)
 from modules.api import getJSON, getJSON_text, check_user_class
-from modules.temp import duel_state, temp_opponent
+from modules.temp import duel_state, temp_opponent, raffle_amount, raffle_entries
 
 wisp = "/me "
 denied = wisp + " only mods can do that FailFish"
@@ -125,11 +125,16 @@ def duel(user, opponent, points):
 	else:
 		return("{} not found in chat! BabyRage".format(opponent))
 
-def raffle(draw, user):
+def raffle():
 
-	if(check_user_class(user, "moderators")):
-		return None
-
+	win = raffle_amount[0]
+	winner = random.choice(raffle_entries)
+	db_add_points_user(str(winner), win)
+	print("[DEBUG] >>> Raffle points: {}".format(win))
+	output = wisp + "{} won the raffle and gets {} points! PogChamp".format(str(winner), int(win))
+	del raffle_entries[:]
+	del raffle_amount[:]
+	return output
 
 def basic_command(key, user):
 

@@ -22,7 +22,7 @@ def joinRoom(s):
 			loading = loadingComplete(line)
 
 	# sends message on join
-	sendMessage(s, " joined the channel, running on {}".format(version))
+	# sendMessage(s, " joined the channel, running on {} [DEV]".format(version))
 
 	def points_timer():
 		threading.Timer(60, points_timer).start()
