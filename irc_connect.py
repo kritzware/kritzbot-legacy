@@ -6,7 +6,7 @@ from modules.irc_socket import openSocket, sendMessage
 from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
-	followage, streamer, duel, quote)
+	followage, streamer, duel, quote, addquote)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -61,6 +61,7 @@ while True:
 				char_1 = word_n(message, 0)
 				char_2 = word_n(message, 1)
 				char_3 = word_n(message, 2)
+				quote_to_add = message[10:]
 				only_int = get_int(message)
 			except:
 				pass
@@ -97,13 +98,15 @@ while True:
 				print("[COMMAND] >>> !top")
 				sendMessage(s, db_get_points_user_first()) 
 			if "!quote" in message:
-				print("[COMMAND >>> !quote")
+				print("[COMMAND] >>> !quote")
 				sendMessage(s, quote())
+			if "!addquote" in message:
+				print("[COMMAND] >>> !addquote")
+				sendMessage(s, addquote(quote_to_add))
 
 			if "!followage" in message:
 				print("[COMMAND] >>> !followage")
 				sendMessage(s, followage(user))
-
 
 			if "!streamer" in message:
 				sendMessage(s, streamer(user, char_2))

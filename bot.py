@@ -179,6 +179,11 @@ def quote():
 	rand = random.choice(quotes)
 	return str(rand)
 
+def addquote(quote):
+
+	quotes.append(quote)
+	return "Quote added! OMGScoots"
+
 ### INT/STRING CHECKER FUNCTIONS ###
 
 def word_n(string, n):
