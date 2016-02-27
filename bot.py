@@ -7,7 +7,7 @@ from pytz import timezone
 
 # external py files
 from modules.settings import twitch_irc
-from modules.basic_commands import commands, update_commands, friends
+from modules.basic_commands import commands, update_commands, friends, quotes
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -100,6 +100,32 @@ def roulette(user, points):
 	else:
 		pass
 
+def duel(user, opponent, points):
+
+	win = int(points)
+	roll = random.randrange(1, 3)
+
+	print(user)
+	print(opponent)
+
+	print(check_user_class(opponent.lower(), "viewers"))
+	print(check_user_class(opponent.lower(), "moderators"))
+
+	if(check_user_class(opponent.lower(), "viewers") or check_user_class(opponent.lower(), "moderators")):
+		if(db_check_user(user)) and db_check_user(opponent):
+			if(roll == 1):
+				print(user, " wins duel")
+				db_add_points_user(user, win)
+				db_minus_points_user(opponent, win)
+				return("{} won the duel and gets {} points! PogChamp".format(user, win))
+			if(roll == 2):
+				print(opponent, " wins duel")
+				db_add_points_user(opponent, win)
+				db_minus_points_user(user, win)
+				return("{} won the duel and gets {} points! PogChamp".format(opponent, win))
+	else:
+		return("{} not found in chat!".format(opponent))
+
 def basic_command(key, user):
 
 	if key == 'help':
@@ -147,6 +173,11 @@ def streamer_geek(user):
 		return wisp + friends.get('geek')
 	else:
 		return denied
+
+def quote():
+
+	rand = random.choice(quotes)
+	return str(rand)
 
 ### INT/STRING CHECKER FUNCTIONS ###
 

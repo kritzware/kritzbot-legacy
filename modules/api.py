@@ -23,10 +23,12 @@ def check_user_class(user, user_class):
 		data = getJSON('https://tmi.twitch.tv/group/user/' + twitch_irc.get('CHANNEL') + '/chatters')
 		chatters = data['chatters'][str(user_class)]
 
+		print("[DEBUG] >>> " + str(user_class) + " IN CHAT >>> ", chatters)
+
 		for n in chatters:
 
-			print(n)
-			print(str(user))
+			print("[DEBUG] >>> CHECKING >>> ", n)
+			# print(str(user))
 
 			if(n == str(user)):
 				print("[INFO] >>> " + user + " found in class " + user_class)

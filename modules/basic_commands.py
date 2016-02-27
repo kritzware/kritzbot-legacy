@@ -16,6 +16,4 @@ friends = {
 	'geek': 'You should (definitely) go check out the lovely GeekGeneration over at twitch.tv/thegeekgeneration Poooound',
 }
 
-quotes = {
-	'rebound': '"rebound it like your last relationship!" - skowalz 2k16'
-}
+quotes = ['"rebound it like your last relationship!" - skowalz 2k16', ]

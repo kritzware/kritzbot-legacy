@@ -21,7 +21,7 @@ def joinRoom(s):
 			loading = loadingComplete(line)
 
 	# sends message on join
-	sendMessage(s, " joined the channel, running on {}".format(version))
+	# sendMessage(s, " joined the channel, running on {}".format(version))
 
 def loadingComplete(line):
 

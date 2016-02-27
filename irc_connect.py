@@ -6,7 +6,7 @@ from modules.irc_socket import openSocket, sendMessage
 from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
-	followage, streamer)
+	followage, streamer, duel, quote)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -15,6 +15,8 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first)
 from modules.temp import cooldown
+
+from modules.api import check_user_class
 
 # connection to the irc server is created
 s = openSocket()
@@ -58,6 +60,7 @@ while True:
 			try:
 				char_1 = word_n(message, 0)
 				char_2 = word_n(message, 1)
+				char_3 = word_n(message, 2)
 				only_int = get_int(message)
 			except:
 				pass
@@ -76,6 +79,13 @@ while True:
 				else:
 					sendMessage(s, "You can only enter int values {} BabyRage".format(user))
 
+			if "!duel" in message:
+				if(check_int(char_3)):
+					sendMessage(s, str(duel(user, char_2, char_3)))
+				else:
+					sendMessage(s, "error")
+
+
 			### ADVANCED COMMANDS ###
 			if "!uptime" in message:
 				print("[COMMAND] >>> !uptime")
@@ -86,10 +96,14 @@ while True:
 			if "!top" in message:
 				print("[COMMAND] >>> !top")
 				sendMessage(s, db_get_points_user_first()) 
+			if "!quote" in message:
+				print("[COMMAND >>> !quote")
+				sendMessage(s, quote())
+
 			if "!followage" in message:
 				print("[COMMAND] >>> !followage")
 				sendMessage(s, followage(user))
-				break
+
 
 			if "!streamer" in message:
 				sendMessage(s, streamer(user, char_2))
