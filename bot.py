@@ -96,8 +96,8 @@ def roulette(user, points):
 			db_add_points_user(user, result)
 			return(wisp + "{} won {} points! PogChamp".format(user, result))
 		if(roll == 2):
-			db_minus_points_user(user, result)
-			return(wisp + "{} lost {} points! BibleThump".format(user, result))
+			db_minus_points_user(user, int_points)
+			return(wisp + "{} lost {} points! BibleThump".format(user, int_points))
 	else:
 		pass
 
