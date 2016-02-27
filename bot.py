@@ -17,6 +17,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user_first,
 	db_get_points_user_int)
 from modules.api import getJSON, getJSON_text, check_user_class
+from modules.temp import duel_state, temp_opponent
 
 wisp = "/me "
 denied = wisp + " only mods can do that FailFish"
@@ -102,20 +103,24 @@ def roulette(user, points):
 
 def duel(user, opponent, points):
 
-	win = int(points)
+	win = points
 	roll = random.randrange(1, 3)
+
+	print("[DEBUG] >>> {} iniated a duel".format(user))
+	print("[DEBUG] >>> {} is the opponent".format(opponent))
+	print("[DEBUG] >>> The duel amount is {}".format(points))
 
 	if(check_user_class(opponent.lower(), "viewers") or check_user_class(opponent.lower(), "moderators")):
 		if(db_check_user(user)) and db_check_user(opponent):
 			if(roll == 1):
 				print(user, " wins duel")
-				db_add_points_user(user, win)
-				db_minus_points_user(opponent, win)
+				db_add_points_user(user, win) # add points to winner
+				db_minus_points_user(opponent, win) # minus points from loser
 				return("{} won the duel and gets {} points! PogChamp".format(user, win))
 			if(roll == 2):
 				print(opponent, " wins duel")
-				db_add_points_user(opponent, win)
-				db_minus_points_user(user, win)
+				db_add_points_user(opponent, win) # add points to winner
+				db_minus_points_user(user, win) # minus points from loser
 				return("{} won the duel and gets {} points! PogChamp".format(opponent, win))
 	else:
 		return("{} not found in chat! BabyRage".format(opponent))
@@ -196,3 +201,8 @@ def check_int(string):
 		return True
 	except(ValueError, TypeError):
 		return False
+
+def bttv_user_replace(user):
+
+	format_user = user.replace('@', '')
+	return format_user

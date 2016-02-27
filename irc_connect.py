@@ -6,7 +6,7 @@ from modules.irc_socket import openSocket, sendMessage
 from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
-	followage, streamer, duel, quote, addquote)
+	followage, streamer, duel, quote, addquote, bttv_user_replace)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -14,7 +14,7 @@ from modules.sql import (db_add_user,
 	db_check_user,
 	db_get_points_user,
 	db_get_points_user_first)
-from modules.temp import cooldown
+from modules.temp import cooldown, temp_opponent, duel_state, temp_user
 
 from modules.api import check_user_class, get_latest_follower
 
@@ -61,6 +61,7 @@ while True:
 				char_1 = word_n(message, 0)
 				char_2 = word_n(message, 1)
 				char_3 = word_n(message, 2)
+				points_duel = char_3
 				quote_to_add = message[10:]
 				only_int = get_int(message)
 			except:
@@ -80,11 +81,60 @@ while True:
 				else:
 					sendMessage(s, "You can only enter int values {} BabyRage".format(user))
 
+			# if "!duel" in message:
+
+			# 	opponent = char_2
+			# 	format_opponent = bttv_user_replace(opponent)
+			# 	temp_opponent.append(opponent)
+			# 	duel_state = True
+
+			# 	if((duel_state) and ("!accept" in message) and (user == temp_opponent[0])):
+			# 		if(check_int(char_3)):
+			# 			sendMessage(s, str(duel(user, char_2, char_3)))
+			# 		else:
+			# 			sendMessage(s, "Error: No amount specified")
+			# 	else:
+			# 		print("Error")
+
 			if "!duel" in message:
 				if(check_int(char_3)):
-					sendMessage(s, str(duel(user, char_2, char_3)))
+					opponent = char_2
+					format_opponent = bttv_user_replace(opponent)
+					temp_opponent.append(opponent.lower())
+					temp_user.append(user.lower())
+					duel_state = True
+					sendMessage(s, "{}, you have been challenged to {} points by {}! Type !accept to duel.".format(opponent, points_duel, user))
 				else:
-					sendMessage(s, "Error: No amount specified")
+					sendMessage(s, "{} you can only enter integers! BabyRage".format(user))
+
+					print(points_duel)
+					print(temp_opponent)
+					print(duel_state)
+
+			if "!accept" in message and duel_state:
+
+				print("[DEBUG] >>> Points to duel >>> ", points_duel)
+				print("[DEBUG] >>> Users in temp_opponent >>> {}".format(temp_opponent))
+				try:
+					user_to_duel = temp_opponent[0]
+					original_duel_user = temp_user[0]
+				except Exception as e:
+					print(e)
+					sendMessage(s, "{} you don't currently have an active duel Kappa".format(user))
+					break
+
+				print(user_to_duel)
+				print(original_duel_user)
+
+				if(user == user_to_duel):
+					print("[DEBUG] >>> Checking {} in temp_opponents".format(user))
+					print(original_duel_user + " duelling " + user_to_duel)
+					sendMessage(s, duel(original_duel_user, user_to_duel, points_duel))
+					print(type(user_to_duel))
+					temp_opponent.remove(user_to_duel)
+					temp_user.remove(original_duel_user)
+				else:
+					print("[ERROR] >>> {} not found in temp_opponent".format(temp_opponent[0]))
 
 
 			### ADVANCED COMMANDS ###
