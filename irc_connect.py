@@ -1,4 +1,5 @@
 import time
+import re
 from threading import Thread
 
 # external py files
@@ -14,8 +15,9 @@ from modules.sql import (db_add_user,
 	db_check_user,
 	db_get_points_user,
 	db_get_points_user_first)
-from modules.temp import cooldown, temp_opponent, duel_state, temp_user
-
+from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, 
+	raffle_state, raffle_entries)
+from modules.settings import twitch_irc
 from modules.api import check_user_class, get_latest_follower
 
 # connection to the irc server is created
@@ -56,6 +58,12 @@ while True:
 					print("[INFO] >>> Cooldown timer started for roulette user: {}".format(user))
 					rouletteTimer().start()
 
+			class raffleTimer(Thread):
+
+				def run(self):
+					time.sleep(30)
+					raffle_state = True
+
 			### STRING EXTRACTION ###
 			try:
 				char_1 = word_n(message, 0)
@@ -81,28 +89,37 @@ while True:
 				else:
 					sendMessage(s, "You can only enter int values {} BabyRage".format(user))
 
-			# if "!duel" in message:
+			if "!raffle" in message:
+				raffle_points = char_2
+				if(check_user_class(user, "moderators")) and check_int(raffle_points):
+					print("[DEBUG] >>> {} started a raffle for {} points".format(user, raffle_points))
+					raffle_state = True
+					sendMessage(s, "A raffle has started for {} points! Type !join to enter PogChamp".format(raffle_points))
 
-			# 	opponent = char_2
-			# 	format_opponent = bttv_user_replace(opponent)
-			# 	temp_opponent.append(opponent)
-			# 	duel_state = True
+			if "!join" in message and raffle_state:
+				raffle_entries.append(user)
 
-			# 	if((duel_state) and ("!accept" in message) and (user == temp_opponent[0])):
-			# 		if(check_int(char_3)):
-			# 			sendMessage(s, str(duel(user, char_2, char_3)))
-			# 		else:
-			# 			sendMessage(s, "Error: No amount specified")
-			# 	else:
-			# 		print("Error")
+
+			if "!test" in message:
+				print(raffle_entries)
+
 
 			if "!duel" in message:
+				test = re.match('(\w+\s\w+)', message)
+				if(test) == None:					
+					sendMessage(s, "You didn't specify an amount {}! FailFish".format(user))
+					break
 				if(check_int(char_3)):
 					opponent = char_2
 					format_opponent = bttv_user_replace(opponent)
 					temp_opponent.append(opponent.lower())
 					temp_user.append(user.lower())
 					duel_state = True
+
+					if(format_opponent == twitch_irc.get('NICK')):
+						sendMessage(s, "{}, I always win the duel! MingLee".format(user))
+						break
+
 					sendMessage(s, "{}, you have been challenged to {} points by {}! Type !accept to duel.".format(opponent, points_duel, user))
 				else:
 					sendMessage(s, "{} you can only enter integers! BabyRage".format(user))
@@ -160,9 +177,6 @@ while True:
 
 			if "!streamer" in message:
 				sendMessage(s, streamer(user, char_2))
-
-			if "!test" in message:
-				sendMessage(s, get_latest_follower())
 
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:

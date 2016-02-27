@@ -125,6 +125,12 @@ def duel(user, opponent, points):
 	else:
 		return("{} not found in chat! BabyRage".format(opponent))
 
+def raffle(draw, user):
+
+	if(check_user_class(user, "moderators")):
+		return None
+
+
 def basic_command(key, user):
 
 	if key == 'help':
