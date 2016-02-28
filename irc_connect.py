@@ -62,9 +62,9 @@ while True:
 
 				def run(self):
 					print("raffle timer started")
-					time.sleep(15)
-					sendMessage(s, "The raffle ends in 15 seconds!")
-					time.sleep(15)
+					time.sleep(30)
+					sendMessage(s, "The raffle ends in 30 seconds!")
+					time.sleep(30)
 					raffle_state = False
 					print("[DEBUG] >>> raffle timer stopped")
 					sendMessage(s, raffle())
