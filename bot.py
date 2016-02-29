@@ -149,7 +149,7 @@ def raffle():
 
 	print(raffle_entries_nodup)
 	print(raffle_entries_nodup_list)
-	
+
 	return output
 
 def basic_command(key, user):
@@ -242,4 +242,9 @@ def remove_duplicates(values):
 		if value not in seen:
 			output.append(value)
 			seen.add(value)
+	return output
+
+def check_int_in_string(string):
+
+	output = int(re.search(r'\-?\d+', string).group)
 	return output

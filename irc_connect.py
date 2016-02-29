@@ -7,14 +7,16 @@ from modules.irc_socket import openSocket, sendMessage
 from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
-	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle)
+	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle, 
+	check_int_in_string)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
 	db_add_points_global,
 	db_check_user,
 	db_get_points_user,
-	db_get_points_user_first)
+	db_get_points_user_first,
+	db_get_points_user_int)
 from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, 
 	raffle_state, raffle_entries, raffle_amount)
 from modules.settings import twitch_irc
@@ -62,9 +64,9 @@ while True:
 
 				def run(self):
 					print("raffle timer started")
-					time.sleep(15)
+					time.sleep(30)
 					sendMessage(s, "The raffle ends in 30 seconds!")
-					time.sleep(15)
+					time.sleep(30)
 					raffle_state = False
 					print("[DEBUG] >>> raffle timer stopped")
 					sendMessage(s, raffle())
@@ -115,15 +117,23 @@ while True:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
 			if "!test" in message:
-				print(raffle_entries)
+					print(points_duel)
+					print(temp_opponent)
+					print(duel_state)
 
 
 			if "!duel" in message:
-				#test = re.match('(\w+\s\w+)', char_2[:-1])
-				#if(test) == None:					
-				#	sendMessage(s, "You didn't specify an amount {}! FailFish".format(user))
-				#	break
-				if(check_int(char_3)):
+				test = re.match('(\w+\s\w+)', message[6:])
+				if(test) == None:					
+					sendMessage(s, "You didn't specify an amount {}! FailFish".format(user))
+					break
+				if(check_int(points_duel)):
+
+					check_user_points = db_get_points_user_int(user)
+					if(check_user_points < int(points_duel)):
+						sendMessage(s, "Sorry {}, you don't have enough points for that BabyRage".format(user))
+						break
+
 					opponent = char_2
 					format_opponent = bttv_user_replace(opponent)
 					temp_opponent.append(opponent.lower())
@@ -142,30 +152,32 @@ while True:
 					print(temp_opponent)
 					print(duel_state)
 
-			if "!accept" in message and duel_state:
+			if "!accept" in message and duel_state and (user in temp_user or user in temp_opponent):
 
 				print("[DEBUG] >>> Points to duel >>> ", points_duel)
 				print("[DEBUG] >>> Users in temp_opponent >>> {}".format(temp_opponent))
 				try:
-					user_to_duel = temp_opponent[0]
-					original_duel_user = temp_user[0]
+					# !duel pokchok 10
+					user_to_duel = temp_opponent[0] # pokchok
+					original_duel_user = temp_user[0] # kritzware
 				except Exception as e:
 					print(e)
 					sendMessage(s, "{} you don't currently have an active duel Kappa".format(user))
 					break
 
-				print(user_to_duel)
-				print(original_duel_user)
+				print(user_to_duel)		
+				print(original_duel_user) 	
 
-				if(user == user_to_duel):
+				if(user in temp_opponent):
 					print("[DEBUG] >>> Checking {} in temp_opponents".format(user))
 					print(original_duel_user + " duelling " + user_to_duel)
 					sendMessage(s, duel(original_duel_user, user_to_duel, points_duel))
-					print(type(user_to_duel))
 					temp_opponent.remove(user_to_duel)
 					temp_user.remove(original_duel_user)
+					duel_state = False
+					points_duel = ''
 				else:
-					print("[ERROR] >>> {} not found in temp_opponent".format(temp_opponent[0]))
+					print("[ERROR] >>> {} not found in temp_opponent".format(user))
 
 
 			### ADVANCED COMMANDS ###

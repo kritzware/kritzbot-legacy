@@ -1,3 +1,5 @@
+import random
+
 commands = {
 	'admin': 'Contact Kritzware if you have any queries or wish to report bugs 4Head',
 	'help': ', you can view my commands here: https://github.com/LouisBluhm/PyBot#readme MrDestructoid',
@@ -17,3 +19,12 @@ friends = {
 }
 
 quotes = ['"rebound it like your last relationship!" - skowalz 2k16', ]
+
+auto_messages = ['Make sure to follow Skowalz on twitter for the latest updates! twitter.com/skowalz PogChamp',
+'Check out the latest highlights here! twitch.tv/skowalz/profile/highlights PogChamp', 
+'Make sure to follow the channel to get notified of the latest streams! PogChamp']
+
+def chat_auto_messages():
+
+	output = random.choice(auto_messages)
+	return str(output)
