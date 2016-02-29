@@ -128,6 +128,10 @@ def duel(user, opponent, points):
 def raffle():
 
 	win = raffle_amount[0]
+
+	if(len(raffle_entries) == 0):
+		return "Nobody entered the raffle. Guess I'll keep the points for myself MingLee"
+	
 	winner = random.choice(raffle_entries)
 	db_add_points_user(str(winner), win)
 	print("[DEBUG] >>> Raffle points: {}".format(win))
