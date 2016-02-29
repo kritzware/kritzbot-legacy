@@ -132,9 +132,10 @@ def raffle():
 	if(len(raffle_entries) == 0):
 		return "Nobody entered the raffle. Guess I'll keep the points for myself MingLee"
 	
-	raffle_entries_nodup = set([x for x in raffle_entries if raffle_entries.count(x) > 1])
-	# print("[DEBUG] >>> Sorted raffle entries >>> ", raffle_entries_nodup)
+	raffle_entries_nodup = remove_duplicates(raffle_entries)
+
 	raffle_entries_nodup_list = list(raffle_entries_nodup)
+	
 	winner = random.choice(raffle_entries_nodup_list)
 	db_add_points_user(str(winner), win)
 	print("[DEBUG] >>> Raffle points: {}".format(win))
@@ -145,6 +146,10 @@ def raffle():
 	while raffle_entries_nodup:
 		raffle_entries_nodup.pop()
 	del raffle_entries_nodup_list[:]
+
+	print(raffle_entries_nodup)
+	print(raffle_entries_nodup_list)
+	
 	return output
 
 def basic_command(key, user):
@@ -228,3 +233,13 @@ def bttv_user_replace(user):
 
 	format_user = user.replace('@', '')
 	return format_user
+
+def remove_duplicates(values):
+
+	output = []
+	seen = set()
+	for value in values:
+		if value not in seen:
+			output.append(value)
+			seen.add(value)
+	return output

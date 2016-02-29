@@ -62,9 +62,9 @@ while True:
 
 				def run(self):
 					print("raffle timer started")
-					time.sleep(30)
+					time.sleep(15)
 					sendMessage(s, "The raffle ends in 30 seconds!")
-					time.sleep(30)
+					time.sleep(15)
 					raffle_state = False
 					print("[DEBUG] >>> raffle timer stopped")
 					sendMessage(s, raffle())
@@ -87,6 +87,7 @@ while True:
 
 			# returns how many points a user owns
 			if "!points" in message:
+				db_add_user(user)
 				sendMessage(s, db_get_points_user(user))
 			if "!roulette" in message and user not in cooldown:
 				if(check_int(char_2)):
@@ -98,6 +99,7 @@ while True:
 					sendMessage(s, "You can only enter int values {} BabyRage".format(user))
 
 			if "!raffle" in message:
+				del raffle_entries[:]
 				raffle_points = char_2
 				if(check_user_class(user, "moderators")) and check_int(raffle_points):
 					print("[DEBUG] >>> {} started a raffle for {} points".format(user, raffle_points))
@@ -108,7 +110,7 @@ while True:
 
 			if "!join" in message and raffle_state:
 				raffle_entries.append(user)
-				print(raffle_entries)
+				print("[DEBUG >>> Users in raffle entries >>> ", raffle_entries)
 			if "!join" in message and raffle_state == False:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
