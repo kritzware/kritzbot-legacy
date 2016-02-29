@@ -108,6 +108,7 @@ while True:
 
 			if "!join" in message and raffle_state:
 				raffle_entries.append(user)
+				print(raffle_entries)
 			if "!join" in message and raffle_state == False:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 

@@ -132,12 +132,19 @@ def raffle():
 	if(len(raffle_entries) == 0):
 		return "Nobody entered the raffle. Guess I'll keep the points for myself MingLee"
 	
-	winner = random.choice(raffle_entries)
+	raffle_entries_nodup = set([x for x in raffle_entries if raffle_entries.count(x) > 1])
+	# print("[DEBUG] >>> Sorted raffle entries >>> ", raffle_entries_nodup)
+	raffle_entries_nodup_list = list(raffle_entries_nodup)
+	winner = random.choice(raffle_entries_nodup_list)
 	db_add_points_user(str(winner), win)
 	print("[DEBUG] >>> Raffle points: {}".format(win))
 	output = wisp + "{} won the raffle and gets {} points! PogChamp".format(str(winner), int(win))
+	print("[DEBUG] >>> Users in the raffle >>> ", raffle_entries_nodup_list)
 	del raffle_entries[:]
 	del raffle_amount[:]
+	while raffle_entries_nodup:
+		raffle_entries_nodup.pop()
+	del raffle_entries_nodup_list[:]
 	return output
 
 def basic_command(key, user):
