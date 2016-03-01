@@ -152,6 +152,12 @@ def raffle():
 
 	return output
 
+def playaudio(user, audio):
+
+	with open("modules/audio.txt", "w") as text_file:
+		print("Audio file to play: {}".format(audio), file=text_file)
+	return "audio sent to text file"
+
 def basic_command(key, user):
 
 	if key == 'help':

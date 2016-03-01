@@ -1,5 +1,6 @@
 import json
 import urllib.request
+import re
 
 from datetime import datetime, timedelta, date, time
 from modules.settings import twitch_irc
@@ -18,6 +19,12 @@ def getJSON_text(url):
 	data = request.read()
 	data_string = data.decode('UTF-8')
 	return data_string
+
+def getJSON_youtube(url):
+
+	json_obj  = urllib.request.urlopen(url).read().decode('UTF-8')
+	json_list = json.loads(json_obj)
+	return json_list
 
 def check_user_class(user, user_class):
 
@@ -51,3 +58,22 @@ def get_latest_follower():
 		return("Thanks for following {} HeyGuys".format(latest_follower))
 	else:
 		return("")
+
+def get_youtube_id(url):
+
+	video_id = re.search(r'\?(.*)', url).group()
+	output = video_id[3:]
+	return output
+
+def get_youtube_request(user, url):
+
+	video_id = get_youtube_id(url)
+	# print("[DEBUG] >>> VIDEO ID >>>", video_id)
+	get_url = 'https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v={}&format=json'.format(video_id)
+	# print("[DEBUG] >>> URL TO RETRIEVE ", str(get_url))
+
+	data = getJSON_youtube('https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=jt0bdaeZMVQ&format=json')
+	video_title = data['title']
+
+	output = "'{}' has been added to the queue, {} SeemsGood".format(video_title, user)
+	return output

@@ -8,7 +8,7 @@ from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
 	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle, 
-	check_int_in_string)
+	check_int_in_string, playaudio)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -21,7 +21,7 @@ from modules.sql import (db_add_user,
 from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, 
 	raffle_state, raffle_entries, raffle_amount)
 from modules.settings import twitch_irc
-from modules.api import check_user_class, get_latest_follower
+from modules.api import check_user_class, get_latest_follower, get_youtube_request
 
 # connection to the irc server is created
 s = openSocket()
@@ -120,9 +120,7 @@ while True:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
 			if "!test" in message:
-					print(points_duel)
-					print(temp_opponent)
-					print(duel_state)
+				sendMessage(s, "test message recieved")
 
 
 
@@ -183,6 +181,11 @@ while True:
 				else:
 					print("[ERROR] >>> {} not found in temp_opponent".format(user))
 
+			if "!playaudio" in message:
+				sendMessage(s, playaudio(user, char_2))
+
+			if "!songrequest" in message:
+				sendMessage(s, get_youtube_request(user, char_2))
 
 			### ADVANCED COMMANDS ###
 			if "!uptime" in message:
