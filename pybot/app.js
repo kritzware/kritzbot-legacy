@@ -5,6 +5,22 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// python shell
+// var PythonShell = require('python-shell');
+// // python script connection
+// var pyshell = new PythonShell('../irc_connect.py');
+
+// pyshell.send('message from node!');
+
+// pyshell.on('message', function(message) {
+// 	console.log(message);
+// });
+
+// pyshell.end(function (err) {
+// 	if(err) throw err;
+// 	console.log('[NODE] >>> No connection to python-shell');
+// });
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var commands = require('./routes/commands');
@@ -64,6 +80,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

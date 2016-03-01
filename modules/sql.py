@@ -98,6 +98,19 @@ def db_get_points_user_first():
 	output = str("/me " + most_user[0] + " has the most points: " + str(format_most_points) + " PogChamp")
 	return(output)
 
+def db_get_user_rank(user):
+
+	try:
+		pybot.execute("SELECT 1 + (SELECT count(*) FROM table1 a WHERE a.points > b.points ) AS rank FROM table1 b WHERE user_id = '" + str(user) + "' ORDER BY rank LIMIT 1")
+		ranking = pybot.fetchone()
+		format_ranking = db_format(ranking)
+		format_points = db_get_points_user_int(user)
+		output = "You are rank {} {}, with {} points!".format(str(format_ranking), user, format_points)
+		return output
+	except Exception:
+		db_add_user(user)
+		return "You are at the bottom {}, with {} points FeelsBadMan".format(user, db_get_points_user_int(user))
+
 # format parameter value to get first int result
 def db_format(values):
 

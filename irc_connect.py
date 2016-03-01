@@ -16,7 +16,8 @@ from modules.sql import (db_add_user,
 	db_check_user,
 	db_get_points_user,
 	db_get_points_user_first,
-	db_get_points_user_int)
+	db_get_points_user_int,
+	db_get_user_rank)
 from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, 
 	raffle_state, raffle_entries, raffle_amount)
 from modules.settings import twitch_irc
@@ -91,6 +92,8 @@ while True:
 			if "!points" in message:
 				db_add_user(user)
 				sendMessage(s, db_get_points_user(user))
+			if "!rank" in message:
+				sendMessage(s, db_get_user_rank(user))
 			if "!roulette" in message and user not in cooldown:
 				if(check_int(char_2)):
 					sendMessage(s, roulette(user, char_2))
@@ -120,6 +123,7 @@ while True:
 					print(points_duel)
 					print(temp_opponent)
 					print(duel_state)
+
 
 
 			if "!duel" in message:
