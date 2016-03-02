@@ -24,6 +24,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var commands = require('./routes/commands');
+var songlist = require('./routes/songlist');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/css', express.static(__dirname + '/node_modules/fontawesome/css'));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/commands', commands);
+app.use('/songlist', songlist);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
