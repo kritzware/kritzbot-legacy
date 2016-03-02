@@ -14,20 +14,20 @@ html
 					span.icon-bar
 					span.icon-bar
 					span.icon-bar
-				a.navbar-brand(href='/') PyBot
+				a.navbar-brand.disabled(href='#') PyBot
 			#bs-example-navbar-collapse-1.collapse.navbar-collapse
 				ul.nav.navbar-nav
-					li
-						a(href='/')
+					li.disabled
+						a(href='#')
 							| Control Panel
 							span.sr-only (current)
-					li
-						a(href='/playlist') Playlist
+					li.disabled
+						a(href='#') Playlist
 					li.active
 						a(href='/commands') Commands
 				ul.nav.navbar-nav.navbar-right
 					li
-						a(href='#') GitHub
+						a(href='https://github.com/kritzware/PyBot') GitHub
 	h2= "Chat Commands"
 	
 	table.table.table-striped.table-bordered
