@@ -8,7 +8,7 @@ from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
 	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle, 
-	check_int_in_string, playaudio)
+	check_int_in_string)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -180,9 +180,6 @@ while True:
 					points_duel = ''
 				else:
 					print("[ERROR] >>> {} not found in temp_opponent".format(user))
-
-			if "!playaudio" in message:
-				sendMessage(s, playaudio(user, char_2))
 
 			if "!songrequest" in message:
 				sendMessage(s, get_youtube_request(user, char_2))

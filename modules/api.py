@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, date, time
 from modules.settings import twitch_irc
 
 latest_follower = ''
+songlist_list = []
 
 def getJSON(url):
 
@@ -75,5 +76,23 @@ def get_youtube_request(user, url):
 	data = getJSON_youtube('https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=jt0bdaeZMVQ&format=json')
 	video_title = data['title']
 
+	songlist_list.append(video_id)
+	add_to_queue(video_id[0])
+	songlist_list.pop(0)
+	print(songlist_list)
 	output = "'{}' has been added to the queue, {} SeemsGood".format(video_title, user)
 	return output
+
+def add_to_queue(video_id):
+
+	# with open('modules/songlist.json', 'w') as json_file:
+	# 	json_file.write("{}\n".format(json.dumps(songlist_list)))
+
+	with open('modules/songlist.json', 'a') as json_file:
+		json_file.write("{}\n".format(json.dumps(songlist_list[0])))
+	print(songlist_list)
+
+	# with open('modules/songlist.json', 'w+') as outfile:
+	# 	print(video_id)
+	# 	json.dump(video_id, outfile)
+	# print("SONG STORED IN JSON FILE")
