@@ -8,7 +8,7 @@ from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
 	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle, 
-	check_int_in_string, give_points)
+	check_int_in_string, give_points, hug)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -141,8 +141,7 @@ while True:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
 			if "!test" in message:
-				print(temp_opponent)
-				print(temp_user)
+				get_latest_follower()
 
 
 
@@ -203,6 +202,12 @@ while True:
 					points_duel = ''
 				else:
 					print("[ERROR] >>> {} not found in temp_opponent".format(user))
+
+			if "!hug" in message:
+				try:
+					sendMessage(s, hug(user, char_2))
+				except:
+					pass
 
 			# if "!songrequest" in message:
 			# 	sendMessage(s, get_youtube_request(user, char_2))

@@ -164,6 +164,11 @@ def give_points(user, gift_user, points):
 			output = "{} gave {} {} points! 4Head".format(user, gift_user, points)
 			return str(output)
 
+def hug(user, opponent):
+
+	output = "{} hugs {} (っಠ‿ಠ)っ <3 <3".format(user, opponent)
+	return output
+
 def basic_command(key, user):
 
 	if key == 'help':

@@ -5,7 +5,7 @@ import threading
 from modules.irc_socket import sendMessage
 from modules.sql import db_add_points_global, db_add_points_user, db_check_user
 from modules.basic_commands import chat_auto_messages
-from modules.api import get_users_json_viewers, get_users_json_mods
+from modules.api import get_users_json_viewers, get_users_json_mods, get_latest_follower
 
 version = "version 1.2"
 
@@ -48,6 +48,17 @@ def joinRoom(s):
 			print(e)
 
 	points_timer()
+
+	def follower_timer():
+		threading.Timer(60, follower_timer).start()
+		try:
+			print("[INFO] >>> Checking for new follower")
+			get_latest_follower()
+		except Exception as e:
+			print(e)
+
+	follower_timer()
+
 
 def loadingComplete(line):
 

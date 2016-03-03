@@ -4,8 +4,8 @@ import re
 
 from datetime import datetime, timedelta, date, time
 from modules.settings import twitch_irc
+from modules.temp import latest_follower
 
-latest_follower = ''
 songlist_list = []
 
 def getJSON(url):
@@ -67,14 +67,14 @@ def get_latest_follower():
 
 	data = getJSON("https://api.twitch.tv/kraken/channels/" + twitch_irc.get('CHANNEL') + "/follows/?limit=1")
 	follower = data["follows"][0]['user']['name']
-	print("[INFO] >>> Latest follower >>> ", follower)
-	latest_follower = "test_follower"
+	latest_follower.append(follower)
 
-	check_new_follower = get_latest_follower()
-	if(latest_follower != check_new_follower):
-		return("Thanks for following {} HeyGuys".format(latest_follower))
-	else:
-		return("")
+	if(follower == latest_follower[0]):
+		return "No new followers"
+	if(follower != latest_follower[0]):
+		latest_follower.pop(0)
+		latest_follower.append(follower)
+		return "New follower detected"
 
 def get_youtube_id(url):
 
