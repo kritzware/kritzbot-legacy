@@ -152,6 +152,18 @@ def raffle():
 
 	return output
 
+def give_points(user, gift_user, points):
+
+	chat_test1 = check_user_class(user, 'moderators') and check_user_class(gift_user, 'moderators')
+	chat_test2 = check_user_class(user, 'viewers') and check_user_class(gift_user, 'viewers')
+	chat_test2 = check_user_class(user, 'viewers') and check_user_class(gift_user, 'moderators')
+	chat_test2 = check_user_class(user, 'moderators') and check_user_class(gift_user, 'viewers')
+	if(chat_test1 or chat_test2 or chat_test3 or chat_test4):
+		if(db_check_user(user) and db_check_user(gift_user)):
+			db_add_points_user(gift_user, points)
+			output = "{} gave {} {} points! 4Head".format(user, gift_user, points)
+			return str(output)
+
 def basic_command(key, user):
 
 	if key == 'help':

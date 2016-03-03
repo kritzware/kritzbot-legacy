@@ -8,7 +8,7 @@ from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
 	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle, 
-	check_int_in_string)
+	check_int_in_string, give_points)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -52,7 +52,8 @@ while True:
 			class rouletteTimer(Thread):
 
 				def run(self):
-					time.sleep(440)
+					#time.sleep(440)
+					time.sleep(30)
 					print("[INFO] >>> Removed from cooldown array user: {}".format(cooldown[0]))
 					cooldown.pop(0)
 					print("[INFO] >>> Users in cooldown ", cooldown)
@@ -92,6 +93,10 @@ while True:
 			if "!points" in message:
 				db_add_user(user)
 				sendMessage(s, db_get_points_user(user))
+
+			if "!givepoints" in message:
+				sendMessage(s, str(give_points(user, char_2, char_3)))
+
 			if "!rank" in message:
 				sendMessage(s, db_get_user_rank(user))
 			if "!roulette" in message and user not in cooldown:
@@ -181,8 +186,8 @@ while True:
 				else:
 					print("[ERROR] >>> {} not found in temp_opponent".format(user))
 
-			if "!songrequest" in message:
-				sendMessage(s, get_youtube_request(user, char_2))
+			# if "!songrequest" in message:
+			# 	sendMessage(s, get_youtube_request(user, char_2))
 
 			### ADVANCED COMMANDS ###
 			if "!uptime" in message:
@@ -244,3 +249,6 @@ while True:
 			if "!coloring" in message:
 				print("[COMMAND] >>> !coloring")
 				sendMessage(s, update_command('coloring', user))
+
+			if "!splinter" in message:
+				sendMessage(s, "NO FUN ALLOWED FUNgineer NO SONG REQUESTS FUNgineer")
