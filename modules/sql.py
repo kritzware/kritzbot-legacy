@@ -98,6 +98,13 @@ def db_get_points_user_first():
 	output = str("/me " + most_user[0] + " has the most points: " + str(format_most_points) + " PogChamp")
 	return(output)
 
+def db_get_user_total():
+
+	pybot.execute("SELECT COUNT(*) AS user_id FROM table1")
+	user_total = pybot.fetchone()
+	format_user_total = db_format(str(user_total))
+	return(str(format_user_total))
+
 def db_get_user_rank(user):
 
 	try:
@@ -105,7 +112,8 @@ def db_get_user_rank(user):
 		ranking = pybot.fetchone()
 		format_ranking = db_format(ranking)
 		format_points = db_get_points_user_int(user)
-		output = "You are rank {} {}, with {} points!".format(str(format_ranking), user, format_points)
+		total_users = db_get_user_total()
+		output = "You are rank {} out of {} {}, with {} points!".format(str(format_ranking), total_users, user, format_points)
 		return output
 	except Exception:
 		db_add_user(user)

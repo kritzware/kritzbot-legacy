@@ -16,7 +16,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first,
 	db_get_points_user_int)
-from modules.api import getJSON, getJSON_text, check_user_class
+from modules.api import getJSON, getJSON_text, check_user_class, get_users_json_mods, get_users_json_viewers
 from modules.temp import duel_state, temp_opponent, raffle_amount, raffle_entries
 
 wisp = "/me "
@@ -154,15 +154,27 @@ def raffle():
 
 def give_points(user, gift_user, points):
 
-	chat_test1 = check_user_class(user, 'moderators') and check_user_class(gift_user, 'moderators')
-	chat_test2 = check_user_class(user, 'viewers') and check_user_class(gift_user, 'viewers')
-	chat_test2 = check_user_class(user, 'viewers') and check_user_class(gift_user, 'moderators')
-	chat_test2 = check_user_class(user, 'moderators') and check_user_class(gift_user, 'viewers')
-	if(chat_test1 or chat_test2 or chat_test3 or chat_test4):
-		if(db_check_user(user) and db_check_user(gift_user)):
-			db_add_points_user(gift_user, points)
-			output = "{} gave {} {} points! 4Head".format(user, gift_user, points)
-			return str(output)
+	try:
+		viewers = get_users_json_viewers()
+		mods = get_users_json_mods()
+		user_points = db_get_points_user_int(user)
+
+		# print(user_points)
+		# print(int(points))
+
+		if(int(points) < user_points):
+			for viewer in viewers:
+				for mod in mods:
+					if user == viewer or user == mod and gift_user == viewer or gift_user == mod:
+						if(db_check_user(user) and db_check_user(gift_user)):
+							db_add_points_user(gift_user, points)
+							db_minus_points_user(user, points)
+							output = "{} gave {} {} points! 4Head".format(user, gift_user, points)
+							return output
+		else:
+			return "Sorry, you don't have enough points for that {} BabyRage".format(user)
+	except Exception as e:
+		print(e)
 
 def hug(user, opponent):
 

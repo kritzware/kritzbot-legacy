@@ -18,8 +18,8 @@ from modules.sql import (db_add_user,
 	db_get_points_user_first,
 	db_get_points_user_int,
 	db_get_user_rank)
-from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, 
-	raffle_state, raffle_entries, raffle_amount)
+from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, raffle_state,
+	raffle_entries, raffle_amount)
 from modules.settings import twitch_irc
 from modules.api import check_user_class, get_latest_follower, get_youtube_request
 
@@ -50,10 +50,9 @@ while True:
 			### TIMER ###
 
 			class rouletteTimer(Thread):
-
 				def run(self):
 					#time.sleep(440)
-					time.sleep(30)
+					time.sleep(120)
 					print("[INFO] >>> Removed from cooldown array user: {}".format(cooldown[0]))
 					cooldown.pop(0)
 					print("[INFO] >>> Users in cooldown ", cooldown)
@@ -63,15 +62,17 @@ while True:
 					rouletteTimer().start()
 
 			class raffleTimer(Thread):
-
 				def run(self):
 					print("[INFO] >>> raffle timer started")
 					time.sleep(30)
 					sendMessage(s, "The raffle ends in 30 seconds!")
 					time.sleep(30)
+					global raffle_state
 					raffle_state = False
+					print("[DEBUG] >>> raffle state changed to {}".format(raffle_state))
 					print("[DEBUG] >>> raffle timer stopped")
 					sendMessage(s, raffle())
+					# print("AFTER SENDING RAFFLE INFO >>> ", raffle_state)
 
 			def raffle_run():
 					raffleTimer().start()
@@ -83,7 +84,10 @@ while True:
 					print(temp_user)
 					time.sleep(60)
 					print("[INFO] >>> {} removed from duel queue")
-					temp_opponent.pop(0)
+					if(len(temp_opponent) == 0):
+						print("[INFO] >>> No users to remove from duel cooldown")
+					else:
+						temp_opponent.pop(0)
 
 			def duel_run():
 					duelTimer().start()
@@ -132,6 +136,8 @@ while True:
 						raffle_amount.append(raffle_points)
 						sendMessage(s, "A raffle has started for {} points! Type !join to enter PogChamp".format(raffle_points))
 						raffle_run()
+				else:
+					sendMessage(s, "Raffle already active FailFish")
 
 
 			if "!join" in message and raffle_state:
@@ -141,8 +147,7 @@ while True:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
 			if "!test" in message:
-				get_latest_follower()
-
+				sendMessage(s, get_latest_follower())
 
 
 			if "!duel" in message:

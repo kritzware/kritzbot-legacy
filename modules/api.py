@@ -4,7 +4,7 @@ import re
 
 from datetime import datetime, timedelta, date, time
 from modules.settings import twitch_irc
-from modules.temp import latest_follower
+from modules.temp import latest_follower, new_follower_found
 
 songlist_list = []
 
@@ -65,16 +65,49 @@ def get_users_json_mods():
 
 def get_latest_follower():
 
-	data = getJSON("https://api.twitch.tv/kraken/channels/" + twitch_irc.get('CHANNEL') + "/follows/?limit=1")
-	follower = data["follows"][0]['user']['name']
-	latest_follower.append(follower)
 
-	if(follower == latest_follower[0]):
-		return "No new followers"
-	if(follower != latest_follower[0]):
-		latest_follower.pop(0)
+	# data = getJSON("https://api.twitch.tv/kraken/channels/" + twitch_irc.get('CHANNEL') + "/follows/?limit=1")
+	# follower = data["follows"][0]['user']['name']
+	# latest_follower.append(follower)
+
+	# print("[INFO] >>> Latest follower >>> ", latest_follower)
+
+	# if(follower == latest_follower[0]):
+	# 	print("No new follower detected")
+
+
+	# for n in latest_follower:
+	# 	if n != follower:
+	# 		latest_follower.pop(0)
+	# 		latest_follower.append(follower)
+	# 		print("New follower added!")
+	# else:
+	# 	print("checking for new follower in 60 secs")
+	data = getJSON("https://api.twitch.tv/kraken/channels/" + twitch_irc.get('CHANNEL') + "/follows/?limit=1")
+
+	#test follower	
+	new_follower = "meme_boy69"
+
+	if(len(latest_follower) == 0):
+		follower = data["follows"][0]['user']['name']
 		latest_follower.append(follower)
-		return "New follower detected"
+		print("[INFO] >>> Latest follower >>> ", latest_follower)
+		new_follower_found = True
+	else:
+		# new_follower = data["follows"][0]['user']['name']
+		if(new_follower not in latest_follower):
+			latest_follower.pop(0)
+			latest_follower.append(new_follower)
+			output = ("[INFO] >>> New follower >>> ", new_follower)
+			print("new follower found!")
+			new_follower_found = True
+			return str(new_follower)
+		# print("no new follower found")
+		print("no new follower found!")
+		new_follower_found = False
+	# print("no new follower found")
+	new_follower_found = False
+	return "no new follower found"
 
 def get_youtube_id(url):
 

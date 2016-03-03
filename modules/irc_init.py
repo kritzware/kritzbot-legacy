@@ -6,8 +6,9 @@ from modules.irc_socket import sendMessage
 from modules.sql import db_add_points_global, db_add_points_user, db_check_user
 from modules.basic_commands import chat_auto_messages
 from modules.api import get_users_json_viewers, get_users_json_mods, get_latest_follower
+from modules.temp import new_follower_found
 
-version = "version 1.2"
+version = "version 1.1.5"
 
 def joinRoom(s):
 
@@ -49,15 +50,18 @@ def joinRoom(s):
 
 	points_timer()
 
-	def follower_timer():
-		threading.Timer(60, follower_timer).start()
-		try:
-			print("[INFO] >>> Checking for new follower")
-			get_latest_follower()
-		except Exception as e:
-			print(e)
+	# def follower_timer():
+	# 	threading.Timer(10, follower_timer).start()
+	# 	try:
+	# 		print("[INFO] >>> Checking for new follower")
+	# 		if(new_follower_found):
+	# 			check_new_follower = get_latest_follower()
+	# 			output = "{} just followed the channel! PogChamp PogChamp HeyGuys HeyGuys".format(check_new_follower)
+	# 			sendMessage(s, output)
+	# 	except Exception as e:
+	# 		print(e)
 
-	follower_timer()
+	# follower_timer()
 
 
 def loadingComplete(line):
