@@ -47,6 +47,22 @@ def check_user_class(user, user_class):
 		print("[ERROR] >>> ", e.reason)
 		return("Error: Twitch API down BabyRage")
 
+def get_users_json_viewers():
+	try:
+		data = getJSON('https://tmi.twitch.tv/group/user/' + twitch_irc.get('CHANNEL') + '/chatters')
+		chatters = data['chatters']['viewers']
+		return chatters
+	except urllib.error.URLError as e:
+		print("[ERROR] >>> ", e.reason)
+
+def get_users_json_mods():
+	try:
+		data = getJSON('https://tmi.twitch.tv/group/user/' + twitch_irc.get('CHANNEL') + '/chatters')
+		chatters = data['chatters']['moderators']
+		return chatters
+	except urllib.error.URLError as e:
+		print("[ERROR] >>> ", e.reason)
+
 def get_latest_follower():
 
 	data = getJSON("https://api.twitch.tv/kraken/channels/" + twitch_irc.get('CHANNEL') + "/follows/?limit=1")
