@@ -65,7 +65,7 @@ while True:
 			class raffleTimer(Thread):
 
 				def run(self):
-					print("raffle timer started")
+					print("[INFO] >>> raffle timer started")
 					time.sleep(30)
 					sendMessage(s, "The raffle ends in 30 seconds!")
 					time.sleep(30)
@@ -75,6 +75,18 @@ while True:
 
 			def raffle_run():
 					raffleTimer().start()
+
+			class duelTimer(Thread):
+				def run(self):
+					print("[INFO] >>> duel timer started")
+					print(temp_opponent)
+					print(temp_user)
+					time.sleep(60)
+					print("[INFO] >>> {} removed from duel queue")
+					temp_opponent.pop(0)
+
+			def duel_run():
+					duelTimer().start()
 
 			### STRING EXTRACTION ###
 			try:
@@ -109,14 +121,18 @@ while True:
 					sendMessage(s, "You can only enter int values {} BabyRage".format(user))
 
 			if "!raffle" in message:
-				del raffle_entries[:]
-				raffle_points = char_2
-				if(check_user_class(user, "moderators")) and check_int(raffle_points):
-					print("[DEBUG] >>> {} started a raffle for {} points".format(user, raffle_points))
-					raffle_state = True
-					raffle_amount.append(raffle_points)
-					sendMessage(s, "A raffle has started for {} points! Type !join to enter PogChamp".format(raffle_points))
-					raffle_run()
+				#if(raffle_state == True):
+				#	sendMessage(s, "A raffle is already active OpieOP")
+				if(raffle_state == False):
+					del raffle_entries[:]
+					raffle_points = char_2
+					if(check_user_class(user, "moderators")) and check_int(raffle_points):
+						print("[DEBUG] >>> {} started a raffle for {} points".format(user, raffle_points))
+						raffle_state = True
+						raffle_amount.append(raffle_points)
+						sendMessage(s, "A raffle has started for {} points! Type !join to enter PogChamp".format(raffle_points))
+						raffle_run()
+
 
 			if "!join" in message and raffle_state:
 				raffle_entries.append(user)
@@ -125,7 +141,8 @@ while True:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
 			if "!test" in message:
-				sendMessage(s, "test message recieved")
+				print(temp_opponent)
+				print(temp_user)
 
 
 
@@ -151,6 +168,7 @@ while True:
 						sendMessage(s, "{}, I always win the duel! MingLee".format(user))
 						break
 
+					duel_run()
 					sendMessage(s, "{}, you have been challenged to {} points by {}! Type !accept to duel.".format(opponent, points_duel, user))
 				else:
 					sendMessage(s, "{} you can only enter integers! BabyRage".format(user))
