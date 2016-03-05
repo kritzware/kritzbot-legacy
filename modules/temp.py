@@ -7,3 +7,4 @@ raffle_entries = []
 raffle_amount = []
 latest_follower = []
 new_follower_found = False
+points_song_request = 200

@@ -147,8 +147,8 @@ def raffle():
 		raffle_entries_nodup.pop()
 	del raffle_entries_nodup_list[:]
 
-	print(raffle_entries_nodup)
-	print(raffle_entries_nodup_list)
+	# print(raffle_entries_nodup)
+	# print(raffle_entries_nodup_list)
 
 	return output
 

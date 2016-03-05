@@ -17,9 +17,11 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first,
 	db_get_points_user_int,
-	db_get_user_rank)
+	db_get_user_rank,
+	db_add_emote_count,
+	db_get_emote_count)
 from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, raffle_state,
-	raffle_entries, raffle_amount)
+	raffle_entries, raffle_amount, points_song_request)
 from modules.settings import twitch_irc
 from modules.api import check_user_class, get_latest_follower, get_youtube_request
 
@@ -103,6 +105,7 @@ while True:
 			except:
 				pass
 
+
 			#### POINT BASED COMMANDS ###
 
 			# returns how many points a user owns
@@ -134,7 +137,10 @@ while True:
 						print("[DEBUG] >>> {} started a raffle for {} points".format(user, raffle_points))
 						raffle_state = True
 						raffle_amount.append(raffle_points)
-						sendMessage(s, "A raffle has started for {} points! Type !join to enter PogChamp".format(raffle_points))
+						if(char_2[:1] == '-'):
+							sendMessage(s, "A raffle has started for {} points! Type !join to enter Kappa".format(raffle_points))
+						else:
+							sendMessage(s, "A raffle has started for {} points! Type !join to enter PogChamp".format(raffle_points))
 						raffle_run()
 				else:
 					sendMessage(s, "Raffle already active FailFish")
@@ -147,8 +153,21 @@ while True:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
 			if "!test" in message:
-				sendMessage(s, get_latest_follower())
+				print(char_2[:1])
 
+
+			#song requests
+			# if "!songrequest " in message:
+			# 	# 200 points for a song request
+			# 	db_minus_points_user(user, points_song_request)
+			# 	sendMessage(s, "{} you just spent {} points on a song request! SeemsGood".format(user, points_song_request))
+
+			#pogchamp count
+			if "!emotecount" in message:
+				emote = char_2
+				sendMessage(s, db_get_emote_count(emote))
+			if "PogChamp" in message:
+				db_add_emote_count("PogChamp")
 
 			if "!duel" in message:
 				test = re.match('(\w+\s\w+)', message[6:])

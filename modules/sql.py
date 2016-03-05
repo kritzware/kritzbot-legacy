@@ -28,6 +28,15 @@ def db_add_points_user(user, points):
 
 	pybot.execute("UPDATE table1 set points = points + " + str(points) + " where user_id = '" + str(user) + "' ")
 
+def db_add_emote_count(emote):
+
+	pybot.execute("UPDATE emote_table set count = count + 1 where emote = '" + str(emote) + "' ")
+
+def db_get_emote_count(emote):
+
+	count = pybot.execute("SELECT count from emote_table where emote = '" + str(emote) + "' ")
+	return str(count)
+
 # add points to all users in the database
 def db_add_points_global(points):
 
