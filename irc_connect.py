@@ -263,7 +263,11 @@ while True:
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:
 				print("[COMMAND] >>> !localtime")
-				sendMessage(s, local_time())
+				sendMessage(s, local_time('US/Eastern'))
+			if "!gmt" in message:
+				print("[COMMAND] >>> !gmt localtime")
+				sendMessage(s, local_time('Europe/London'))
+
 			if "!admin" in message:
 				print("[COMMAND] >>> !admin")
 				sendMessage(s, basic_command('admin', user))

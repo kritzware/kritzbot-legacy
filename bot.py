@@ -61,9 +61,9 @@ def uptime():
 
 
 # get the local time of the streamer
-def local_time():
+def local_time(zone):
 
-	localtime = timezone('US/Eastern')
+	localtime = timezone(str(zone))
 	time = datetime.now(localtime)
 	format_time = time.strftime('%H:%M:%S')
 	output = "{} Local time: {} EST".format(wisp, format_time)
