@@ -7,6 +7,7 @@ commands = {
 	'spooky': "Hold me chat, I'm scared! WutFace WutFace WutFace",
 	'donger': 'ᕙ༼ຈل͜ຈ༽ᕗ. ʜᴀʀᴅᴇʀ,﻿ ʙᴇᴛᴛᴇʀ, ғᴀsᴛᴇʀ, ᴅᴏɴɢᴇʀ .ᕙ༼ຈل͜ຈ༽ᕗ',
 	'bot': "I'm not real.. FeelsBadMan",
+	'vampire': "Imma suck your blood ~ Keepo ~"
 }
 
 update_commands = {
@@ -20,9 +21,9 @@ friends = {
 
 quotes = ['"rebound it like your last relationship!" - skowalz 2k16', ]
 
-auto_messages = ['Make sure to follow Skowalz on twitter for the latest updates! twitter.com/skowalz PogChamp',
-'Check out the latest highlights here! twitch.tv/skowalz/profile/highlights PogChamp', 
-'Make sure to follow the channel to get notified of the latest streams! PogChamp']
+auto_messages = ['Make sure to follow Skowalz on twitter for the latest updates! twitter.com/skowalz',
+'Check out the latest highlights here! twitch.tv/skowalz/profile/highlights', 
+'Make sure to follow the channel to get notified of the latest streams!']
 
 def chat_auto_messages():
 

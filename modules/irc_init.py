@@ -27,10 +27,10 @@ def joinRoom(s):
 	# sends message on join
 	# sendMessage(s, " joined the channel, running on {} [DEV]".format(version))
 
-	# def auto_message():
-	# 	threading.Timer(600, auto_message).start()
-	# 	sendMessage(s, chat_auto_messages())
-	# auto_message()
+	def auto_message():
+		threading.Timer(900, auto_message).start()
+		sendMessage(s, chat_auto_messages())
+	auto_message()
 
 	def points_timer():
 		threading.Timer(60, points_timer).start()

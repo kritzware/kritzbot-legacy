@@ -66,7 +66,10 @@ def local_time(zone):
 	localtime = timezone(str(zone))
 	time = datetime.now(localtime)
 	format_time = time.strftime('%H:%M:%S')
-	output = "{} Local time: {} EST".format(wisp, format_time)
+	if zone == 'US/Eastern':
+		output = "{} Local time: {} EST".format(wisp, format_time)
+	if zone == 'Europe/London':
+		output = "{} Local time: {} GMT".format(wisp, format_time)
 	return output
 
 def followage(user):

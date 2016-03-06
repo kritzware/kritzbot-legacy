@@ -152,15 +152,22 @@ while True:
 			if "!join" in message and raffle_state == False:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
+			### DEBUG ###
 			if "!test" in message:
 				print(db_get_emote_count("PogChamp"))
 
+			if "!songrequest" in message:
+				if user == 'Moobot':
+					print(error)
+				else:
+					try:
+						char_2
+						if(char_2):
+							db_minus_points_user(user, points_song_request)
+							sendMessage(s, "{} you just spent {} points on a song request! SeemsGood".format(user, points_song_request))
+					except NameError:
+						print("[ERROR] >>> No song request specified")
 
-			#song requests
-			# if "!songrequest " in message:
-			# 	# 200 points for a song request
-			# 	db_minus_points_user(user, points_song_request)
-			# 	sendMessage(s, "{} you just spent {} points on a song request! SeemsGood".format(user, points_song_request))
 
 			#pogchamp count
 			if "!emotecount" in message:
@@ -234,7 +241,13 @@ while True:
 					pass
 
 			# if "!songrequest" in message:
-			# 	sendMessage(s, get_youtube_request(user, char_2))
+			# 	try:
+			# 		char_2
+			# 		sendMessage(s, get_youtube_request(user, char_2))
+			# 	except NameError:
+					
+			# 	else:
+			# 		sendMessage(s, "no request")
 
 			### ADVANCED COMMANDS ###
 			if "!uptime" in message:
@@ -246,12 +259,12 @@ while True:
 			if "!top" in message:
 				print("[COMMAND] >>> !top")
 				sendMessage(s, db_get_points_user_first()) 
-			if "!quote" in message:
-				print("[COMMAND] >>> !quote")
-				sendMessage(s, quote())
-			if "!addquote" in message:
-				print("[COMMAND] >>> !addquote")
-				sendMessage(s, addquote(quote_to_add))
+			# if "!quote" in message:
+			# 	print("[COMMAND] >>> !quote")
+			# 	sendMessage(s, quote())
+			# if "!addquote" in message:
+			# 	print("[COMMAND] >>> !addquote")
+			# 	sendMessage(s, addquote(quote_to_add))
 
 			if "!followage" in message:
 				print("[COMMAND] >>> !followage")
@@ -267,7 +280,6 @@ while True:
 			if "!gmt" in message:
 				print("[COMMAND] >>> !gmt localtime")
 				sendMessage(s, local_time('Europe/London'))
-
 			if "!admin" in message:
 				print("[COMMAND] >>> !admin")
 				sendMessage(s, basic_command('admin', user))
@@ -280,6 +292,8 @@ while True:
 			if "!spooky" in message:
 				print("[COMMAND] >>> !spooky")
 				sendMessage(s, basic_command('spooky', user))
+			if "!vampire" in message:
+				sendMessage(s, basic_command('vampire', user))
 			if "!bot" in message:
 				print("[COMMAND] >>> !bot")
 				sendMessage(s, basic_command('bot', user))
