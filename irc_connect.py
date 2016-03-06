@@ -175,6 +175,10 @@ while True:
 					except NameError:
 						print("[ERROR] >>> No song request specified")
 
+			if "!shutdown" in message:
+				if user == twitch_irc.get('ADMIN'):
+					sendMessage(s, "Shutdown iniated by admin.. HeyGuys")
+					raise SystemExit
 
 			#pogchamp count
 			if "!emotecount" in message:

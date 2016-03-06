@@ -21,7 +21,7 @@ friends = {
 
 quotes = ['"rebound it like your last relationship!" - skowalz 2k16', ]
 
-auto_messages = ['Make sure to follow Skowalz on twitter for the latest updates! twitter.com/skowalz',
+auto_messages = ['Make sure to follow SKOWALZ on twitter for the latest updates! twitter.com/skowalz',
 'Check out the latest highlights here! twitch.tv/skowalz/profile/highlights', 
 'Make sure to follow the channel to get notified of the latest streams!']
 
