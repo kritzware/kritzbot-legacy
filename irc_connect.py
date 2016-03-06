@@ -8,7 +8,7 @@ from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
 	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle, 
-	check_int_in_string, give_points, hug)
+	check_int_in_string, give_points, hug, latest_highlight)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -152,9 +152,16 @@ while True:
 			if "!join" in message and raffle_state == False:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
+
+
 			### DEBUG ###
 			if "!test" in message:
-				print(db_get_emote_count("PogChamp"))
+				print("test recieved")
+
+
+
+			if "!highlight" in message:
+				sendMessage(s, latest_highlight())
 
 			if "!songrequest" in message:
 				if user == 'Moobot':

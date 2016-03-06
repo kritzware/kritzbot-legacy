@@ -16,7 +16,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user,
 	db_get_points_user_first,
 	db_get_points_user_int)
-from modules.api import getJSON, getJSON_text, check_user_class, get_users_json_mods, get_users_json_viewers
+from modules.api import getJSON, getJSON_text, check_user_class, get_users_json_mods, get_users_json_viewers, get_latest_highlight
 from modules.temp import duel_state, temp_opponent, raffle_amount, raffle_entries
 
 wisp = "/me "
@@ -80,6 +80,15 @@ def followage(user):
 	#except Exception as e:
 	#	print("[ERROR] >>> ", e)
 	#	return("{} is not following this channel! BibleThump".format(user))
+
+def latest_highlight():
+
+	title = get_latest_highlight('title')
+	description = get_latest_highlight('description')
+	vid_id = get_latest_highlight('_id')
+	link = vid_id[1:]
+	output = wisp + "Watch the latest highlight ({} - {}) here! http://www.twitch.tv/skowalz/v/{}".format(title, description, link)
+	return output
 
 def roulette(user, points):
 

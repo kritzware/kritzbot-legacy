@@ -63,8 +63,17 @@ def get_users_json_mods():
 	except urllib.error.URLError as e:
 		print("[ERROR] >>> ", e.reason)
 
-def get_latest_follower():
+def get_latest_highlight(info):
 
+	try:
+		data = getJSON('https://api.twitch.tv/kraken/channels/' + twitch_irc.get('CHANNEL') + '/videos?limit=1')
+
+		return_data = data['videos'][0][info]
+		return return_data
+	except urllib.error.URLError as e:
+		print("[ERROR] >>> ", e.reason)
+
+def get_latest_follower():
 
 	# data = getJSON("https://api.twitch.tv/kraken/channels/" + twitch_irc.get('CHANNEL') + "/follows/?limit=1")
 	# follower = data["follows"][0]['user']['name']
