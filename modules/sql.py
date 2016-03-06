@@ -28,14 +28,26 @@ def db_add_points_user(user, points):
 
 	pybot.execute("UPDATE table1 set points = points + " + str(points) + " where user_id = '" + str(user) + "' ")
 
+# increments 1 to emote count value
 def db_add_emote_count(emote):
 
 	pybot.execute("UPDATE emote_table set count = count + 1 where emote = '" + str(emote) + "' ")
 
+# gets the emote count for certain emote
 def db_get_emote_count(emote):
 
-	count = pybot.execute("SELECT count from emote_table where emote = '" + str(emote) + "' ")
-	return str(count)
+	count = pybot.execute("SELECT COUNT(*) FROM emote_table")
+	pybot.execute("SELECT emote from emote_table")
+	emotes = pybot.fetchall()
+
+	emote_range = len(emotes)
+	pogchamp = ''.join(emotes[0])
+
+	pybot.execute("SELECT count from emote_table where emote = '" + str(pogchamp) + "'")
+	get_count = pybot.fetchone()
+	format_count = db_format(get_count)
+	output = "{} has been used {} times in the chat! {}".format(pogchamp, format_count, pogchamp)
+	return str(output)
 
 # add points to all users in the database
 def db_add_points_global(points):

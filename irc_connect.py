@@ -153,7 +153,7 @@ while True:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
 			if "!test" in message:
-				print(char_2[:1])
+				print(db_get_emote_count("PogChamp"))
 
 
 			#song requests
@@ -165,7 +165,7 @@ while True:
 			#pogchamp count
 			if "!emotecount" in message:
 				emote = char_2
-				sendMessage(s, db_get_emote_count(emote))
+				sendMessage(s, str(db_get_emote_count(emote)))
 			if "PogChamp" in message:
 				db_add_emote_count("PogChamp")
 
