@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SkowalzBot - Home</title>
+
+	<!--Bootstrap Core Files-->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<!--Bootstrap Custom Theme-->
+	<link href="https://bootswatch.com/superhero/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<!--Custom CSS-->
+	<link href="static/css/main.css" rel="stylesheet" type="text/css">
+	<!--jQuery-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+
+</head>
+<body>
+
+	{%block navbar %}
+	<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">SkowalzBot</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/commands">Commands</a></li>
+            <li><a href="/control-panel">Control Panel</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/kritzware">GitHub<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    {% endblock %}
+    
+    {% block body %}{% endblock %}
+
+<!-- 	<footer class="footer">
+      <div class="container">
+        <p class="text-muted">PyBot is created and maintained by <a href="https://github.com/kritzware">Kritzware</a> | Operating in <a href="https://twitch.tv/skowalz">twitch.tv/skowalz</a></p>
+      </div>
+    </footer> -->
+
+<!--Bootstrap CSS-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</body>
+</html>

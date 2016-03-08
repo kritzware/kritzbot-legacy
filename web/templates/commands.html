@@ -1,0 +1,147 @@
+{% extends "index.html" %}
+{% block title %}SkowalzBot - Commands{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <h2>Viewer Commands</h2>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>Response/Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><kbd>!admin</kbd></td>
+        <td>
+          Contact KRITZWARE if you have any queries or wish to report bugs
+          &nbsp;<img src="https://camo.githubusercontent.com/c2a9eb18e0c26e34ceef9985b9916a2c5109b6a7/68747470733a2f2f7374617469632d63646e2e6a74766e772e6e65742f656d6f7469636f6e732f76312f3335342f312e30">
+        </td>
+      </tr>
+      <tr>
+        <td><kbd>!help</kbd></td>
+        <td>{user}, you can view my commands here: <a href="https://github.com/LouisBluhm/PyBot#readme">https://github.com/LouisBluhm/PyBot#readme</a>&nbsp;<img src="https://camo.githubusercontent.com/91f41e4bfb674531c9e4998f6d3d44860f57c876/68747470733a2f2f7374617469632d63646e2e6a74766e772e6e65742f656d6f7469636f6e732f76312f32382f312e30"></td>
+      </tr>
+      <tr>
+        <td><kbd>!twitter</kbd></td>
+        <td>Make sure to follow Skowalz on twitter for the latest updates! &nbsp;<a href="https://twitter.com/skowalz">twitter.com/skowalz</a>&nbsp;<img src="https://camo.githubusercontent.com/4198e98a80aadd488ced8b50a87ced47065ba769/68747470733a2f2f7374617469632d63646e2e6a74766e772e6e65742f656d6f7469636f6e732f76312f38382f312e30"></td>
+      </tr>
+      <tr>
+        <td><kbd>!uptime</kbd></td>
+        <td>{channel} has been streaming for 2 hrs and 5 mins</td>
+      </tr>
+      <tr>
+        <td><kbd>!localtime</kbd></td>
+        <td>Local time: 07:28:08 EST</td>
+      </tr>
+      <tr>
+        <td><kbd>!followage</kbd></td>
+        <td>
+          {user} has been following for 10 months, 2 weeks!
+          &nbsp;<img src="https://static-cdn.jtvnw.net/emoticons/v1/64138/1.0">
+        </td>
+      </tr>
+      <tr>
+        <td><kbd>!points</kbd></td>
+        <td>{user} has 3000 points</td>
+      </tr>
+      <tr>
+        <td><kbd>!roulette</kbd></td>
+        <td>
+          {user} gambled 50 points and won 100/lost 50 points!
+          &nbsp;<img src="https://camo.githubusercontent.com/4198e98a80aadd488ced8b50a87ced47065ba769/68747470733a2f2f7374617469632d63646e2e6a74766e772e6e65742f656d6f7469636f6e732f76312f38382f312e30">
+        </td>
+      </tr>
+      <tr>
+        <td><kbd>!duel {opponent} 10</kbd></td>
+        <td>{opponent}, you have been challenged to 10 points by {user}! Type !accept to duel. </td>
+      </tr>
+      <tr>
+        <td><kbd>!rank</kbd></td>
+        <td>You are rank 4 {user}, with 15310 points!</td>
+      </tr>
+      <tr>
+        <td><kbd>!top</kbd></td>
+        <td>
+          Kritzware has the most points: 172843
+          &nbsp;<img src="https://camo.githubusercontent.com/4198e98a80aadd488ced8b50a87ced47065ba769/68747470733a2f2f7374617469632d63646e2e6a74766e772e6e65742f656d6f7469636f6e732f76312f38382f312e30">
+        </td>
+      </tr>
+      <tr>
+        <td><kbd>!spooky</kbd></td>
+        <td>
+          Hold me chat, I'm scared!
+          &nbsp;<img src="https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0"><img src="https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0"><img src="https://static-cdn.jtvnw.net/emoticons/v1/28087/1.0">
+        </td>
+      </tr>
+      <tr>
+        <td><kbd>!bot</kbd></td>
+        <td>
+          I'm not real..
+          &nbsp;<img src="https://cdn.betterttv.net/emote/566c9fc265dbbdab32ec053b/1x">
+        </td>
+      </tr>
+      <tr>
+        <td><kbd>!donger</kbd></td>
+        <td>ᕙ༼ຈل͜ຈ༽ᕗ. ʜᴀʀᴅᴇʀ,﻿ ʙᴇᴛᴛᴇʀ, ғᴀsᴛᴇʀ, ᴅᴏɴɢᴇʀ .ᕙ༼ຈل͜ຈ༽ᕗ         </td>
+      </tr>
+    </tbody>
+  </table><br>
+  <h2>Moderator Commands <img src="http://assistly-production.s3.amazonaws.com/twitchtv/portal_attachments/349943/moderator-background_original.png?AWSAccessKeyId=AKIAJNSFWOZ6ZS23BMKQ&Expires=1457503160&Signature=E0nZBhdzDd1wezENgFWL1%2Fvceaw%3D&response-content-disposition=filename%3D%22moderator-background.png%22&response-content-type=image%2Fpng"></h2>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>Response/Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <kbd>!raffle 10</kbd></td>
+        <td>
+          A raffle for 10 points has started! Type !join to enter
+          &nbsp;<img src="https://camo.githubusercontent.com/4198e98a80aadd488ced8b50a87ced47065ba769/68747470733a2f2f7374617469632d63646e2e6a74766e772e6e65742f656d6f7469636f6e732f76312f38382f312e30">
+        </td>
+      </tr>
+      <tr>
+        <td><kbd>!streamer {user}</kbd></td>
+        <td>
+          Check out {user} at twitch.tv/{user}
+          &nbsp;<img src="https://static-cdn.jtvnw.net/emoticons/v1/54090/1.0">
+        </td>
+      </tr>
+      <tr>
+        <td><kbd>!streamer acorn</kbd></td>
+        <td>You should (definitely) go check out the lovely AcornBandit over at <a href="twitch.tv/acornbandit">twitch.tv/acornbandit</a>&nbsp;<img src="https://static-cdn.jtvnw.net/emoticons/v1/27679/1.0"></td>
+      </tr>
+      <tr>
+        <td><kbd>!streamer geek</kbd></td>
+        <td>You should (definitely) go check out the lovely GeekGeneration over at <a href="twitch.tv/thegeekgeneration">twitch.tv/thegeekgeneration</a>&nbsp;<img src="https://static-cdn.jtvnw.net/emoticons/v1/358/1.0"></td>
+      </tr>
+      <tr>
+        <td><kbd>!test</kbd></td>
+        <td>[DEV] test_command recieved</td>
+      </tr>
+    </tbody>
+</table><br>
+<h2>Broadcaster/Admin Commands <img src="http://assistly-production.s3.amazonaws.com/twitchtv/portal_attachments/349942/broadcaster-background_original.png?AWSAccessKeyId=AKIAJNSFWOZ6ZS23BMKQ&Expires=1457508656&Signature=f9z1g20GQQ9iVtwIyz%2FLG%2BcO03I%3D&response-content-disposition=filename%3D%22broadcaster-background.png%22&response-content-type=image%2Fpng"></h2>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>Response/Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <kbd>!shutdown</kbd></td>
+        <td>
+          Shutdown iniated by admin.. &nbsp;<img src="https://static-cdn.jtvnw.net/emoticons/v1/30259/1.0">
+        </td>
+      </tr>
+    </tbody>
+</table>
+</div>
+{% endblock %}
