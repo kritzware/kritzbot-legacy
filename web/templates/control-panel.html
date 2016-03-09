@@ -3,18 +3,19 @@
 {% block body %}
 
 <div class="container">
-      <h1>Please login</h1>
+      <h3>Admin Login &nbsp;<img src="../static/img/broadcaster-icon.png"></h3>
       <br>
       <form action="" method="post">
         <input type="text" placeholder="Username" name="username" value="{{
-          request.form.username }}">
-         <input type="password" placeholder="Password" name="password" value="{{
-          request.form.password }}">
-        <input class="btn btn-default" type="submit" value="Login">
+          request.form.username }}">&nbsp;
+        <input type="password" placeholder="Password" name="password" value="{{
+          request.form.password }}">&nbsp;
+        <input class="btn btn-primary" type="submit" value="Login">
       </form>
       {% if error %}
+        <br>
         <p class="error"><strong>Error:</strong> {{ error }}
       {% endif %}
-    </div>
+</div>
 
 {% endblock %}
