@@ -15,8 +15,6 @@
 
 </head>
 <body>
-
-	{%block navbar %}
 	<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -32,6 +30,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
             <li><a href="/commands">Commands</a></li>
+            <li><a href="/stats">Stats</a></li>
             <li><a href="/control-panel">Control Panel</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -40,12 +39,13 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    {% endblock %}
     
     {% block body %}{% endblock %}
 
+	<p>this is the home page</p>
+
 <!-- 	<footer class="footer">
-      <div class="container">
+      <div class="container" style="clear:both">
         <p class="text-muted">PyBot is created and maintained by <a href="https://github.com/kritzware">Kritzware</a> | Operating in <a href="https://twitch.tv/skowalz">twitch.tv/skowalz</a></p>
       </div>
     </footer> -->
