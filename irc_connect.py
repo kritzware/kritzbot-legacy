@@ -24,7 +24,7 @@ from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, raffle
 	raffle_entries, raffle_amount, points_song_request, giveaway_entries, giveaway_state, 
 	giveaway_time, giveaway_entry)
 from modules.settings import twitch_irc
-from modules.api import check_user_class, get_latest_follower, get_youtube_request
+from modules.api import check_user_class, get_latest_follower, get_youtube_request, check_stream_online
 
 # connection to the irc server is created
 s = openSocket()
@@ -194,7 +194,7 @@ while True:
 
 			### DEBUG ###
 			if "!test" in message:
-				print(raffle_amount)
+				print(check_stream_online())
 
 
 

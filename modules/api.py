@@ -28,6 +28,19 @@ def getJSON_youtube(url):
 	json_list = json.loads(json_obj)
 	return json_list
 
+def check_stream_online():
+	try:
+		data = getJSON('https://api.twitch.tv/kraken/streams?channel={}'.format(twitch_irc.get('CHANNEL')))
+		online = data['_total']
+		online_int = int(online)
+		if(online_int == 1):
+			return True
+		else:
+			return False
+	except urllib.error.URLError as e:
+		print("[ERROR] >>> ", e.reason)
+		return("Error: Twitch API down BabyRage")
+
 def check_user_class(user, user_class):
 
 	try:
