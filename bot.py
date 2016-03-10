@@ -17,7 +17,7 @@ from modules.sql import (db_add_user,
 	db_get_points_user_first,
 	db_get_points_user_int)
 from modules.api import getJSON, getJSON_text, check_user_class, get_users_json_mods, get_users_json_viewers, get_latest_highlight
-from modules.temp import duel_state, temp_opponent, raffle_amount, raffle_entries
+from modules.temp import duel_state, temp_opponent, raffle_amount, raffle_entries, giveaway_entries
 
 wisp = "/me "
 denied = wisp + " only mods can do that FailFish"
@@ -74,12 +74,12 @@ def local_time(zone):
 
 def followage(user):
 
-	#try:
 	data = getJSON_text("https://api.rtainc.co/twitch/followers/length?channel=" + twitch_irc.get('CHANNEL') + "&name=" + user)
 	return(wisp + "{} has been following for {}! SeemsGood".format(user, data))
 	#except Exception as e:
-	#	print("[ERROR] >>> ", e)
-	#	return("{} is not following this channel! BibleThump".format(user))
+		#print("[ERROR] >>> ", e)
+	#	return ""
+		#return("{} is not following this channel! BibleThump".format(user))
 
 def latest_highlight():
 
@@ -137,13 +137,31 @@ def duel(user, opponent, points):
 	else:
 		return("{} not found in chat! BabyRage".format(opponent))
 
+def giveaway():
+
+	if(len(giveaway_entries) == 0):
+		return "Nobody entered the giveaway. MingLee"
+	giveaway_entries_nodup = remove_duplicates(giveaway_entries)
+	giveaway_entries_nodup_list = list(giveaway_entries_nodup)
+	winner = random.choice(giveaway_entries_nodup_list)
+	print("[INFO] >>> Giveaway winner: ", winner)
+
+	output = wisp + "{} won the giveaway! Enjoy your prize PogChamp".format(str(winner))
+	del giveaway_entries[:]
+	while giveaway_entries_nodup:
+		giveaway_entries_nodup.pop()
+	del giveaway_entries_nodup_list[:]
+
+	return output
+
 def raffle():
 
 	win = raffle_amount[0]
 
 	if(len(raffle_entries) == 0):
+		del raffle_amount[:]
 		return "Nobody entered the raffle. Guess I'll keep the points for myself MingLee"
-	
+		
 	raffle_entries_nodup = remove_duplicates(raffle_entries)
 
 	raffle_entries_nodup_list = list(raffle_entries_nodup)

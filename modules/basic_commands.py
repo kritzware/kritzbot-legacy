@@ -7,7 +7,9 @@ commands = {
 	'spooky': "Hold me chat, I'm scared! WutFace WutFace WutFace",
 	'donger': 'ᕙ༼ຈل͜ຈ༽ᕗ. ʜᴀʀᴅᴇʀ,﻿ ʙᴇᴛᴛᴇʀ, ғᴀsᴛᴇʀ, ᴅᴏɴɢᴇʀ .ᕙ༼ຈل͜ຈ༽ᕗ',
 	'bot': "I'm not real.. FeelsBadMan",
-	'vampire': "Imma suck your blood ~ Keepo ~"
+	'vampire': "Imma suck your blood ~ Keepo ~",
+	'lenny': "( ͡° ͜ʖ ͡°)",
+	'rigged': "DansGame RIGGED DansGame RIGGED DansGame"
 }
 
 update_commands = {

@@ -19,6 +19,7 @@ def getJSON_text(url):
 	request = urllib.request.urlopen(url)
 	data = request.read()
 	data_string = data.decode('UTF-8')
+	print(data_string)
 	return data_string
 
 def getJSON_youtube(url):

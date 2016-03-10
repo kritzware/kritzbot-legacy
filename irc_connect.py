@@ -8,7 +8,7 @@ from modules.irc_init import joinRoom
 from bot import (get_user, get_message, local_time, basic_command, update_command,
 	word_n, streamer_acorn, streamer_geek, roulette, check_int, get_int, uptime,
 	followage, streamer, duel, quote, addquote, bttv_user_replace, raffle, 
-	check_int_in_string, give_points, hug, latest_highlight)
+	check_int_in_string, give_points, hug, latest_highlight, giveaway)
 from modules.sql import (db_add_user,
 	db_add_points_user,
 	db_minus_points_user,
@@ -21,7 +21,8 @@ from modules.sql import (db_add_user,
 	db_add_emote_count,
 	db_get_emote_count)
 from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, raffle_state,
-	raffle_entries, raffle_amount, points_song_request)
+	raffle_entries, raffle_amount, points_song_request, giveaway_entries, giveaway_state, 
+	giveaway_time, giveaway_entry)
 from modules.settings import twitch_irc
 from modules.api import check_user_class, get_latest_follower, get_youtube_request
 
@@ -78,6 +79,29 @@ while True:
 
 			def raffle_run():
 					raffleTimer().start()
+
+			class giveawayTimer(Thread):
+				def run(self):
+					print("[INFO] >>> giveaway timer started!")
+					global giveaway_time
+					global giveaway_entry
+					if giveaway_time == 1:
+						half_time_sec = 30
+					else:
+						half_time = int(giveaway_time/2)
+					half_time_sec = (half_time * 60)
+					print("[INFO] >>> Half time[S]: ", half_time_sec)
+					time.sleep(half_time_sec/2)
+					sendMessage(s, "You have {} minutes left to enter the giveaway! Enter by typing {} in chat.".format(str(half_time), giveaway_entry))
+					time.sleep(half_time_sec/2)
+					global giveaway_state
+					giveaway_state = False
+					print("[DEBUG] >>> giveaway stated changed to {}".format(giveaway_state))
+					print("[DEBUG] >>> giveaway timer stopped")
+					sendMessage(s, giveaway())
+
+			def giveaway_run():
+					giveawayTimer().start()
 
 			class duelTimer(Thread):
 				def run(self):
@@ -152,28 +176,42 @@ while True:
 			if "!join" in message and raffle_state == False:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
-
+			if "!giveaway" in message:
+				if(giveaway_state == False):
+					del giveaway_entries[:]
+					giveaway_time = int(char_2)
+					giveaway_entry = char_3
+					if(check_user_class(user, "moderators")):
+						print("[DEBUG] >>> {} started a giveaway!".format(user))
+						giveaway_state = True
+						sendMessage(s, "A giveaway has started. Type {} to enter! You have {} minutes..".format(giveaway_entry, giveaway_time))
+						giveaway_run()
+				else:
+					sendMessage(s, "Giveaway already active FailFish")
+			if giveaway_entry in message and giveaway_state == True:
+				giveaway_entries.append(user)
+				print("[DEBUG] >>> {} added to giveaway".format(user))
 
 			### DEBUG ###
 			if "!test" in message:
-				print("test recieved")
+				print(raffle_amount)
 
 
 
 			if "!highlight" in message:
 				sendMessage(s, latest_highlight())
 
-			if "!songrequest" in message:
-				if user == 'Moobot':
-					print(error)
-				else:
-					try:
-						char_2
-						if(char_2):
-							db_minus_points_user(user, points_song_request)
-							sendMessage(s, "{} you just spent {} points on a song request! SeemsGood".format(user, points_song_request))
-					except NameError:
-						print("[ERROR] >>> No song request specified")
+			# if "!songrequest" in message:
+			# 	if user == 'Moobot':
+			# 		print(error)
+			# 	else:
+			# 		try:
+			# 			char_2
+			# 			if(char_2):
+			# 				db_minus_points_user(user, points_song_request)
+			# 				sendMessage(s, "{} you just spent {} points on a song request! SeemsGood".format(user, points_song_request))
+			# 		except NameError:
+			# 			print("[ERROR] >>> No song request specified")
 
 			if "!shutdown" in message:
 				if user == twitch_irc.get('ADMIN'):
@@ -256,17 +294,15 @@ while True:
 			# 		char_2
 			# 		sendMessage(s, get_youtube_request(user, char_2))
 			# 	except NameError:
-					
-			# 	else:
 			# 		sendMessage(s, "no request")
 
 			### ADVANCED COMMANDS ###
 			if "!uptime" in message:
 				print("[COMMAND] >>> !uptime")
 				sendMessage(s, uptime())
-			if "!followage" in message:
-				print("[COMMAND] >>> !followage")
-				sendMessage(s, followage(user))
+			#if "!followage" in message:
+			#	print("[COMMAND] >>> !followage")
+			#	sendMessage(s, followage(user))
 			if "!top" in message:
 				print("[COMMAND] >>> !top")
 				sendMessage(s, db_get_points_user_first()) 
@@ -314,6 +350,15 @@ while True:
 					sendMessage(s, basic_command('donger', user))
 				except:
 					pass
+			if "!lenny" in message:
+				print("[COMMAND] >>> !lenny")
+				try:
+					sendMessage(s, basic_command('lenny', user))
+				except:
+					pass
+			if "!rigged" in message:
+				print("[COMMAND] >>> !rigged")
+				sendMessage(s, basic_command('rigged', user))
 
 			# ### STREAMERS###
 			# if "!streamer acorn" in message:

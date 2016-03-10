@@ -1,9 +1,21 @@
 from flask import Flask, render_template, redirect, url_for, request
+from flask_socketio import SocketIO
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
+
+@socketio.on('message')
+def handle_message(message):
+	print('received message: ' + message)
 
 @app.route('/')
 def index_page():
-	return render_template('index.html')
+	return render_template('home.html')
+
+@app.route('/home')
+def home_page():
+	return render_template('home.html')
 
 @app.route('/commands')
 def commands_page():
@@ -32,4 +44,5 @@ def page_not_found(e):
 	return render_template('404.html'), 404
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', debug=True)
+	socketio.run(app)
+	#app.run(host='0.0.0.0', debug=True)
