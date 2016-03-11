@@ -8,8 +8,9 @@ commands = {
 	'donger': 'ᕙ༼ຈل͜ຈ༽ᕗ. ʜᴀʀᴅᴇʀ,﻿ ʙᴇᴛᴛᴇʀ, ғᴀsᴛᴇʀ, ᴅᴏɴɢᴇʀ .ᕙ༼ຈل͜ຈ༽ᕗ',
 	'bot': "I'm not real.. FeelsBadMan",
 	'vampire': "Imma suck your blood ~ Keepo ~",
-	'lenny': "( ͡° ͜ʖ ͡°)",
-	'rigged': "DansGame RIGGED DansGame RIGGED DansGame"
+	'wut': " Alwaaaays waaaatchiiiiing~ ( ͡° ͜ʖ ͡°)",
+	'rigged': "DansGame RIGGED DansGame RIGGED DansGame",
+	'raid': "SKOWALZ SQUALL PogChamp PogChamp"
 }
 
 update_commands = {

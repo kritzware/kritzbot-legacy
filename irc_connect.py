@@ -19,7 +19,8 @@ from modules.sql import (db_add_user,
 	db_get_points_user_int,
 	db_get_user_rank,
 	db_add_emote_count,
-	db_get_emote_count)
+	db_get_emote_count,
+	db_get_another_user_rank)
 from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, raffle_state,
 	raffle_entries, raffle_amount, points_song_request, giveaway_entries, giveaway_state, 
 	giveaway_time, giveaway_entry)
@@ -129,6 +130,22 @@ while True:
 			except:
 				pass
 
+			## ADMIN SUPER USER COMMANDS 
+			if "!addpoints" in message and user == twitch_irc.get('CHANNEL'):
+				add_points_user = char_2
+				add_points_amount = char_3
+				if(check_int(add_points_amount)):
+					db_add_points_user(str(add_points_user), add_points_amount)
+					sendMessage(s, "Admin gave {} points to {}.".format(add_points_amount, add_points_user))
+			if "!minuspoints" in message and user == twitch_irc.get('CHANNEL'):
+				min_points_user = char_2
+				min_points_amount = char_3
+				if(check_int(min_points_amount)):
+					db_minus_points_user(str(min_points_user), min_points_amount)
+					sendMessage(s, "Admin took {} points from {}.".format(min_points_amount, min_points_user))
+			if "!shutdown" in message and user == twitch_irc.get('CHANNEL'):
+				sendMessage(s, "Shutdown iniated by admin.. HeyGuys")
+				raise SystemExit	
 
 			#### POINT BASED COMMANDS ###
 
@@ -138,10 +155,18 @@ while True:
 				sendMessage(s, db_get_points_user(user))
 
 			if "!givepoints" in message:
+				print(char_2)
+				print(char_3)
 				sendMessage(s, str(give_points(user, char_2, char_3)))
+
 
 			if "!rank" in message:
 				sendMessage(s, db_get_user_rank(user))
+			# if "!userrank" in message:
+			# 	rank_user_check = char_2
+			# 	print(rank_user_check)
+			# 	sendMessage(s, db_get_another_user_rank(rank_user_check))
+
 			if "!roulette" in message and user not in cooldown:
 				if(check_int(char_2)):
 					sendMessage(s, roulette(user, char_2))
@@ -191,6 +216,7 @@ while True:
 			if giveaway_entry in message and giveaway_state == True:
 				giveaway_entries.append(user)
 				print("[DEBUG] >>> {} added to giveaway".format(user))
+				print("[DEBUG] >>> Giveaway entries: {}".format(giveaway_entries))
 
 			### DEBUG ###
 			if "!test" in message:
@@ -213,10 +239,7 @@ while True:
 			# 		except NameError:
 			# 			print("[ERROR] >>> No song request specified")
 
-			if "!shutdown" in message:
-				if user == twitch_irc.get('ADMIN'):
-					sendMessage(s, "Shutdown iniated by admin.. HeyGuys")
-					raise SystemExit
+
 
 			#pogchamp count
 			if "!emotecount" in message:
@@ -224,6 +247,8 @@ while True:
 				sendMessage(s, str(db_get_emote_count(emote)))
 			if "PogChamp" in message:
 				db_add_emote_count("PogChamp")
+			if "Kappa" in message:
+				db_add_emote_count("Kappa")
 
 			if "!duel" in message:
 				test = re.match('(\w+\s\w+)', message[6:])
@@ -350,15 +375,18 @@ while True:
 					sendMessage(s, basic_command('donger', user))
 				except:
 					pass
-			if "!lenny" in message:
-				print("[COMMAND] >>> !lenny")
+			if "!wut" in message:
+				# print("[COMMAND] >>> !wut")
 				try:
-					sendMessage(s, basic_command('lenny', user))
+					sendMessage(s, basic_command('wut', user))
 				except:
 					pass
 			if "!rigged" in message:
 				print("[COMMAND] >>> !rigged")
 				sendMessage(s, basic_command('rigged', user))
+			if "!raid" in message:
+				print("[COMMAND] >>> !raid")
+				sendMessage(s, basic_command('raid', user))
 
 			# ### STREAMERS###
 			# if "!streamer acorn" in message:

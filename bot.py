@@ -87,7 +87,7 @@ def latest_highlight():
 	description = get_latest_highlight('description')
 	vid_id = get_latest_highlight('_id')
 	link = vid_id[1:]
-	output = wisp + "Watch the latest highlight ({} - {}) here! http://www.twitch.tv/skowalz/v/{}".format(title, description, link)
+	output = wisp + "Watch the latest highlight ({} - {}) here! http://www.twitch.tv/{}/v/{}".format(title, description, twitch_irc.get('CHANNEL'), link)
 	return output
 
 def roulette(user, points):
@@ -143,9 +143,9 @@ def giveaway():
 		return "Nobody entered the giveaway. MingLee"
 	giveaway_entries_nodup = remove_duplicates(giveaway_entries)
 	giveaway_entries_nodup_list = list(giveaway_entries_nodup)
+	# print(giveaway_entries_nodup_list)
 	winner = random.choice(giveaway_entries_nodup_list)
 	print("[INFO] >>> Giveaway winner: ", winner)
-
 	output = wisp + "{} won the giveaway! Enjoy your prize PogChamp".format(str(winner))
 	del giveaway_entries[:]
 	while giveaway_entries_nodup:

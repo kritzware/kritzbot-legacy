@@ -140,6 +140,19 @@ def db_get_user_rank(user):
 		db_add_user(user)
 		return "You are at the bottom {}, with {} points FeelsBadMan".format(user, db_get_points_user_int(user))
 
+def db_get_another_user_rank(user):
+
+	pybot.execute("SELECT 1 + (SELECT count(*) FROM table1 a WHERE a.points > b.points ) AS rank FROM table1 b WHERE user_id = '" + str(user) + "' ORDER BY rank LIMIT 1")
+	ranking = pybot.fetchone()
+	print(ranking)
+	format_ranking = db_format(ranking)
+	print(format_ranking)
+	format_points = db_get_points_user(user)
+	print(format_points)
+	total_users = db_get_user_total()
+	output = "{} is rank {} out of {}, with {} points!".format(user, str(format_ranking), total_users, format_points)
+	return output
+	
 # format parameter value to get first int result
 def db_format(values):
 
