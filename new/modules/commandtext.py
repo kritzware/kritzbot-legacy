@@ -3,7 +3,8 @@ from modules.config import *
 
 commands = {
 	'github': 'Report an issue or suggest ideas at github.com/kritzware/pybot 4Head',
-	'wut': ' Alwaaaays waaaatchiiiiing~ ( ͡° ͜ʖ ͡°)'
+	'wut': ' Alwaaaays waaaatchiiiiing~ ( ͡° ͜ʖ ͡°)',
+	'bot': 'I\'m not real.. FeelsBadMan',
 }
 user_commands = {
 	'help': ', you can view my commands here: [add-link] MrDestructoid'
