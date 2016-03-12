@@ -99,3 +99,4 @@ jspm_packages
 # Twitch settings
 Settings.py
 .new/
+new/
