@@ -13,4 +13,7 @@ class CommandManager:
 			return False
 
 	def parse_message(self, line):
-			return line[1:]
+		return line[1:]
+
+	def get_message_word(self, n):
+		return self.line.split(" ")[n]

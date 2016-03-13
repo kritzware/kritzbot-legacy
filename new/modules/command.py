@@ -2,6 +2,7 @@ import logging, coloredlogs
 from modules.config import *
 from modules.database import Database
 from modules.commandtext import commands, user_commands, advanced_commands
+from modules.commandmanager import CommandManager
 
 class Command:
 
@@ -11,6 +12,12 @@ class Command:
 		self.commands = commands
 		self.user_commands = user_commands
 		self.advanced_commands = advanced_commands
+		try:
+			command_check = CommandManager(self.line)
+			self.parameter_2 = command_check.get_message_word(1)
+			self.parameter_3 = command_check.get_message_word(2)
+		except Exception:
+			pass
 
 	def basic_command(self):
 		for keys, values in self.commands.items():
