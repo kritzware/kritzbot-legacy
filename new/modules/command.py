@@ -28,5 +28,5 @@ class Command:
 	def advanced_command(self):
 		for keys, values in self.advanced_commands.items():
 			if keys in self.line:
-				return values()
+				return values(self.user)
 		return ""

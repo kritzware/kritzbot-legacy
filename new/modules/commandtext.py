@@ -10,7 +10,8 @@ user_commands = {
 	'help': ', you can view my commands here: [add-link] MrDestructoid'
 }
 advanced_commands = {
-	'test': database.db_test
+	'points': database.db_get_points_user,
+	'rank': database.db_get_user_rank,
 }
 
 # commands_old = {

@@ -84,7 +84,7 @@ class Bot:
 		if(message == ""):
 			return
 		else:
-			logging.info("Bot sent: {}".format(message))
+			logging.warning("> {}".format(message))
 
 	def connection(self):
 		s = self.open_socket()
