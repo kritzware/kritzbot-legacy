@@ -239,6 +239,8 @@ while True:
 			# 		except NameError:
 			# 			print("[ERROR] >>> No song request specified")
 
+			if "!multi" in message:
+				sendMessage(s, "Watch SKOWALZ and Jekudin here! http://kadgar.net/live/jekudin/skowalz 4Head")
 
 
 			#pogchamp count
