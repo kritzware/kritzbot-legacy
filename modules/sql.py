@@ -49,6 +49,17 @@ def db_get_emote_count(emote):
 	output = "{} has been used {} times in the chat! {}".format(pogchamp, format_count, pogchamp)
 	return str(output)
 
+def db_add_counter1(user):
+	pybot.execute("UPDATE counter set count = count + 1 where id = 'counter1'")
+	return db_get_counter1(user)
+
+def db_get_counter1(user):
+	pybot.execute("SELECT count from counter where id = 'counter1'")
+	get_count = pybot.fetchone()
+	format_count = db_format(get_count)
+	output = "{} fucks given {} EleGiggle".format(format_count, user)
+	return output
+
 # add points to all users in the database
 def db_add_points_global(points):
 

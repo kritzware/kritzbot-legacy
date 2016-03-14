@@ -34,7 +34,7 @@ def joinRoom(s):
 
 	def points_timer():
 		threading.Timer(60, points_timer).start()
-		if(check_stream_online):
+		if(check_stream_online()):
 			print("[INFO] >>> Stream ONLINE")
 			try:
 				viewers_chat = get_users_json_viewers()

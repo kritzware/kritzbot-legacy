@@ -20,7 +20,9 @@ from modules.sql import (db_add_user,
 	db_get_user_rank,
 	db_add_emote_count,
 	db_get_emote_count,
-	db_get_another_user_rank)
+	db_get_another_user_rank,
+	db_add_counter1,
+	db_get_counter1)
 from modules.temp import (cooldown, temp_opponent, duel_state, temp_user, raffle_state,
 	raffle_entries, raffle_amount, points_song_request, giveaway_entries, giveaway_state, 
 	giveaway_time, giveaway_entry)
@@ -311,6 +313,13 @@ while True:
 					sendMessage(s, hug(user, char_2))
 				except:
 					pass
+
+			if "!+fucksgiven" in message:
+				if(check_user_class(user, "moderators")):
+					sendMessage(s, db_add_counter1(user))
+			if "!fucksgiven" in message:
+				sendMessage(s, db_get_counter1(user))
+ 
 
 			# if "!songrequest" in message:
 			# 	try:
