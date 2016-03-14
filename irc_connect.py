@@ -154,10 +154,10 @@ while True:
 				db_add_user(user)
 				sendMessage(s, db_get_points_user(user))
 
-			if "!givepoints" in message:
-				print(char_2)
-				print(char_3)
-				sendMessage(s, str(give_points(user, char_2, char_3)))
+			# if "!givepoints" in message:
+			# 	print(char_2)
+			# 	print(char_3)
+			# 	sendMessage(s, str(give_points(user, char_2, char_3)))
 
 
 			if "!rank" in message:
@@ -238,10 +238,6 @@ while True:
 			# 				sendMessage(s, "{} you just spent {} points on a song request! SeemsGood".format(user, points_song_request))
 			# 		except NameError:
 			# 			print("[ERROR] >>> No song request specified")
-
-			if "!multi" in message:
-				sendMessage(s, "Watch SKOWALZ and Jekudin here! http://kadgar.net/live/jekudin/skowalz 4Head")
-
 
 			#pogchamp count
 			if "!emotecount" in message:
@@ -371,6 +367,10 @@ while True:
 			if "!bot" in message:
 				print("[COMMAND] >>> !bot")
 				sendMessage(s, basic_command('bot', user))
+			if "!hype" in message:
+				sendMessage(s, basic_command('hype', user))
+			if "!chatlove" in message:
+				sendMessage(s, basic_command('chatlove', user))
 			if "!donger" in message:
 				print("[COMMAND] >>> !donger")
 				try:
@@ -390,6 +390,9 @@ while True:
 				print("[COMMAND] >>> !raid")
 				sendMessage(s, basic_command('raid', user))
 
+			if "!discord" in message:
+				sendMessage(s, "Chat with other viewers on discord! discord.gg/0dlGiuDScFuAb2vx MingLee")
+
 			# ### STREAMERS###
 			# if "!streamer acorn" in message:
 			# 	sendMessage(s, streamer_acorn(user))
@@ -401,5 +404,5 @@ while True:
 				print("[COMMAND] >>> !coloring")
 				sendMessage(s, update_command('coloring', user))
 
-			if "!splinter" in message:
-				sendMessage(s, "NO FUN ALLOWED FUNgineer NO SONG REQUESTS FUNgineer")
+			# if "!splinter" in message:
+			# 	sendMessage(s, "NO FUN ALLOWED FUNgineer NO SONG REQUESTS FUNgineer")

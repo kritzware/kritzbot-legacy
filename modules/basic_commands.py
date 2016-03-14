@@ -10,7 +10,10 @@ commands = {
 	'vampire': "Imma suck your blood ~ Keepo ~",
 	'wut': " Alwaaaays waaaatchiiiiing~ ( ͡° ͜ʖ ͡°)",
 	'rigged': "DansGame RIGGED DansGame RIGGED DansGame",
-	'raid': "SKOWALZ SQUALL PogChamp PogChamp"
+	'raid': "SKOWALZ SQUALL PogChamp PogChamp",
+	'hype': "PogChamp PogChamp PogChamp",
+	'chatlove': "CHAT LOOOVE bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple",
+	
 }
 
 update_commands = {
