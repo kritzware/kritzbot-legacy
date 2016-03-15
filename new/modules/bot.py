@@ -90,6 +90,7 @@ class Bot:
 		s = self.open_socket()
 		self.join_channel(s)
 		readbuffer = ""
+		self.send_message(s, "starting up (dev version 1.1.5) MrDestructoid")
 		while True:
 			readbuffer = readbuffer + s.recv(1024).decode('UTF-8')
 			temp = str.split(readbuffer, "\n")
