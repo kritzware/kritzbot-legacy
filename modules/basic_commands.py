@@ -13,8 +13,10 @@ commands = {
 	'raid': "SKOWALZ SQUALL PogChamp PogChamp",
 	'hype': "PogChamp PogChamp PogChamp",
 	'chatlove': "CHAT LOOOVE bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple",
-	
+	'merch': "Want to support the stream AND get some cool loot? Grab some merch here! goo.gl/1KuFfi KappaPride"
 }
+
+# merch link: http://www.designbyhumans.com/shop/SKOWALZ/
 
 update_commands = {
 	'coloring': 'Grab a coffee & ease into the day :) Expect me here weekday mornings from about 6:15AM - 7:00AM EST. Dope-ass coloring pages from >> http://etsy.me/1KbIzqO'
