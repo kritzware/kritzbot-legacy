@@ -229,7 +229,7 @@ while True:
 			if "!highlight" in message:
 				sendMessage(s, latest_highlight())
 
-			if "!songrequest" in message:
+			if "!songrequest" in message or "!requestsong" in message:
 				if user == 'Moobot':
 					print(error)
 				else:
