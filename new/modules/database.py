@@ -39,29 +39,42 @@ class Database:
 		self.db.execute("UPDATE table1 set points = points - {} where user_id = '{}".format(points, user))
 
 	def db_get_points_user(self, user):
-		count = self.db.execute("SELECT * FROM table1")
-		self.db.execute("SELECT user_id from table1")
-		users = self.db.fetchall()
-		for n in range(0, count + 1):
+		points = self.db_get_user_points_int(user)
+		output = "{} has {} points".format(user, points)
+		return output
 
-			if users[n] != str(user):
-				self.db_add_points_user(user, 0)
-				self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
-				get_points = self.db.fetchone()
-				format_points = self.db_format(get_points)
-				output = "{} has {} points".format(user, format_points)
-				if(int(format_points) < 0):
-					neg_output = "{} has -{} points BabyRage".format(user, format_points)
-					return str(neg_output)
-				else:
-					return output
+		# count = self.db.execute("SELECT * FROM table1")
+		# self.db.execute("SELECT user_id from table1")
+		# users = self.db.fetchall()
+		# for n in range(0, count + 1):
+		# 	# if users[n] != str(user):
+		# 	# if users[n] == str(user):
+		# 	# 	self.db_add_points_user(user, 0)
 
-			if str(users[n]) == str(user):
-				self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
-				get_points = self.db.fetchone()
-				format_points = self.db_format(get_points)
-				output = "{} has {} points".format(user, format_points)
-				return output
+		# 	# self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
+		# 	self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
+		# 	print("points:", self.db.fetchone())
+
+		# 	get_points = self.db.fetchone()
+		# 	print(get_points)
+
+		# 	format_points = self.db_format(get_points)
+		# 	print(format_points)
+
+		# 	output = "{} has {} points".format(user, format_points)
+		# 	print(output)
+		# 	# if(int(format_points) < 0):
+		# 	# 	neg_output = "{} has -{} points BabyRage".format(user, format_points)
+		# 	# 	return str(neg_output)
+		# 	# else:
+		# 	return output
+
+		# 	# if str(users[n]) == str(user):
+		# 	# 	self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
+		# 	# 	get_points = self.db.fetchone()
+		# 	# 	format_points = self.db_format(get_points)
+		# 	# 	output = "{} has {} points".format(user, format_points)
+		# 	# 	return output
 
 	def db_get_user_points_int(self, user):
 		points = self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))

@@ -12,7 +12,6 @@ user_commands = {
 advanced_commands = {
 	'points': database.db_get_points_user,
 	'rank': database.db_get_user_rank,
-	
 }
 
 # commands_old = {

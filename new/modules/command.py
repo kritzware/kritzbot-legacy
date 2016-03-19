@@ -12,12 +12,13 @@ class Command:
 		self.commands = commands
 		self.user_commands = user_commands
 		self.advanced_commands = advanced_commands
-		try:
-			command_check = CommandManager(self.line)
-			self.parameter_2 = command_check.get_message_word(1)
-			self.parameter_3 = command_check.get_message_word(2)
-		except Exception:
-			pass
+		# try:
+		# 	command_check = CommandManager(self.line)
+		# 	# self.parameter_2 = command_check.get_message_word(1)
+		# 	self.parameter_3 = command_check.get_message_word(2)
+		# except IndexError or NameError:
+		# 	self.parameter_2 = None
+		# 	self.parameter_3 = None
 
 	def basic_command(self):
 		for keys, values in self.commands.items():
@@ -34,6 +35,19 @@ class Command:
 
 	def advanced_command(self):
 		for keys, values in self.advanced_commands.items():
+			try:
+				command_check = CommandManager(self.line)
+				parameter_2 = command_check.get_message_word(1)
+			except IndexError or NameError:
+				parameter_2 = None
+
 			if keys in self.line:
-				return values(self.user)
+				if parameter_2 is None:
+					print("param:",parameter_2)
+					print("user:",self.user)
+					return values(self.user)
+				else:
+					print("param:",parameter_2)
+					print("user:",self.user)
+					return values(parameter_2)
 		return ""

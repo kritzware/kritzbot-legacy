@@ -23,7 +23,12 @@ class Timer(Thread):
 		super(Timer, self).__init__()
 
 	def run(self):
-		time.sleep(5)
+		half_time = int(self.time) / 2
+		time.sleep(half_time)
 		print("adding points")
-		time.sleep(5)
+		time.sleep(half_time)
 		print("points added")
+		self.auto()
+
+	def auto(self):
+		self.run()
