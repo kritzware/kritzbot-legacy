@@ -86,30 +86,32 @@ class Bot:
 		else:
 			logging.warning("> {}".format(message))
 
+	def bot_commands(self, user, message):
+		if(command_check.check_line(message)):
+			parse_command = command_check.parse_message(message)
+			command = Command(parse_command, user)
+			try:
+				self.send_message(server_connection, command.basic_command())
+				self.send_message(server_connection, command.user_command())
+				self.send_message(server_connection, command.advanced_command())
+			except:
+				pass
+
 	def connection(self):
-		s = self.open_socket()
-		self.join_channel(s)
+		global server_connection
+		server_connection = self.open_socket()
+		self.join_channel(server_connection)
 		readbuffer = ""
-		self.send_message(s, "starting up (dev version 1.1.5) MrDestructoid")
+		self.send_message(server_connection, "starting up (dev version 1.1.5) MrDestructoid")
 		while True:
-			readbuffer = readbuffer + s.recv(1024).decode('UTF-8')
+			readbuffer = readbuffer + server_connection.recv(1024).decode('UTF-8')
 			temp = str.split(readbuffer, "\n")
 			readbuffer = temp.pop()
 			for line in temp:
 				# print(line)
-				if(self.pong(s, line)):
+				if(self.pong(server_connection, line)):
 					break
 				user = self.get_user(line)
 				message = self.get_message(line)
 				logging.info("{}: {}".format(user, message))
-
-				if(command_check.check_line(message)):
-					parse_command = command_check.parse_message(message)
-					command = Command(parse_command, user)
-					try:
-						self.send_message(s, command.basic_command())
-						self.send_message(s, command.user_command())
-						self.send_message(s, command.advanced_command())
-					except:
-						pass
-					break
+				self.bot_commands(user, message)

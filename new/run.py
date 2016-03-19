@@ -14,10 +14,11 @@ logging.info("Hello world!")
 
 bot = Bot(HOST, PORT, PASS, NICK, CHANNEL)
 # whisper_bot = WhisperConnection(W_HOST, W_PORT, PASS, NICK, W_GROUP)
-# points_timer = Timer(10)
+points_timer = Timer(10)
 # points_timer.start()
 
 if __name__ == '__main__':
 	Thread(target=bot.connection).start()
 	# Thread(target=whisper_bot.connection).start()
 	# Thread(target=points_timer.run).start()
+	# points_timer.auto()
