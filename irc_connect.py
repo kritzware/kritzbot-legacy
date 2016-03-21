@@ -161,6 +161,18 @@ while True:
 			# 	print(char_3)
 			# 	sendMessage(s, str(give_points(user, char_2, char_3)))
 
+			if "!doggy" in message:
+				sendMessage(s, "EleGiggle doggyfood has lost 1647359 points EleGiggle")
+
+			if "!kritz" in message:
+				sendMessage(s, "RAFFLE BabyRage KRITZWARE, RAFFLE BabyRage WE WANT RAFFLE KRITZ BabyRage")
+
+			if "!fu" in message:
+				try:
+					test123 = char_2
+					sendMessage(s, "Hey {}, ( ° ͜ʖ͡°)╭∩╮")
+				except:
+					pass
 
 			if "!rank" in message:
 				sendMessage(s, db_get_user_rank(user))
