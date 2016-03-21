@@ -170,7 +170,7 @@ while True:
 			if "!fu" in message:
 				try:
 					test123 = char_2
-					sendMessage(s, "Hey {}, ( ° ͜ʖ͡°)╭∩╮")
+					sendMessage(s, "Hey {}, ( ° ͜ʖ͡°)╭∩╮".format(test123))
 				except:
 					pass
 
