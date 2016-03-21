@@ -174,6 +174,12 @@ while True:
 				except:
 					pass
 
+			if "!nice" in message:
+				try:
+					sendMessage(s, "☑ Stream online ☑ Earning points ☑ KappaPride - Must be SKOWALZ stream FeelsGoodMan")
+				except:
+					pass
+
 			if "!rank" in message:
 				sendMessage(s, db_get_user_rank(user))
 			# if "!userrank" in message:
