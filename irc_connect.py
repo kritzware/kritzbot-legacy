@@ -176,7 +176,7 @@ while True:
 
 			if "!nice" in message:
 				try:
-					sendMessage(s, "☑ Stream online ☑ Earning points ☑ KappaPride - Must be SKOWALZ stream FeelsGoodMan")
+					sendMessage(s, "☑ Stream online ☑ Earning points ☑ KappaPride in chat - Must be SKOWALZ stream FeelsGoodMan")
 				except:
 					pass
 
