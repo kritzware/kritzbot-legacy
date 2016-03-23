@@ -31,7 +31,8 @@ quotes = ['"rebound it like your last relationship!" - skowalz 2k16', ]
 
 auto_messages = ['Make sure to follow SKOWALZ on twitter for the latest updates! twitter.com/skowalz',
 'Check out the latest highlights here! twitch.tv/skowalz/profile/highlights', 
-'Make sure to follow the channel to get notified of the latest streams!']
+'Make sure to follow the channel to get notified of the latest streams!'
+'Want to support the stream AND get some cool loot? Grab some merch here! goo.gl/1KuFfi KappaPride',]
 
 def chat_auto_messages():
 
