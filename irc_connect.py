@@ -398,6 +398,8 @@ while True:
 				sendMessage(s, basic_command('hype', user))
 			if "!chatlove" in message:
 				sendMessage(s, basic_command('chatlove', user))
+			if "!merch" in message:
+				sendMessage(s, basic_command('merch', user))
 			if "!donger" in message:
 				print("[COMMAND] >>> !donger")
 				try:
