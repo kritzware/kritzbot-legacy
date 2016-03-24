@@ -38,47 +38,61 @@ class Database:
 	def db_minus_points_user(self, user, points):
 		self.db.execute("UPDATE table1 set points = points - {} where user_id = '{}".format(points, user))
 
+	def bttv_parse(self, username):
+		output = username.replace('@', '')
+		return output
+
 	def db_get_points_user(self, user):
+		user = self.bttv_parse(user)
 		points = self.db_get_user_points_int(user)
-		output = "{} has {} points".format(user, points)
+
+		if(points < 0):
+			output = "{} has {} points BabyRage".format(user, points)
+		else:
+			output = "{} has {} points".format(user, points)
 		return output
 
 		# count = self.db.execute("SELECT * FROM table1")
 		# self.db.execute("SELECT user_id from table1")
 		# users = self.db.fetchall()
 		# for n in range(0, count + 1):
-		# 	# if users[n] != str(user):
-		# 	# if users[n] == str(user):
-		# 	# 	self.db_add_points_user(user, 0)
+		# 	if users[n] != str(user):
+		# 		self.db_add_points_user(user, 0)
 
-		# 	# self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
 		# 	self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
-		# 	print("points:", self.db.fetchone())
+		# 	self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
 
 		# 	get_points = self.db.fetchone()
-		# 	print(get_points)
+		# 	print("GET_POINTS:", get_points)
+		# 	if(get_points == None):
+		# 		self.db_add_points_user(user, 0)
 
 		# 	format_points = self.db_format(get_points)
-		# 	print(format_points)
+		# 	print("FORMAT_POINTS:", format_points)
 
 		# 	output = "{} has {} points".format(user, format_points)
-		# 	print(output)
-		# 	# if(int(format_points) < 0):
-		# 	# 	neg_output = "{} has -{} points BabyRage".format(user, format_points)
-		# 	# 	return str(neg_output)
-		# 	# else:
-		# 	return output
+		# 	print("OUTPUT:", output)
+		# 	if(int(format_points) < 0):
+		# 		neg_output = "{} has -{} points BabyRage".format(user, format_points)
+		# 		return str(neg_output)
+		# 	else:
+		# 		return output
 
-		# 	# if str(users[n]) == str(user):
-		# 	# 	self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
-		# 	# 	get_points = self.db.fetchone()
-		# 	# 	format_points = self.db_format(get_points)
-		# 	# 	output = "{} has {} points".format(user, format_points)
-		# 	# 	return output
+		# 	if str(users[n]) == str(user):
+		# 		self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
+		# 		get_points = self.db.fetchone()
+		# 		format_points = self.db_format(get_points)
+		# 		output = "{} has {} points".format(user, format_points)
+		# 		return output
 
 	def db_get_user_points_int(self, user):
 		points = self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
 		get_points = self.db.fetchone()
+		if(get_points == None):
+			print("add user")
+			self.db_add_user(user)
+			points = self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
+			get_points = self.db.fetchone()
 		return int(self.db_format(get_points))
 
 	def db_get_user_total(self):
@@ -99,7 +113,19 @@ class Database:
 		except Exception:
 			self.db_add_user(user)
 			points = self.db_get_user_points_int(user)
-			return "You are at the bottom {}, with {} points FeelsBadMan".format(user, points)			
+			return "You are at the bottom {}, with {} points FeelsBadMan".format(user, points)
 
-database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
-database.database_connection()
+	# def db_get_user_rank(self, user):
+	# 	print(user)
+	# 	try:
+	# 		self.db.execute("SELECT 1 + (SELECT count(*) FROM table1 a WHERE a.points > b.points ) AS rank FROM table1 b WHERE user_id = '{}' ORDER BY rank LIMIT 1".format(user))
+	# 		ranking = self.db.fetchone()
+	# 		format_ranking = self.db_format(ranking)
+	# 		format_points = self.db_get_user_points_int(user)
+	# 		total_users = self.db_get_user_total()
+	# 		output = "{} is rank {} out of {}, with {} points!".format(user, str(format_ranking), total_users, format_points)
+	# 		return output
+	# 	except Exception:
+	# 		self.db_add_user(user)
+	# 		points = self.db_get_user_points_int(user)
+	# 		return "{} is at the bottom {}, with {} points FeelsBadMan".format(user, points)
