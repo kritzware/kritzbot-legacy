@@ -1,8 +1,8 @@
 import logging, coloredlogs
 from modules.config import *
 from modules.database import Database
-from modules.commandtext import commands, user_commands, advanced_commands
 from modules.commandmanager import CommandManager
+from modules.commandtext import commands, user_commands, advanced_commands
 
 class Command:
 
@@ -37,7 +37,7 @@ class Command:
 		for keys, values in self.advanced_commands.items():
 			try:
 				command_check = CommandManager(self.line)
-				parameter_2 = command_check.get_message_word(1)
+				parameter_2 = (command_check.get_message_word(1)).strip()
 			except IndexError or NameError:
 				parameter_2 = None
 
@@ -51,3 +51,4 @@ class Command:
 					print("user:",self.user)
 					return values(parameter_2)
 		return ""
+
