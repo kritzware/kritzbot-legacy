@@ -1,7 +1,7 @@
 from threading import Thread
 import time
 
-from modules.database import database
+# from modules.database import database
 
 # class Timer:
 

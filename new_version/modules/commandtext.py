@@ -1,10 +1,13 @@
-from modules.database import database
+from modules.database import Database
 from modules.config import *
+
+database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
+database.database_connection()
 
 commands = {
 	'github': 'Report an issue or suggest ideas at github.com/kritzware/pybot 4Head',
 	'wut': ' Alwaaaays waaaatchiiiiing~ ( ͡° ͜ʖ ͡°)',
-	'bot': 'I\'m not real.. FeelsBadMan',
+	'robot': 'I\'m not real.. FeelsBadMan',
 }
 user_commands = {
 	'help': ', you can view my commands here: [add-link] MrDestructoid'
@@ -12,6 +15,7 @@ user_commands = {
 advanced_commands = {
 	'points': database.db_get_points_user,
 	'rank': database.db_get_user_rank,
+	# 'user': database.db_get_user_rank,
 }
 
 # commands_old = {
