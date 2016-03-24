@@ -1,0 +1,225 @@
+extends layout
+
+block content
+	.ui.menu
+		.header.item #{title}
+		a.item.active(href='/skowalz/commands') Commands
+		a.item(href='/skowalz/points') Points
+		a.item(href='/skowalz/playlist') Playlist
+		.ui.dropdown.item
+			| Admin
+			i.dropdown.icon
+			.menu
+				.item Audio
+				.item CLR
+				.item Stats
+		.right.menu
+			.item
+				.ui.action.left.icon.input
+					button.ui.button.blue Sign In
+			a.item GitHub
+	script.
+		$(document)
+			.ready(function() {
+				$('.ui.menu .ui.dropdown').dropdown({
+					on: 'hover'
+				});
+				$('.ui.menu a.item')
+					.on('click', function() {
+						$(this)
+							.addClass('active')
+							.siblings()
+							.removeClass('active')
+						;
+					})
+				;
+			})
+		;
+	br
+	div.ui.container.center
+		h2 Viewer Commands
+		table.ui.celled.table.purple
+			thead
+				tr
+					th Command
+					|       
+					th Example/Description
+					|       
+					th Activated
+			|   
+			tbody
+				tr
+					td
+						code !uptime
+					|       
+					td SKOWALZ has been streaming for 2 hrs and 5 mins
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td
+						code !localtime
+					|       
+					td Local time: 07:28:08 EST
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td
+						code !help
+					|       
+					td {user}, you can view my commands here: 
+						a(href='/skowalz/commands') kritzware.io/skowalz/commands
+						&nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/28/1.0")
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td 
+						code !points
+					|       
+					td {user} has 3671 points
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td 
+						code !rank
+					|       
+					td {user} is rank 12 out of 263, with 1432 points!
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td 
+						code !roulette 56
+					|       
+					td {user} gambled 56 points and won 112/lost 56! 
+						&nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/88/1.0")
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td 
+						code !duel kritzware 25
+					|       
+					td {user} won the duel against kritzware and gets 50 points! 
+						&nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/88/1.0")
+					|       
+					td.negative
+						i.icon.close
+				|     
+				tr
+					td 
+						code !twitter
+					|       
+					td Make sure to follow Skowalz on twitter for the latest updates! 
+						a(href='https://twitter.com/skowalz') twitter.com/skowalz
+						&nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/88/1.0")
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td 
+						code !merch
+					|       
+					td Want to support the stream AND get some cool loot? Grab some merch here! 
+						a(href='https://goo.gl/1KuFfi') goo.gl/1KuFfi
+						&nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/55338/1.0")
+					|       
+					td.positive
+						i.icon.checkmark
+
+		br
+		h2 Moderator Commands
+			&nbsp;
+			img(src="/images/mod-icon.png")
+		table.ui.celled.table.green
+			thead
+				tr
+					th Command
+					|       
+					th Example/Description
+					|       
+					th Activated
+			|   
+			tbody
+				tr
+					td 
+						code !raffle 10
+					|       
+					td A raffle has started for 10 points! Type !join to enter
+						&nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/88/1.0")
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td 
+						code !giveaway 4
+						&nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/25/1.0")
+					|       
+					td A giveaway has started! Type &nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/25/1.0")
+						span &nbsp; to enter. You have 4 minutes..
+					|       
+					td.positive
+						i.icon.checkmark
+
+		br
+		h2 Admin/Broadcaster Commands
+			&nbsp;
+			img(src="/images/broadcaster-icon.png")
+		table.ui.celled.table.red
+			thead
+				tr
+					th Command
+					|       
+					th Example/Description
+					|       
+					th Activated
+			|   
+			tbody
+				tr
+					td 
+						code !shutdown
+					|       
+					td Shutdown iniated by admin..
+						&nbsp;
+						img(src="https://static-cdn.jtvnw.net/emoticons/v1/30259/1.0")
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td 
+						code !addpoints {user} 10
+					|       
+					td Admin gave 10 points to {user}.
+					|       
+					td.positive
+						i.icon.checkmark
+				|     
+				tr
+					td 
+						code !minuspoints {user} 10
+					|       
+					td Admin took 10 points from {user}.
+					|       
+					td.positive
+						i.icon.checkmark
+		br

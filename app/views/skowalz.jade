@@ -1,0 +1,40 @@
+extends layout
+
+block content
+	.ui.menu
+		.header.item #{title}
+		a.item(href='/skowalz/commands') Commands
+		a.item(href='/skowalz/points') Points
+		a.item(href='/skowalz/playlist') Playlist
+		.ui.dropdown.item
+			| Admin
+			i.dropdown.icon
+			.menu
+				.item Audio
+				.item CLR
+				.item Stats
+		.right.menu
+			.item
+				.ui.action.left.icon.input
+					button.ui.button.blue Sign In
+			a.item GitHub
+	script.
+		$(document)
+			.ready(function() {
+				$('.ui.menu .ui.dropdown').dropdown({
+					on: 'hover'
+				});
+				$('.ui.menu a.item')
+					.on('click', function() {
+						$(this)
+							.addClass('active')
+							.siblings()
+							.removeClass('active')
+						;
+					})
+				;
+			})
+		;
+	h2.ui.container.center Welcome to the website for SkowalzBot
+	br
+	// iframe.ui.center.container(height='720', width='1280', frameborder='0', scrolling='no', src='http://www.twitch.tv/skowalz/embed')
