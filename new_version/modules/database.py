@@ -102,30 +102,16 @@ class Database:
 		return(str(format_user_total))
 
 	def db_get_user_rank(self, user):
+		user = self.bttv_parse(user)
 		try:
 			self.db.execute("SELECT 1 + (SELECT count(*) FROM table1 a WHERE a.points > b.points ) AS rank FROM table1 b WHERE user_id = '{}' ORDER BY rank LIMIT 1".format(user))
 			ranking = self.db.fetchone()
 			format_ranking = self.db_format(ranking)
 			format_points = self.db_get_user_points_int(user)
 			total_users = self.db_get_user_total()
-			output = "You are rank {} out of {} {}, with {} points!".format(str(format_ranking), total_users, user, format_points)
+			output = "{} is rank {} out of {}, with {} points!".format(user, str(format_ranking), total_users, format_points)
 			return output
 		except Exception:
 			self.db_add_user(user)
 			points = self.db_get_user_points_int(user)
-			return "You are at the bottom {}, with {} points FeelsBadMan".format(user, points)
-
-	# def db_get_user_rank(self, user):
-	# 	print(user)
-	# 	try:
-	# 		self.db.execute("SELECT 1 + (SELECT count(*) FROM table1 a WHERE a.points > b.points ) AS rank FROM table1 b WHERE user_id = '{}' ORDER BY rank LIMIT 1".format(user))
-	# 		ranking = self.db.fetchone()
-	# 		format_ranking = self.db_format(ranking)
-	# 		format_points = self.db_get_user_points_int(user)
-	# 		total_users = self.db_get_user_total()
-	# 		output = "{} is rank {} out of {}, with {} points!".format(user, str(format_ranking), total_users, format_points)
-	# 		return output
-	# 	except Exception:
-	# 		self.db_add_user(user)
-	# 		points = self.db_get_user_points_int(user)
-	# 		return "{} is at the bottom {}, with {} points FeelsBadMan".format(user, points)
+			return "{} is the lowest rank, with {} points FeelsBadMan".format(user, points)

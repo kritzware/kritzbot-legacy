@@ -247,17 +247,17 @@ while True:
 			if "!highlight" in message:
 				sendMessage(s, latest_highlight())
 
-			if "!songrequest" in message or "!requestsong" in message:
-				if user == 'Moobot':
-					print(error)
-				else:
-					try:
-						char_2
-						if(char_2):
-							db_minus_points_user(user, points_song_request)
-							sendMessage(s, "{} you just spent {} points on a song request! SeemsGood".format(user, points_song_request))
-					except NameError:
-						print("[ERROR] >>> No song request specified")
+			# if "!songrequest" in message or "!requestsong" in message:
+			# 	if user == 'Moobot':
+			# 		print(error)
+			# 	else:
+			# 		try:
+			# 			char_2
+			# 			if(char_2):
+			# 				db_minus_points_user(user, points_song_request)
+			# 				sendMessage(s, "{} you just spent {} points on a song request! SeemsGood".format(user, points_song_request))
+			# 		except NameError:
+			# 			print("[ERROR] >>> No song request specified")
 
 			#pogchamp count
 			if "!emotecount" in message:

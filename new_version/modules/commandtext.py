@@ -8,6 +8,7 @@ commands = {
 	'github': 'Report an issue or suggest ideas at github.com/kritzware/pybot 4Head',
 	'wut': ' Alwaaaays waaaatchiiiiing~ ( ͡° ͜ʖ ͡°)',
 	'robot': 'I\'m not real.. FeelsBadMan',
+	'spooky': 'Hold me chat, I\'m scared! WutFace WutFace WutFace'
 }
 user_commands = {
 	'help': ', you can view my commands here: [add-link] MrDestructoid'
@@ -15,7 +16,6 @@ user_commands = {
 advanced_commands = {
 	'points': database.db_get_points_user,
 	'rank': database.db_get_user_rank,
-	# 'user': database.db_get_user_rank,
 }
 
 # commands_old = {

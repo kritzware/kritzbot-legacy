@@ -103,7 +103,7 @@ def roulette(user, points):
 			return(wisp + "Sorry {}, you don't have enough points BabyRage".format(user))
 
 		result = int_points * 2
-		roll = random.randrange(1, 4)
+		roll = random.randrange(1, 6)
 		if(roll == 1):
 			db_add_points_user(user, result)
 			return(wisp + "{} won {} points! PogChamp".format(user, result))

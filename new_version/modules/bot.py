@@ -68,9 +68,7 @@ class Bot:
 
 	def pong(self, s, line):
 		if "PING :tmi.twitch.tv" in line:
-			# print("[INFO] PING RECIEVED")
 			response = "PING :tmi.twitch.tv\r\n"
-			# print(response)
 			bytes_response = str.encode(response)
 			s.send(bytes_response)
 			logging.info("PING request : PONG sent")
@@ -93,7 +91,7 @@ class Bot:
 			try:
 				self.send_message(server_connection, command.basic_command())
 				self.send_message(server_connection, command.user_command())
-				self.send_message(server_connection, command.advanced_command())
+				self.send_message(server_connection, command.user_check_command())
 			except:
 				pass
 
