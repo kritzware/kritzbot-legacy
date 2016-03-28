@@ -23,8 +23,8 @@ class Bot:
 			s.send(bytes("PASS {} \r\n".format(self.key), 'UTF-8'))
 			s.send(bytes("NICK {} \r\n".format(self.nick), 'UTF-8'))
 			s.send(bytes("JOIN #{} \r\n".format(self.channel), 'UTF-8'))
-			# s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
-			# s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
+			#s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
+			#s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
 			logging.info("Connecting to TWITCH IRC..")
 			return s
 		except socket.error as e:
@@ -92,6 +92,7 @@ class Bot:
 				self.send_message(server_connection, command.basic_command())
 				self.send_message(server_connection, command.user_command())
 				self.send_message(server_connection, command.user_check_command())
+				self.send_message(server_connection, command.api_command())
 			except:
 				pass
 
@@ -100,7 +101,8 @@ class Bot:
 		server_connection = self.open_socket()
 		self.join_channel(server_connection)
 		readbuffer = ""
-		self.send_message(server_connection, "starting up (dev version 1.1.5) MrDestructoid")
+		# Announce to chat upon joining channel
+		# self.send_message(server_connection, "starting up (dev version 1.1.5) MrDestructoid")
 		while True:
 			readbuffer = readbuffer + server_connection.recv(1024).decode('UTF-8')
 			temp = str.split(readbuffer, "\n")

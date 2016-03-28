@@ -1,21 +1,26 @@
 from modules.database import Database
 from modules.config import *
+from modules.api import API
 
 database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
 database.database_connection()
+api = API(5)
 
 commands = {
-	'github': 'Report an issue or suggest ideas at github.com/kritzware/pybot 4Head',
+	'github': 'Report an issue or suggest ideas at github.com/kritzware/kritzbot 4Head',
 	'wut': ' Alwaaaays waaaatchiiiiing~ ( ͡° ͜ʖ ͡°)',
 	'robot': 'I\'m not real.. FeelsBadMan',
 	'spooky': 'Hold me chat, I\'m scared! WutFace WutFace WutFace'
 }
 user_commands = {
-	'help': ', you can view my commands here: [add-link] MrDestructoid'
+	'help': ', you can view my commands here: {} MrDestructoid'.format(COMMAND_LINK)
 }
 advanced_commands = {
 	'points': database.db_get_points_user,
 	'rank': database.db_get_user_rank,
+}
+api_commands = {
+	'test': api.get_latest_follower
 }
 
 # commands_old = {

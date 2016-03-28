@@ -2,7 +2,7 @@ import logging, coloredlogs
 from modules.config import *
 from modules.database import Database
 from modules.commandmanager import CommandManager
-from modules.commandtext import commands, user_commands, advanced_commands
+from modules.commandtext import commands, user_commands, advanced_commands, api_commands
 from modules.command_modules.raffle import Raffle
 
 class Command:
@@ -13,6 +13,7 @@ class Command:
 		self.commands = commands
 		self.user_commands = user_commands
 		self.advanced_commands = advanced_commands
+		self.api_commands = api_commands
 		# try:
 		# 	command_check = CommandManager(self.line)
 		# 	# self.parameter_2 = command_check.get_message_word(1)
@@ -47,6 +48,12 @@ class Command:
 					return values(self.user)
 				else:
 					return values(parameter_2)
+		return ""
+
+	def api_command(self):
+		for keys, values in self.api_commands.items():
+			if keys in self.line:
+				return values()
 		return ""
 
 	def raffle_command(self, points):
