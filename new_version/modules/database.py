@@ -36,7 +36,7 @@ class Database:
 		self.db.execute("UPDATE table1 set points = points + {} where user_id = '{}'".format(points, user))
 
 	def db_minus_points_user(self, user, points):
-		self.db.execute("UPDATE table1 set points = points - {} where user_id = '{}".format(points, user))
+		self.db.execute("UPDATE table1 set points = points - {} where user_id = '{}'".format(points, user))
 
 	def bttv_parse(self, username):
 		output = username.replace('@', '')

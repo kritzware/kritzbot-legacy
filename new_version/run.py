@@ -18,4 +18,4 @@ if __name__ == '__main__':
 	Thread(target=bot.connection).start()
 	# Thread(target=whisper_bot.connection).start()
 	# Thread(target=points_timer.run).start()
-	# points_timer.auto()
+	# points_timer.auto_message()

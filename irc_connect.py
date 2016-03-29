@@ -189,10 +189,13 @@ while True:
 
 			if "!roulette" in message and user not in cooldown:
 				if(check_int(char_2)):
-					sendMessage(s, roulette(user, char_2))
-					cooldown.append(user)
-					print("[INFO] >>> ", cooldown)
-					run()
+					try:
+						sendMessage(s, roulette(user, char_2))
+						cooldown.append(user)
+						print("[INFO] >>> ", cooldown)
+						run()
+					except:
+						break
 				else:
 					sendMessage(s, "You can only enter int values {} BabyRage".format(user))
 
@@ -221,6 +224,7 @@ while True:
 			if "!join" in message and raffle_state == False:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
+			giveaway_entry_cost = 1000
 			if "!giveaway" in message:
 				if(giveaway_state == False):
 					del giveaway_entries[:]
@@ -229,19 +233,31 @@ while True:
 					if(check_user_class(user, "moderators")):
 						print("[DEBUG] >>> {} started a giveaway!".format(user))
 						giveaway_state = True
-						sendMessage(s, "A giveaway has started. Type {} to enter! You have {} minutes..".format(giveaway_entry, giveaway_time))
+						sendMessage(s, "A giveaway has started with an entry cost of {} points. Type {} to enter! You have {} minutes..".format(giveaway_entry_cost, giveaway_entry, giveaway_time))
 						giveaway_run()
 				else:
 					sendMessage(s, "Giveaway already active FailFish")
-			if giveaway_entry in message and giveaway_state == True:
-				giveaway_entries.append(user)
-				print("[DEBUG] >>> {} added to giveaway".format(user))
-				print("[DEBUG] >>> Giveaway entries: {}".format(giveaway_entries))
+
+			if giveaway_entry in message and giveaway_state == True and user in giveaway_entries:
+				sendMessage(s, "You've already entered the giveaway {} FailFish".format(user))
+
+			if giveaway_entry in message and giveaway_state == True and user not in giveaway_entries:
+				check_user_points = db_get_points_user_int(user)
+				if(check_user_points > giveaway_entry_cost):
+					giveaway_entries.append(user)
+					db_minus_points_user(user, giveaway_entry_cost)
+					print("[DEBUG] >>> {} added to giveaway".format(user))
+					print("[DEBUG] >>> Giveaway entries: {}".format(giveaway_entries))
+				else:
+					sendMessage(s, "You don't have enough points to enter {}!".format(user))
+					break
+			
 
 			### DEBUG ###
-			if "!test" in message:
-				print(check_stream_online())
-
+			# if "!test" in message:
+			# 	print(cooldown)
+			# if "!test123" in message:
+			# 	cooldown.pop()
 
 
 			if "!highlight" in message:
@@ -260,71 +276,76 @@ while True:
 						print("[ERROR] >>> No song request specified")
 
 			#pogchamp count
-			if "!emotecount" in message:
-				emote = char_2
-				sendMessage(s, str(db_get_emote_count(emote)))
-			if "PogChamp" in message:
-				db_add_emote_count("PogChamp")
-			if "Kappa" in message:
-				db_add_emote_count("Kappa")
+			# if "!emotecount" in message:
+			# 	emote = char_2
+			# 	sendMessage(s, str(db_get_emote_count(emote)))
+			# if "PogChamp" in message:
+			# 	db_add_emote_count("PogChamp")
+			# if "Kappa" in message:
+			# 	db_add_emote_count("Kappa")
 
 			if "!duel" in message:
-				test = re.match('(\w+\s\w+)', message[6:])
-				if(test) == None:					
-					sendMessage(s, "You didn't specify an amount {}! FailFish".format(user))
+				try:
+					test = re.match('(\w+\s\w+)', message[6:])
+					if(test) == None:					
+						sendMessage(s, "You didn't specify an amount {}! FailFish".format(user))
+						break
+					if(check_int(points_duel)):
+
+						check_user_points = db_get_points_user_int(user)
+						if(check_user_points < int(points_duel)):
+							sendMessage(s, "Sorry {}, you don't have enough points for that BabyRage".format(user))
+							break
+
+						opponent = char_2
+						format_opponent = bttv_user_replace(opponent)
+						temp_opponent.append(opponent.lower())
+						temp_user.append(user.lower())
+						duel_state = True
+
+						if(format_opponent == twitch_irc.get('NICK')):
+							sendMessage(s, "{}, I always win the duel! MingLee".format(user))
+							break
+
+						duel_run()
+						sendMessage(s, "{}, you have been challenged to {} points by {}! Type !accept to duel.".format(opponent, points_duel, user))
+					else:
+						sendMessage(s, "{} you can only enter integers! BabyRage".format(user))
+
+						print(points_duel)
+						print(temp_opponent)
+						print(duel_state)
+				except:
 					break
-				if(check_int(points_duel)):
-
-					check_user_points = db_get_points_user_int(user)
-					if(check_user_points < int(points_duel)):
-						sendMessage(s, "Sorry {}, you don't have enough points for that BabyRage".format(user))
-						break
-
-					opponent = char_2
-					format_opponent = bttv_user_replace(opponent)
-					temp_opponent.append(opponent.lower())
-					temp_user.append(user.lower())
-					duel_state = True
-
-					if(format_opponent == twitch_irc.get('NICK')):
-						sendMessage(s, "{}, I always win the duel! MingLee".format(user))
-						break
-
-					duel_run()
-					sendMessage(s, "{}, you have been challenged to {} points by {}! Type !accept to duel.".format(opponent, points_duel, user))
-				else:
-					sendMessage(s, "{} you can only enter integers! BabyRage".format(user))
-
-					print(points_duel)
-					print(temp_opponent)
-					print(duel_state)
 
 			if "!accept" in message and duel_state and (user in temp_user or user in temp_opponent):
-
-				print("[DEBUG] >>> Points to duel >>> ", points_duel)
-				print("[DEBUG] >>> Users in temp_opponent >>> {}".format(temp_opponent))
 				try:
-					# !duel pokchok 10
-					user_to_duel = temp_opponent[0] # pokchok
-					original_duel_user = temp_user[0] # kritzware
-				except Exception as e:
-					print(e)
-					sendMessage(s, "{} you don't currently have an active duel Kappa".format(user))
+					print("[DEBUG] >>> Points to duel >>> ", points_duel)
+					print("[DEBUG] >>> Users in temp_opponent >>> {}".format(temp_opponent))
+					try:
+						# !duel pokchok 10
+						user_to_duel = temp_opponent[0] # pokchok
+						original_duel_user = temp_user[0] # kritzware
+					except Exception as e:
+						print(e)
+						sendMessage(s, "{} you don't currently have an active duel Kappa".format(user))
+						break
+
+					print(user_to_duel)		
+					print(original_duel_user) 	
+
+					if(user in temp_opponent):
+						print("[DEBUG] >>> Checking {} in temp_opponents".format(user))
+						print(original_duel_user + " duelling " + user_to_duel)
+						sendMessage(s, duel(original_duel_user, user_to_duel, points_duel))
+						temp_opponent.remove(user_to_duel)
+						temp_user.remove(original_duel_user)
+						duel_state = False
+						points_duel = ''
+					else:
+						print("[ERROR] >>> {} not found in temp_opponent".format(user))
+				except:
 					break
-
-				print(user_to_duel)		
-				print(original_duel_user) 	
-
-				if(user in temp_opponent):
-					print("[DEBUG] >>> Checking {} in temp_opponents".format(user))
-					print(original_duel_user + " duelling " + user_to_duel)
-					sendMessage(s, duel(original_duel_user, user_to_duel, points_duel))
-					temp_opponent.remove(user_to_duel)
-					temp_user.remove(original_duel_user)
-					duel_state = False
-					points_duel = ''
-				else:
-					print("[ERROR] >>> {} not found in temp_opponent".format(user))
 
 			if "!hug" in message:
 				try:
@@ -332,11 +353,11 @@ while True:
 				except:
 					pass
 
-			if "!+fucksgiven" in message:
-				if(check_user_class(user, "moderators")):
-					sendMessage(s, db_add_counter1(user))
-			if "!fucksgiven" in message:
-				sendMessage(s, db_get_counter1(user))
+			# if "!+fucksgiven" in message:
+			# 	if(check_user_class(user, "moderators")):
+			# 		sendMessage(s, db_add_counter1(user))
+			# if "!fucksgiven" in message:
+			# 	sendMessage(s, db_get_counter1(user))
  
 
 			# if "!songrequest" in message:
@@ -350,12 +371,17 @@ while True:
 			if "!uptime" in message:
 				print("[COMMAND] >>> !uptime")
 				sendMessage(s, uptime())
-			#if "!followage" in message:
-			#	print("[COMMAND] >>> !followage")
-			#	sendMessage(s, followage(user))
+			# if "!followage" in message:
+			# 	print("[COMMAND] >>> !followage")
+			# 	try:
+			# 		sendMessage(s, followage(user))
+			# 	except urllib.error.URLError as e:
+			# 		print(e)
+			# 		break
 			if "!top" in message:
 				print("[COMMAND] >>> !top")
 				sendMessage(s, db_get_points_user_first()) 
+				break
 			# if "!quote" in message:
 			# 	print("[COMMAND] >>> !quote")
 			# 	sendMessage(s, quote())
@@ -363,43 +389,55 @@ while True:
 			# 	print("[COMMAND] >>> !addquote")
 			# 	sendMessage(s, addquote(quote_to_add))
 
-			if "!followage" in message:
-				print("[COMMAND] >>> !followage")
-				sendMessage(s, followage(user))
+			# if "!followage" in message:
+			# 	print("[COMMAND] >>> !followage")
+			# 	sendMessage(s, followage(user))
 
 			if "!streamer" in message:
 				sendMessage(s, streamer(user, char_2))
+				break
 
 			### DEFAULT COMMANDS ###
 			if "!localtime" in message:
 				print("[COMMAND] >>> !localtime")
 				sendMessage(s, local_time('US/Eastern'))
+				break
 			if "!gmt" in message:
 				print("[COMMAND] >>> !gmt localtime")
 				sendMessage(s, local_time('Europe/London'))
+				break
 			if "!admin" in message:
 				print("[COMMAND] >>> !admin")
 				sendMessage(s, basic_command('admin', user))
+				break
 			if "!help" in message or "!commands" in message:
 				print("[COMMAND] >>> !help")
 				sendMessage(s, basic_command('help', user))
+				break
 			if "!twitter" in message:
 				print("[COMMAND] >>> !twitter")
 				sendMessage(s, basic_command('twitter', user))
+				break
 			if "!spooky" in message:
 				print("[COMMAND] >>> !spooky")
 				sendMessage(s, basic_command('spooky', user))
+				break
 			if "!vampire" in message:
 				sendMessage(s, basic_command('vampire', user))
+				break
 			if "!bot" in message:
 				print("[COMMAND] >>> !bot")
 				sendMessage(s, basic_command('bot', user))
+				break
 			if "!hype" in message:
 				sendMessage(s, basic_command('hype', user))
+				break
 			if "!chatlove" in message:
 				sendMessage(s, basic_command('chatlove', user))
+				break
 			if "!merch" in message:
 				sendMessage(s, basic_command('merch', user))
+				break
 			if "!donger" in message:
 				print("[COMMAND] >>> !donger")
 				try:
@@ -415,12 +453,17 @@ while True:
 			if "!rigged" in message:
 				print("[COMMAND] >>> !rigged")
 				sendMessage(s, basic_command('rigged', user))
+				break
 			if "!raid" in message:
 				print("[COMMAND] >>> !raid")
 				sendMessage(s, basic_command('raid', user))
-
+				break
 			if "!discord" in message:
 				sendMessage(s, "Chat with other viewers on discord! discord.gg/0dlGiuDScFuAb2vx MingLee")
+				break
+			if "!ohno" in message:
+				sendMessage(s, "~ BabyRage ~ \ PedoBear /")
+				break
 
 			# ### STREAMERS###
 			# if "!streamer acorn" in message:
@@ -432,6 +475,7 @@ while True:
 			if "!coloring" in message:
 				print("[COMMAND] >>> !coloring")
 				sendMessage(s, update_command('coloring', user))
-
+				break
+				
 			# if "!splinter" in message:
 			# 	sendMessage(s, "NO FUN ALLOWED FUNgineer NO SONG REQUESTS FUNgineer")

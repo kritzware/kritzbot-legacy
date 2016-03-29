@@ -2,7 +2,7 @@ import random
 
 commands = {
 	'admin': 'Contact Kritzware if you have any queries or wish to report bugs 4Head',
-	'help': ', you can view my commands here: https://github.com/LouisBluhm/PyBot#readme MrDestructoid',
+	'help': ', you can view my commands here: kritzware.io/skowalz/commands MrDestructoid',
 	'twitter': 'Make sure to follow Skowalz on twitter for the latest updates! twitter.com/skowalz PogChamp',
 	'spooky': "Hold me chat, I'm scared! WutFace WutFace WutFace",
 	'donger': 'ᕙ༼ຈل͜ຈ༽ᕗ. ʜᴀʀᴅᴇʀ,﻿ ʙᴇᴛᴛᴇʀ, ғᴀsᴛᴇʀ, ᴅᴏɴɢᴇʀ .ᕙ༼ຈل͜ຈ༽ᕗ',

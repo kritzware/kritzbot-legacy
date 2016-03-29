@@ -1,11 +1,12 @@
 import socket
 import string
-import threading
 import sys
 import logging, coloredlogs
+from threading import Thread
 
 from modules.commandmanager import CommandManager
 from modules.command import Command
+from modules.timer import Timer
 
 class Bot:
 
@@ -15,6 +16,7 @@ class Bot:
 		self.key = key
 		self.nick = nick
 		self.channel = channel
+		self.points_timer = Timer(10)
 
 	def open_socket(self):
 		try:
@@ -23,8 +25,8 @@ class Bot:
 			s.send(bytes("PASS {} \r\n".format(self.key), 'UTF-8'))
 			s.send(bytes("NICK {} \r\n".format(self.nick), 'UTF-8'))
 			s.send(bytes("JOIN #{} \r\n".format(self.channel), 'UTF-8'))
-			#s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
-			#s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
+			# s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
+			# s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
 			logging.info("Connecting to TWITCH IRC..")
 			return s
 		except socket.error as e:
@@ -89,10 +91,10 @@ class Bot:
 			parse_command = command_check.parse_message(message)
 			command = Command(parse_command, user)
 			try:
-				self.send_message(server_connection, command.basic_command())
-				self.send_message(server_connection, command.user_command())
-				self.send_message(server_connection, command.user_check_command())
-				self.send_message(server_connection, command.api_command())
+				self.send_message(server_connection, command.return_command())
+				# self.send_message(server_connection, command.text_command())
+				# self.send_message(server_connection, command.user_check_command())
+				# self.send_message(server_connection, command.api_command())
 			except:
 				pass
 
@@ -101,8 +103,13 @@ class Bot:
 		server_connection = self.open_socket()
 		self.join_channel(server_connection)
 		readbuffer = ""
+
 		# Announce to chat upon joining channel
 		# self.send_message(server_connection, "starting up (dev version 1.1.5) MrDestructoid")
+
+		# Start auto message thread
+		# Thread(target=self.points_timer.auto_message).start()
+
 		while True:
 			readbuffer = readbuffer + server_connection.recv(1024).decode('UTF-8')
 			temp = str.split(readbuffer, "\n")
@@ -112,6 +119,10 @@ class Bot:
 				if(self.pong(server_connection, line)):
 					break
 				user = self.get_user(line)
+				return_user(user)
 				message = self.get_message(line)
 				logging.info("{}: {}".format(user, message))
 				self.bot_commands(user, message)
+
+def return_user(chatter):
+	return chatter

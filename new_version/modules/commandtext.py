@@ -10,15 +10,37 @@ commands = {
 	'github': 'Report an issue or suggest ideas at github.com/kritzware/kritzbot 4Head',
 	'wut': ' Alwaaaays waaaatchiiiiing~ ( ͡° ͜ʖ ͡°)',
 	'robot': 'I\'m not real.. FeelsBadMan',
-	'spooky': 'Hold me chat, I\'m scared! WutFace WutFace WutFace'
+	'spooky': 'Hold me chat, I\'m scared! WutFace WutFace WutFace',
+	'help': '<user>, you can view my commands here: {} MrDestructoid'.format(COMMAND_LINK),
+	'doggy': 'EleGiggle doggyfood has lost 1647359 points EleGiggle',
+	'donger': 'ᕙ༼ຈل͜ຈ༽ᕗ. ʜᴀʀᴅᴇʀ,﻿ ʙᴇᴛᴛᴇʀ, ғᴀsᴛᴇʀ, ᴅᴏɴɢᴇʀ .ᕙ༼ຈل͜ຈ༽ᕗ',
+	'twitter': 'Make sure to follow {} on twitter for the latest updates! {} OMGScoots'.format(CHANNEL, TWITTER),
+	'merch': 'Want to support the stream AND get some cool loot? Grab some merch here! {} KappaPride'.format(MERCH),
+	'coloring': 'Grab a coffee & ease into the day KappaRoss Expect me here weekday mornings from about 6:15AM - 7:00AM EST. Dope-ass coloring pages from etsy.me/1KbIzqO',
+	'rigged': 'DansGame RIGGED DansGame RIGGED DansGame',
+	'discord': 'Chat with other viewers on discord! {} MingLee'.format(DISCORD),
+	'raid': 'SKOWALZ SQUALL PogChamp PogChamp',
+	'hype': 'PogChamp PogChamp PogChamp',
+	'chatlove': 'CHAT LOOOVE bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple bleedPurple',
+	'nice': '☑ Stream online ☑ Earning points ☑ KappaPride in chat - Must be SKOWALZ stream FeelsGoodMan',
+	'kritz': 'RAFFLE BabyRage KRITZWARE, RAFFLE BabyRage WE WANT RAFFLE KRITZ BabyRage',
+	'fu': 'Hey <param2> ( ° ͜ʖ͡°)╭∩╮',
+	'hug': '<user> hugs <param2> (っಠ‿ಠ)っ <3 <3',
+	'test': '<user> <param2> <param3>'
 }
-user_commands = {
-	'help': ', you can view my commands here: {} MrDestructoid'.format(COMMAND_LINK)
-}
-advanced_commands = {
-	'points': database.db_get_points_user,
-	'rank': database.db_get_user_rank,
-}
+
+# advanced_commands = {
+# 	'points': database.db_get_points_user,
+# 	'rank': database.db_get_user_rank,
+# }
+advanced_commands = ['points',
+					 'rank',
+					]
+
+test_commands = ['points',
+				 'rank',
+				]
+
 api_commands = {
 	'test': api.get_latest_follower
 }
@@ -47,9 +69,10 @@ api_commands = {
 
 # quotes = ['"rebound it like your last relationship!" - skowalz 2k16', ]
 
-# auto_messages = ['Make sure to follow SKOWALZ on twitter for the latest updates! twitter.com/skowalz',
-# 'Check out the latest highlights here! twitch.tv/skowalz/profile/highlights', 
-# 'Make sure to follow the channel to get notified of the latest streams!']
+auto_messages = ['Make sure to follow SKOWALZ on twitter for the latest updates! {}'.format(TWITTER),
+ 				 'Check out the latest highlights here! twitch.tv/{}/profile/highlights'.format(CHANNEL), 
+ 				 'Make sure to follow the channel to get notified of the latest streams!',
+ 				]
 
 # def chat_auto_messages():
 
