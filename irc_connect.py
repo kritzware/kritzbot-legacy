@@ -224,20 +224,6 @@ while True:
 			if "!join" in message and raffle_state == False:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
-			giveaway_entry_cost = 1000
-			if "!giveaway" in message:
-				if(giveaway_state == False):
-					del giveaway_entries[:]
-					giveaway_time = int(char_2)
-					giveaway_entry = char_3
-					if(check_user_class(user, "moderators")):
-						print("[DEBUG] >>> {} started a giveaway!".format(user))
-						giveaway_state = True
-						sendMessage(s, "A giveaway has started with an entry cost of {} points. Type {} to enter! You have {} minutes..".format(giveaway_entry_cost, giveaway_entry, giveaway_time))
-						giveaway_run()
-				else:
-					sendMessage(s, "Giveaway already active FailFish")
-
 			if giveaway_entry in message and giveaway_state == True and user in giveaway_entries:
 				sendMessage(s, "You've already entered the giveaway {} FailFish".format(user))
 
@@ -251,6 +237,20 @@ while True:
 				else:
 					sendMessage(s, "You don't have enough points to enter {}!".format(user))
 					break
+
+			giveaway_entry_cost = 1000
+			if "!giveaway" in message:
+				if(giveaway_state == False):
+					del giveaway_entries[:]
+					giveaway_time = int(char_2)
+					giveaway_entry = char_3
+					if(check_user_class(user, "moderators")):
+						print("[DEBUG] >>> {} started a giveaway!".format(user))
+						giveaway_state = True
+						sendMessage(s, "A giveaway has started with an entry cost of {} points. Type {} to enter! You have {} minutes..".format(giveaway_entry_cost, giveaway_entry, giveaway_time))
+						giveaway_run()
+				else:
+					sendMessage(s, "Giveaway already active FailFish")
 			
 
 			### DEBUG ###
