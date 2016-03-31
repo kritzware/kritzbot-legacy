@@ -465,6 +465,14 @@ while True:
 				sendMessage(s, "~ BabyRage ~ \ PedoBear /")
 				break
 
+			if "!12hr" in message:
+				sendMessage(s, "Welcome to the 12HR STREAMTACULAR! PogChamp Today's games include: Chariot, Tales from the Borderlands, SKYRIM, SingStar, and a viewer choice! Vote here >> strawpoll.me/7236786 Stream will end at approx 10PM EST. Thanks for stopping by!")
+				break
+
+			if "!singstar" in message:
+				sendMessage(s, "Vote for SingStar songs! strawpoll.me/7236839 I will be singing 8 to 10... Ohh, boy... Keepo")
+				break
+
 			# ### STREAMERS###
 			# if "!streamer acorn" in message:
 			# 	sendMessage(s, streamer_acorn(user))
