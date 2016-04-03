@@ -10,7 +10,7 @@ from modules.timer import Timer
 coloredlogs.install()
 
 logging.info("Instance of bot created..")
-logging.info("Hello world!")
+logging.info("{} spawned: Hello world!".format(NICK))
 
 bot = Bot(HOST, PORT, PASS, NICK, CHANNEL)
 

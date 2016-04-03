@@ -187,6 +187,10 @@ while True:
 			# 	print(rank_user_check)
 			# 	sendMessage(s, db_get_another_user_rank(rank_user_check))
 
+			if "!wishlist" in message:
+				sendMessage(s, "If you feel as though you wanna show X-tra Support, you can do this via amzn.com/w/1D0N2LFHB5M97 All funds and items go right back into the stream for us to enjoy together.")
+				break
+
 			if "!roulette" in message and user not in cooldown:
 				if(check_int(char_2)):
 					try:

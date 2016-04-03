@@ -2,8 +2,6 @@ from modules.database import Database
 from modules.config import *
 from modules.api import API
 
-database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
-database.database_connection()
 api = API(5)
 
 commands = {

@@ -5,6 +5,9 @@ from modules.commandmanager import CommandManager
 from modules.commandtext import commands, advanced_commands, api_commands
 from modules.points import Points
 
+database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
+database.database_connection()
+
 class Command:
 
 	def __init__(self, line, user):
@@ -31,7 +34,9 @@ class Command:
 			if keys in self.line:
 				return self.text_command(keys, values, parameter_2, parameter_3)
 
-		self.advanced_command(self.line, parameter_2, parameter_3)
+		for keys in self.advanced_commands:
+			if keys in self.line:
+				return self.advanced_command(self.line, parameter_2, parameter_3)
 
 		return ""
 
@@ -46,14 +51,21 @@ class Command:
 		except:
 			return response
 
-	def advanced_command(self, cmd, var2, var3):
-		print("commands >", self.advanced_commands)
-		print("cmd={}=".format(cmd))
+	def advanced_command(self, line, var2, var3):
+		cmd = line.strip()
 
-		if self.line in self.advanced_commands:
-			print(True)
-		else:
-			print(False)
+		try:
+			if var2 is None:
+				if cmd == 'points':
+					return database.db_get_points_user(self.user)
+				if cmd == 'rank':
+					return database.db_get_user_rank(self.user)
+		except:
+			if cmd == 'points':
+				return database.db_get_points_user(var2)
+			if cmd == 'rank':
+				return database.db_get_user_rank(var2)			
+
 
 	# Return a basic text command
 	# def text_command(self):
