@@ -126,6 +126,8 @@ while True:
 				char_1 = word_n(message, 0)
 				char_2 = word_n(message, 1)
 				char_3 = word_n(message, 2)
+				char_4 = word_n(message, 3)
+				giveaway_entry_cost = int(char_4)
 				points_duel = char_3
 				quote_to_add = message[10:]
 				only_int = get_int(message)
@@ -228,8 +230,8 @@ while True:
 			if "!join" in message and raffle_state == False:
 				sendMessage(s, "{}, there is currently no active raffle BabyRage".format(user))
 
-			if giveaway_entry in message and giveaway_state == True and user in giveaway_entries:
-				sendMessage(s, "You've already entered the giveaway {} FailFish".format(user))
+			# if giveaway_entry in message and giveaway_state == True and user in giveaway_entries:
+			# 	sendMessage(s, "You've already entered the giveaway {} FailFish".format(user))
 
 			if giveaway_entry in message and giveaway_state == True and user not in giveaway_entries:
 				check_user_points = db_get_points_user_int(user)
@@ -242,7 +244,6 @@ while True:
 					sendMessage(s, "You don't have enough points to enter {}!".format(user))
 					break
 
-			giveaway_entry_cost = 1000
 			if "!giveaway" in message:
 				if(giveaway_state == False):
 					del giveaway_entries[:]
