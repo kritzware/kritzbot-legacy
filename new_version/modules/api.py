@@ -22,9 +22,9 @@ class API:
 		data = self.getJSON('https://api.twitch.tv/kraken/streams?channel={}'.format(CHANNEL))
 		online = int(data['_total'])
 		if(online == 1):
-			return "Stream online : True"
+			return True
 		else:
-			return "Stream offline : False"
+			return False
 
 	def check_user_class(self, user, user_class):
 		data = self.getJSON('https://tmi.twitch.tv/group/user/{}/chatters'.format(CHANNEL))

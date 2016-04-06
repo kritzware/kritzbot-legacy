@@ -24,15 +24,19 @@ commands = {
 	'kritz': 'RAFFLE BabyRage KRITZWARE, RAFFLE BabyRage WE WANT RAFFLE KRITZ BabyRage',
 	'fu': 'Hey <param2> ( ° ͜ʖ͡°)╭∩╮',
 	'hug': '<user> hugs <param2> (っಠ‿ಠ)っ <3 <3',
-	'test': '<user> <param2> <param3>'
 }
 
 # advanced_commands = {
 # 	'points': database.db_get_points_user,
 # 	'rank': database.db_get_user_rank,
 # }
-advanced_commands = ['points',
-					 'rank',
+advanced_commands = ['rank',
+					 'points',
+					 'uptime',
+					 'localtime',
+					 'playsound',
+					 'roulette',
+					 'test',
 					]
 
 test_commands = ['points',
