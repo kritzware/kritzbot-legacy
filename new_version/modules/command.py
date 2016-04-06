@@ -22,7 +22,7 @@ class Command:
 		self.api_commands = api_commands
 		self.points = Points(self.user)
 		self.time = Time()
-		self.playsound = PlaySound(self.user)
+		self.playsound = PlaySound(self.user, 10)
 		self.api = API(1)
 
 	def return_command(self):
