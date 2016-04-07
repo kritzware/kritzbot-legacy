@@ -18,11 +18,14 @@ class PlaySound:
 		self.cost = cost
 
 	def playsound(self, sound):
-		self.add_sound_to_queue(sound, self.get_filepath())
-		# self.start_timer()
-		PlaySoundTimerRun()
-		database.db_minus_points_user(self.user, self.cost)
-		return "{} just spent {} points on an audio clip!".format(self.user, self.cost)
+		if(database.db_get_user_points_int(self.user) > self.cost):
+			self.add_sound_to_queue(sound, self.get_filepath())
+			database.db_minus_points_user(self.user, self.cost)
+			# self.start_timer()
+			PlaySoundTimerRun()
+			return "{} just spent {} points on an audio clip!".format(self.user, self.cost)
+		else:
+			return "{}, you don't have enough points FailFish".format(self.user)
 
 	def get_filepath(self):
 		basepath = os.path.dirname(__file__)
