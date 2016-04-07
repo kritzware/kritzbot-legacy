@@ -3,35 +3,29 @@ from threading import Thread
 import time
 from random import choice
 
+from modules.config import *
 from modules.commandtext import auto_messages
-# from modules.database import database
+from modules.database import Database
 
-# class Timer:
-
-# 	def __init__(self, time):
-# 		self.time = time
-
-# 	def start_timer(self):
-# 		print("timer started")
-# 		threading.Timer(self.time, self.action()).start()
-
-# 	def action(self):
-# 		print("adding points")
-# 		database.db_add_points_user("kritzware", 100)
+database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
+database.database_connection()
 
 class Timer(Thread):
 
-	def __init__(self, time):
+	def __init__(self, user, time, timer_list, name):
+		# Seconds
+		self.user = user
 		self.time = time
 		super(Timer, self).__init__()
 		self.temp_message = ''
-
+		self.timer_list = timer_list
+		self.name = name
+		
 	def run(self):
-		half_time = int(self.time) / 2
-		time.sleep(half_time)
-		print("adding points")
-		time.sleep(half_time)
-		print("points added")
+		print("timer started")
+		database.db_add_points_user(self.user, VIEWER_POINT_GAIN)
+		time.sleep(self.time)
+		print("adding points for {}".format(self.user))
 		self.auto()
 
 	def auto(self):
@@ -51,3 +45,12 @@ class Timer(Thread):
 
 	def get_message(self):
 		return self.temp_message
+
+	def cooldown(self):
+		time.sleep(self.time)
+		logging.info("{} removed from list {}".format(self.timer_list[0], self.name))
+		self.timer_list.pop(0)
+
+	def cooldown_run(self):
+		self.timer_list.append(self.user)
+		self.cooldown()

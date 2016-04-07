@@ -8,7 +8,6 @@ from modules.api import API
 from modules.modules.time import Time
 from modules.modules.playsound import PlaySound
 
-
 database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
 database.database_connection()
 
@@ -22,7 +21,7 @@ class Command:
 		self.api_commands = api_commands
 		self.points = Points(self.user)
 		self.time = Time()
-		self.playsound = PlaySound(self.user, 10)
+		self.playsound = PlaySound(self.user, PLAYSOUND_COST)
 		self.api = API(1)
 
 	def return_command(self):
