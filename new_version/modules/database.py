@@ -29,6 +29,9 @@ class Database:
 		format_data = re.findall('[+-]?\d+(?:\.\d+)?', str(data))
 		return format_data[0]
 
+	def db_tuple_to_string(self, data):
+		return ''.join(data)
+
 	def db_add_user(self, user):
 		self.db.execute("INSERT ignore into table1 VALUES ('{}', 0)".format(user))
 
@@ -81,3 +84,9 @@ class Database:
 		#	self.db_add_user(user)
 		#	points = self.db_get_user_points_int(user)
 		#	return "{} is the lowest rank, with {} {} FeelsBadMan".format(user, points, CURRENCY)
+
+	def db_get_follower(self):
+		self.db.execute("SELECT follower FROM latest_follower")
+		follower = self.db.fetchall()
+		follower_parsed = self.db_tuple_to_string(follower[0])
+		return follower_parsed

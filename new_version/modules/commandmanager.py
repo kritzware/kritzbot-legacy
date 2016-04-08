@@ -13,7 +13,10 @@ class CommandManager:
 			return False
 
 	def parse_message(self, line):
-		return line[1:]
+		#cmd = self.get_message_word(0).replace('!', '')
+		# line[1:]
+		cmd = line.replace('!', '')
+		return cmd
 
 	def get_message_word(self, n):
 		return self.line.split(" ")[n]
