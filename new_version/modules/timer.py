@@ -40,9 +40,6 @@ class Timer(Thread):
 		time.sleep(self.time)
 		self.auto_message_run()
 
-	def auto_message_run(self):
-		self.auto_message()
-
 	def get_message(self):
 		return self.temp_message
 

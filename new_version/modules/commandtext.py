@@ -21,6 +21,7 @@ commands = {
 	'kritz': 'RAFFLE BabyRage KRITZWARE, RAFFLE BabyRage WE WANT RAFFLE KRITZ BabyRage',
 	'fu': 'Hey <param2> ( ° ͜ʖ͡°)╭∩╮',
 	'hug': '<user> hugs <param2> (っಠ‿ಠ)っ <3 <3',
+	'currency': 'You gain points by watching the stream. Check how many you have with !points, or gamble them away with !roulette Kappa'
 }
 
 # advanced_commands = {

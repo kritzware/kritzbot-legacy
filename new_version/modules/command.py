@@ -1,4 +1,6 @@
 import logging, coloredlogs
+from threading import Thread
+
 from modules.config import *
 from modules.database import Database
 from modules.commandmanager import CommandManager
@@ -82,4 +84,6 @@ class Command:
 			return self.points.roulette(var2)
 
 		if line == 'test':
-			return self.followalert.check_follower()
+			# return self.followalert.check_follower()
+			Thread(target=self.followalert.check_follower_run).start()
+			return "follow thread started Kappa"

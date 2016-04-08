@@ -90,3 +90,7 @@ class Database:
 		follower = self.db.fetchall()
 		follower_parsed = self.db_tuple_to_string(follower[0])
 		return follower_parsed
+
+	def db_new_follower(self, follower):
+		self.db.execute("UPDATE latest_follower SET follower = '{}'".format(follower))
+		logging.info("New follower added to DB")
