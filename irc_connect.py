@@ -163,11 +163,17 @@ while True:
 			# 	print(char_3)
 			# 	sendMessage(s, str(give_points(user, char_2, char_3)))
 
+			if "!kyla" in message:
+				sendMessage(s, "facebook.com/kylacosplay HotPokket instagram.com/kylacovert HotPokket")
+				break
+
 			if "!doggy" in message:
 				sendMessage(s, "EleGiggle doggyfood has lost 1647359 points EleGiggle")
+				break
 
 			if "!kritz" in message:
 				sendMessage(s, "RAFFLE BabyRage KRITZWARE, RAFFLE BabyRage WE WANT RAFFLE KRITZ BabyRage")
+				break
 
 			if "!fu" in message:
 				try:
