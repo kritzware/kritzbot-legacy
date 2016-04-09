@@ -34,6 +34,8 @@ advanced_commands = ['rank',
 					 'localtime',
 					 'playsound',
 					 'roulette',
+					 'raffle',
+					 'join',
 					 'test'
 					]
 

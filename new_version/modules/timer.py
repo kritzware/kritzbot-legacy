@@ -6,6 +6,7 @@ from random import choice
 from modules.config import *
 from modules.commandtext import auto_messages
 from modules.database import Database
+from modules.api import API
 
 database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
 database.database_connection()
@@ -20,12 +21,20 @@ class Timer(Thread):
 		self.temp_message = ''
 		self.timer_list = timer_list
 		self.name = name
+		self.api = API(1)
 		
 	def run(self):
-		print("timer started")
-		database.db_add_points_user(self.user, VIEWER_POINT_GAIN)
+		for viewers in self.api.get_viewers_json('viewers'):
+			if database.db_check_user_exists(viewers) == False:
+				database.db_add_user(viewers)
+			database.db_add_points_user(viewers, VIEWER_POINT_GAIN) 
+
+		for viewers in self.api.get_viewers_json('moderators'):
+			if database.db_check_user_exists(viewers) == False:
+				database.db_add_user(viewers)
+			database.db_add_points_user(viewers, VIEWER_POINT_GAIN)
+
 		time.sleep(self.time)
-		print("adding points for {}".format(self.user))
 		self.auto()
 
 	def auto(self):
@@ -51,3 +60,7 @@ class Timer(Thread):
 	def cooldown_run(self):
 		self.timer_list.append(self.user)
 		self.cooldown()
+
+	def raffle_run(self):
+		time.sleep(self.time)
+		print("timer over")

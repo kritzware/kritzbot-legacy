@@ -41,6 +41,14 @@ class Database:
 	def db_minus_points_user(self, user, points):
 		self.db.execute("UPDATE table1 set points = points - {} where user_id = '{}'".format(points, user))
 
+	def db_check_user_exists(self, user):
+		points = self.db.execute("SELECT user_id FROM table1 where user_id = '{}'".format(user))
+		check_user_exists = self.db.fetchone()
+		if(check_user_exists == None):
+			return False
+		else:
+			return True
+
 	def bttv_parse(self, username):
 		output = username.replace('@', '')
 		return output

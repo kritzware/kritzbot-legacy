@@ -16,7 +16,7 @@ class Bot:
 		self.key = key
 		self.nick = nick
 		self.channel = channel
-		# self.points_timer = Timer("not_needed_here", 10, [])
+		self.points_timer = Timer("not_needed_here", 120, [], "ViewerTimer")
 
 	def open_socket(self):
 		try:
@@ -108,7 +108,7 @@ class Bot:
 		# self.send_message(server_connection, "starting up (dev version 1.1.5) MrDestructoid")
 
 		# Start auto message thread
-		# Thread(target=self.points_timer.auto).start()
+		Thread(target=self.points_timer.auto).start()
 
 		while True:
 			readbuffer = readbuffer + server_connection.recv(1024).decode('UTF-8')

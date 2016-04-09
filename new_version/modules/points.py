@@ -19,10 +19,14 @@ class Points:
 		self.cooldown_timer = Timer(self.user, 120, RouletteCooldown, "Roulette")
 
 	def roulette(self, amount):
-
 		if(self.user in self.cooldown_timer.timer_list):
 			return ""
 		else:
+			get_user_points = database.db_get_user_points_int(self.user)
+			if(int(amount) > get_user_points):
+				return "You don't have {} points {} FailFish".format(amount, self.user)
+			if(int(amount) <= 0):
+				return ""
 			gamble = randrange(1, 4)
 			if(gamble == 1):
 				total_win = int(amount) * 2

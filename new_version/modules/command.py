@@ -10,9 +10,12 @@ from modules.api import API
 from modules.modules.time import Time
 from modules.modules.playsound import PlaySound
 from modules.modules.followalert import FollowAlert
+from modules.modules.raffle import Raffle, RaffleEntries
 
 database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
 database.database_connection()
+
+RaffleActive = False
 
 class Command:
 
@@ -26,6 +29,7 @@ class Command:
 		self.time = Time()
 		self.playsound = PlaySound(self.user, PLAYSOUND_COST)
 		self.followalert = FollowAlert('FollowAlert')
+		self.api = API(1)
 
 	def return_command(self):
 		try:
@@ -60,30 +64,47 @@ class Command:
 		except:
 			return response
 
-	def advanced_command(self, line, var2, var3):
-		if line == 'points':
+	def advanced_command(self, cmd, var2, var3):
+		if cmd == 'points':
 			if var2 is None:
 				return database.db_get_points_user(self.user)
 			else:
 				return database.db_get_points_user(var2)
-		if line == 'rank':
+		if cmd == 'rank':
 			if var2 is None:
 				return database.db_get_user_rank(self.user)
 			else:
 				return database.db_get_user_rank(var2)
-		if line == 'uptime':
+		if cmd == 'uptime':
 			return self.time.uptime()
-		if line == 'localtime':
+		if cmd == 'localtime':
 			return self.time.local_time()
-		if line == 'playsound':
+		if cmd == 'playsound':
 			if var2 is None:
 				return "{}, you didn't specify a sound. View them here {}".format(self.user, SOUNDS_LINK)
 			else:
 				return self.playsound.playsound(var2)
-		if line == 'roulette':
+		if cmd == 'roulette':
 			return self.points.roulette(var2)
 
-		if line == 'test':
-			# return self.followalert.check_follower()
-			Thread(target=self.followalert.check_follower_run).start()
-			return "follow thread started Kappa"
+		# Moderator Commands
+		if(self.api.check_user_class(self.user, 'moderators')):
+			if cmd == 'raffle':
+				raffle = Raffle(self.user, var2)
+				global RaffleActive
+				RaffleActive = True
+				return raffle.start_raffle()
+
+		# Entry Keywords
+		if cmd == 'join' and RaffleActive and self.user not in RaffleEntries:
+			RaffleEntries.append(self.user)
+			return ""
+		if cmd == 'join':
+			return ""
+
+		if cmd == 'test':
+			print("Raffle Entries:", RaffleEntries)
+			print("Raffle Active:", RaffleActive)
+			return ""
+		# 	# return self.followalert.check_follower()
+		# 	Thread(target=self.followalert.check_follower_run).start()
