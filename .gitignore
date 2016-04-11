@@ -97,9 +97,5 @@ jspm_packages
 .node_repl_history
 
 # Twitch settings
-Settings.py
-new_version/modules/config.py
-
-# Node
-app/node_modules/
-app/public/bower_components/
+modules/config.py
+version_1/modules/settings.py
