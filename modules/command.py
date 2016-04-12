@@ -86,6 +86,7 @@ class Command:
 			return self.points.roulette(var2)
 		if cmd == 'songrequest':
 			database.db_minus_points_user(self.user, 200)
+			return ""
 
 		# Moderator Commands
 		if(self.api.check_user_class(self.user, 'moderators')):
