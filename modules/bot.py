@@ -3,10 +3,14 @@ import string
 import sys
 import logging, coloredlogs
 from threading import Thread
+from random import choice
+from time import sleep
 
 from modules.commandmanager import CommandManager
 from modules.command import Command
 from modules.timer import Timer
+from modules.config import *
+from modules.commandtext import auto_messages
 
 class Bot:
 
@@ -78,20 +82,12 @@ class Bot:
 		else:
 			return False
 
-	def send_message(self, s, message):
-		temp_message = "PRIVMSG #{} : {}".format(self.channel, message)
-		s.send(bytes("{}\r\n".format(temp_message), 'UTF-8'))
-		if(message == ""):
-			return
-		else:
-			logging.warning("> {}".format(message))
-
 	def bot_commands(self, user, message):
 		if(command_check.check_line(message)):
 			parse_command = command_check.parse_message(message)
 			command = Command(parse_command, user)
 			try:
-				self.send_message(server_connection, command.return_command())
+				send_message(server_connection, command.return_command())
 				# self.send_message(server_connection, command.text_command())
 				# self.send_message(server_connection, command.user_check_command())
 				# self.send_message(server_connection, command.api_command())
@@ -107,8 +103,11 @@ class Bot:
 		# Announce to chat upon joining channel
 		# self.send_message(server_connection, "starting up (dev version 1.1.5) MrDestructoid")
 
-		# Start auto message thread
+		# Start auto points thread
 		Thread(target=self.points_timer.auto).start()
+
+		# Start auto message thread
+		Thread(target=auto_message_send_run).start()
 
 		while True:
 			readbuffer = readbuffer + server_connection.recv(1024).decode('UTF-8')
@@ -124,9 +123,25 @@ class Bot:
 				logging.info("{}: {}".format(user, message))
 				self.bot_commands(user, message)
 
+def send_message(s, message):
+	temp_message = "PRIVMSG #{} : {}".format(CHANNEL, message)
+	s.send(bytes("{}\r\n".format(temp_message), 'UTF-8'))
+	if(message == ""):
+		return
+	else:
+		logging.warning("> {}".format(message))
+
+def bot_msg(message):
+	send_message(server_connection, message)
+
+def auto_message_send():
+	message = choice(auto_messages)
+	bot_msg(message)
+	auto_message_send_run()
+
+def auto_message_send_run():
+	sleep(600)
+	auto_message_send()
+
 def return_user(chatter):
 	return chatter
-
-def send_message_global(message):
-	temp_message = "PRIVMSG #{} : {}".format(self.channel, message)
-	server_connection.send(bytes("{}\r\n".format(temp_message), 'UTF-8'))

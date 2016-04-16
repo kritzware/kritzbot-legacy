@@ -1,5 +1,6 @@
 import logging, coloredlogs
 from threading import Thread
+from time import sleep
 
 from modules.config import *
 from modules.database import Database
@@ -90,6 +91,18 @@ class Command:
 			else:
 				return self.points.givepoints(var2, var3)
 
+
+		
+		# if cmd == 'duel':
+		# 	if var2 is None or var3 is None:
+		# 		return ""
+		# 	else:
+		# 		return self.points.duel(var2, var3)
+		# if cmd == 'accept':
+		# 	return self.points.duel_outcome(self.user)
+
+
+
 		if cmd == 'songrequest':
 			database.db_minus_points_user(self.user, 200)
 			return ""
@@ -99,8 +112,22 @@ class Command:
 			if cmd == 'raffle':
 				raffle = Raffle(self.user, var2, 10)
 				return raffle.start_raffle()
-			Thread(target=raffle.raffle_win).start()
-			return "test"
+
+			if cmd == 'ac':
+				if var2 is None or var3 is None:
+					return ""
+				else:
+					return database.db_add_command(var2, var3)
+			if cmd == 'ec':
+				if var2 is None or var3 is None:
+					return ""
+				else:
+					return database.db_edit_command(var2, var3)			
+			if cmd == 'rc':
+				if var2 is None:
+					return ""
+				else:
+					return database.db_delete_command(var2)
 
 		# Entry Keywords
 		if cmd == 'join' and Raffle.RaffleActive and self.user not in Raffle.RaffleEntries:

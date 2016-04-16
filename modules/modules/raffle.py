@@ -27,8 +27,8 @@ class Raffle:
 
 		if self.check_int():
 			Raffle.RaffleActive = True
-			# Thread(target=self.raffle_win).start()
-
+			Thread(target=self.raffle_win).start()
+			print(True)
 			return "A raffle has started for {} points! Type !join to enter PogChamp".format(self.amount)	
 		else:
 			return "You can only enter int values {} FailFish".format(self.user)
@@ -40,10 +40,16 @@ class Raffle:
 		except ValueError:
 			return False
 
-	def raffle_win(Thread):
-		sleep(10)
-		return "test123"
+	def raffle_win(self):
+		from modules.bot import bot_msg
+		sleep(30)
+		bot_msg("The raffle for {} {} ends in 30 seconds! Type !join to enter".format(self.amount, CURRENCY))
+		sleep(30)
 		winner = choice(Raffle.RaffleEntries)
 		database.db_add_points_user(winner, self.amount)
-		print("{} won the raffle and gets {} points! FeelsGoodMan".format(self.user, self.amount))
-		return "{} won the raffle and gets {} points! FeelsGoodMan".format(self.user, self.amount)
+		self.raffle_clear()
+		bot_msg("{} won the raffle and gets {} points! FeelsGoodMan".format(self.user, self.amount))
+
+	def raffle_clear(self):
+		Raffle.RaffleActive = False
+		del Raffle.RaffleEntries[:]

@@ -102,3 +102,16 @@ class Database:
 	def db_new_follower(self, follower):
 		self.db.execute("UPDATE latest_follower SET follower = '{}'".format(follower))
 		logging.info("New follower added to DB")
+
+	### NEW COMMAND TESTING
+	def db_add_command(self, command, content):
+		self.db.execute("INSERT INTO commands VALUES ('{}', '{}')".format(command, content))
+		return "Command !{} was added to the database SeemsGood".format(command)
+
+	def db_edit_command(self, command, new_content):
+		self.db.execute("UPDATE commands SET content='{}' WHERE command = '{}'".format(new_content, command))
+		return "Command !{} was successfully updated SeemsGood".format(command)
+
+	def db_delete_command(self, command):
+		self.db.execute("DELETE FROM commands WHERE command = '{}'".format(command))
+		return "Command !{} was successfully deleted KAPOW".format(command)

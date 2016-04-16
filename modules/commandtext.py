@@ -38,7 +38,12 @@ advanced_commands = ['rank',
 					 'join',
 					 'test',
 					 'songrequest',
-					 'give'
+					 'give',
+					 'duel',
+					 'accept',
+					 'ac',
+					 'rc',
+					 'ec',
 					]
 
 # friends = {
@@ -51,4 +56,5 @@ advanced_commands = ['rank',
 auto_messages = ['Make sure to follow {} on twitter for the latest updates! {}'.format(CHANNEL, TWITTER),
  				 'Check out the latest highlights here! twitch.tv/{}/profile/highlights'.format(CHANNEL), 
  				 'Make sure to follow the channel to get notified of the latest streams!',
+ 				 'You earn points by watching the stream. Check how many you have with !points and gamble them away with !roulette Kappa'
  				]
