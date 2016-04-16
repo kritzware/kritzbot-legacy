@@ -84,6 +84,12 @@ class Command:
 				return self.playsound.playsound(var2)
 		if cmd == 'roulette':
 			return self.points.roulette(var2)
+		if cmd == 'give':
+			if var2 is None or var3 is None:
+				return ""
+			else:
+				return self.points.givepoints(var2, var3)
+
 		if cmd == 'songrequest':
 			database.db_minus_points_user(self.user, 200)
 			return ""

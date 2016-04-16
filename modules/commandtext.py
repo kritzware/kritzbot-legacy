@@ -37,7 +37,8 @@ advanced_commands = ['rank',
 					 'raffle',
 					 'join',
 					 'test',
-					 'songrequest'
+					 'songrequest',
+					 'give'
 					]
 
 # friends = {

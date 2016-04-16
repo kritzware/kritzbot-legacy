@@ -37,3 +37,19 @@ class Points:
 				output = "{} lost {} {}! BibleThump".format(self.user, amount, self.currency)
 			Thread(target=self.cooldown_timer.cooldown_run).start()
 			return output
+
+	def givepoints(self, reciever, amount):
+		if self.user == reciever:
+			return ""
+		if(database.db_check_user_exists(reciever)):
+			get_user_points = database.db_get_user_points_int(self.user)
+			if(int(amount) > get_user_points):
+				return "You don't have {} points {} FailFish".format(amount, self.user)
+			if(int(amount) <= 0):
+				return ""
+			else:
+				database.db_add_points_user(reciever, amount)
+				database.db_minus_points_user(self.user, amount)
+				return "{} gave {} {} to {}! <3".format(self.user, amount, CURRENCY, reciever)
+		else:
+			return ""
