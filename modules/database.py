@@ -104,14 +104,39 @@ class Database:
 		logging.info("New follower added to DB")
 
 	### NEW COMMAND TESTING
+	def db_check_command_exists(self, command):
+		command = self.db.execute("SELECT content FROM commands WHERE command = '{}'".format(command))
+		check_command = self.db.fetchone()
+		if(check_command == None):
+			return False
+		else:
+			return True
+
 	def db_add_command(self, command, content):
-		self.db.execute("INSERT INTO commands VALUES ('{}', '{}')".format(command, content))
-		return "Command !{} was added to the database SeemsGood".format(command)
+		if(self.db_check_command_exists(command)):
+			return "Error: Command {} already exists OMGScoots".format(command)
+		else:
+			self.db.execute("INSERT INTO commands VALUES ('{}', '{}')".format(command, content))
+			return "Command !{} was added to the database SeemsGood".format(command)
 
 	def db_edit_command(self, command, new_content):
-		self.db.execute("UPDATE commands SET content='{}' WHERE command = '{}'".format(new_content, command))
-		return "Command !{} was successfully updated SeemsGood".format(command)
+		if(self.db_check_command_exists(command)):		
+			self.db.execute("UPDATE commands SET content='{}' WHERE command = '{}'".format(new_content, command))
+			return "Command !{} was successfully updated SeemsGood".format(command)
+		else:
+			return "Error: Command {} doesn't exist OMGScoots".format(command)
 
 	def db_delete_command(self, command):
-		self.db.execute("DELETE FROM commands WHERE command = '{}'".format(command))
-		return "Command !{} was successfully deleted KAPOW".format(command)
+		if(self.db_check_command_exists(command)):	
+			self.db.execute("DELETE FROM commands WHERE command = '{}'".format(command))
+			return "Command !{} was successfully deleted KAPOW".format(command)
+		else:
+			return "Error: Command {} doesn't exist OMGScoots".format(command)
+
+	def db_get_command(self, command, user):
+		self.db.execute("SELECT content FROM commands WHERE command = '{}'".format(command))
+		response = self.db.fetchone()
+		parsed_response = self.db_tuple_to_string(response[0])
+		if '<user>' in str(parsed_response):
+			parsed_response = parsed_response.replace('<user>', user)
+		return parsed_response

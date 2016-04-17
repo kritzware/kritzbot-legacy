@@ -45,6 +45,12 @@ class Command:
 		for keys, values in self.commands.items():
 			if keys == self.command:
 				return self.text_command(keys, values, parameter_2, parameter_3)
+		
+		# try:
+		# 	print(self.line)
+		# 	return database.db_get_command(self.command, self.user)
+		# except:
+		# 	pass
 
 		for message in self.advanced_commands:
 			if message == self.command:
@@ -52,16 +58,27 @@ class Command:
 
 		return ""
 
-	def text_command(self, cmd, response, var2, var3):
+	def text_command(self, cmd, var2, var3):
 		try:
-			output = response.replace('<user>', self.user)
+			output = cmd.replace('<user>', self.user)
 			if var2 is None:
 				return output
 			else:
-				output = response.replace('<user>', self.user).replace('<param2>', var2)
+				output = cmd.replace('<user>', self.user).replace('<param2>', var2)
 				return output
 		except:
-			return response
+			return cmd
+
+	# def text_command(self, cmd, response, var2, var3):
+	# 	try:
+	# 		output = response.replace('<user>', self.user)
+	# 		if var2 is None:
+	# 			return output
+	# 		else:
+	# 			output = response.replace('<user>', self.user).replace('<param2>', var2)
+	# 			return output
+	# 	except:
+	# 		return response
 
 	def advanced_command(self, cmd, var2, var3):
 		if cmd == 'points':
@@ -113,16 +130,21 @@ class Command:
 				raffle = Raffle(self.user, var2, 10)
 				return raffle.start_raffle()
 
+			# Add commands to Database
 			if cmd == 'ac':
 				if var2 is None or var3 is None:
 					return ""
 				else:
-					return database.db_add_command(var2, var3)
+					command_text = self.line.replace(var2, '').replace(cmd, '')
+					print(command_text)
+					return database.db_add_command(var2, command_text)
 			if cmd == 'ec':
 				if var2 is None or var3 is None:
 					return ""
 				else:
-					return database.db_edit_command(var2, var3)			
+					command_text = self.line.replace(var2, '').replace(cmd, '')
+					print(command_text)
+					return database.db_edit_command(var2, command_text)			
 			if cmd == 'rc':
 				if var2 is None:
 					return ""
@@ -137,9 +159,9 @@ class Command:
 		if cmd == 'join':
 			return ""
 
-		if cmd == 'test':
-			print("Raffle Active:", Raffle.RaffleActive)
-			print("Raffle Entries:", Raffle.RaffleEntries)
-			return ""
+		# if cmd == 'test':
+		# 	print("Raffle Active:", Raffle.RaffleActive)
+		# 	print("Raffle Entries:", Raffle.RaffleEntries)
+		# 	return ""
 		# 	# return self.followalert.check_follower()
 		# 	Thread(target=self.followalert.check_follower_run).start()

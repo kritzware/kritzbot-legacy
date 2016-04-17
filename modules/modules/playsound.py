@@ -20,7 +20,7 @@ class PlaySound:
 		self.user = user
 		self.api = API(1)
 		self.cost = cost
-		self.available_sounds = ['beans', 'bs', 'concentration', 'swearjar', 'toohard', 'killinit']
+		self.available_sounds = ['beans', 'bs', 'concentration', 'swearjar', 'toohard', 'killinit', 'dammit', 'unbreakable']
 		self.cooldown_timer = Timer(self.user, 900, PlaySoundCooldown, "PlaySound")
 
 	def playsound(self, sound):
