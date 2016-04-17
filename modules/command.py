@@ -58,27 +58,27 @@ class Command:
 
 		return ""
 
-	def text_command(self, cmd, var2, var3):
-		try:
-			output = cmd.replace('<user>', self.user)
-			if var2 is None:
-				return output
-			else:
-				output = cmd.replace('<user>', self.user).replace('<param2>', var2)
-				return output
-		except:
-			return cmd
-
-	# def text_command(self, cmd, response, var2, var3):
+	# def text_command(self, cmd, var2, var3):
 	# 	try:
-	# 		output = response.replace('<user>', self.user)
+	# 		output = cmd.replace('<user>', self.user)
 	# 		if var2 is None:
 	# 			return output
 	# 		else:
-	# 			output = response.replace('<user>', self.user).replace('<param2>', var2)
+	# 			output = cmd.replace('<user>', self.user).replace('<param2>', var2)
 	# 			return output
 	# 	except:
-	# 		return response
+	# 		return cmd
+
+	def text_command(self, cmd, response, var2, var3):
+		try:
+			output = response.replace('<user>', self.user)
+			if var2 is None:
+				return output
+			else:
+				output = response.replace('<user>', self.user).replace('<param2>', var2)
+				return output
+		except:
+			return response
 
 	def advanced_command(self, cmd, var2, var3):
 		if cmd == 'points':

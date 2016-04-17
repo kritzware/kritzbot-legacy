@@ -48,7 +48,7 @@ class Raffle:
 		winner = choice(Raffle.RaffleEntries)
 		database.db_add_points_user(winner, self.amount)
 		self.raffle_clear()
-		bot_msg("{} won the raffle and gets {} points! FeelsGoodMan".format(self.user, self.amount))
+		bot_msg("{} won the raffle and gets {} points! FeelsGoodMan".format(winner, self.amount))
 
 	def raffle_clear(self):
 		Raffle.RaffleActive = False
