@@ -49,7 +49,7 @@ class PlaySound:
 
 	def get_filepath(self):
 		basepath = os.path.dirname(__file__)
-		filepath = os.path.abspath(os.path.join(basepath, "..", "..", "..", "..", "kritzwareio", "views", "queue.json"))
+		filepath = os.path.abspath(os.path.join(basepath, "..", "..", "..", "kritzwareio", "views", "queue.json"))
 		return filepath
 
 	def add_sound_to_queue(self, sound, filepath):
