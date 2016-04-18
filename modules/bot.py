@@ -129,7 +129,18 @@ def send_message(s, message):
 	if(message == ""):
 		return
 	else:
-		logging.warning("> {}".format(message))
+		logging.info("> {}".format(message))
+
+def send_message_whisper(s, message, user):
+	temp_message = "PRIVMSG #{} :/w kritzware {}".format(CHANNEL, message)
+	s.send(bytes("{}\r\n".format(temp_message), 'UTF-8'))
+	if(message == ""):
+		return
+	else:
+		logging.info("> {}".format(message))
+
+def bot_msg_whsp(message):
+	send_message_whisper(server_connection, message)
 
 def bot_msg(message):
 	send_message(server_connection, message)
