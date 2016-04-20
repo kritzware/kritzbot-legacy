@@ -45,6 +45,12 @@ class Command:
 		for keys, values in self.commands.items():
 			if keys == self.command:
 				return self.text_command(keys, values, parameter_2, parameter_3)
+
+		# try:
+		# 	output = database.db_get_command(self.command, self.user)
+		# 	return output
+		# except:
+		# 	pass
 		
 		# try:
 		# 	print(self.line)

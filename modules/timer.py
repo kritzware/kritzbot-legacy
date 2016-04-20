@@ -24,15 +24,17 @@ class Timer(Thread):
 		self.api = API(1)
 		
 	def run(self):
-		for viewers in self.api.get_viewers_json('viewers'):
-			if database.db_check_user_exists(viewers) == False:
-				database.db_add_user(viewers)
-			database.db_add_points_user(viewers, VIEWER_POINT_GAIN) 
+		if self.api.check_stream_online():
+			print("online")
+			for viewers in self.api.get_viewers_json('viewers'):
+				if database.db_check_user_exists(viewers) == False:
+					database.db_add_user(viewers)
+				database.db_add_points_user(viewers, VIEWER_POINT_GAIN) 
 
-		for viewers in self.api.get_viewers_json('moderators'):
-			if database.db_check_user_exists(viewers) == False:
-				database.db_add_user(viewers)
-			database.db_add_points_user(viewers, VIEWER_POINT_GAIN)
+			for viewers in self.api.get_viewers_json('moderators'):
+				if database.db_check_user_exists(viewers) == False:
+					database.db_add_user(viewers)
+				database.db_add_points_user(viewers, VIEWER_POINT_GAIN)
 
 		time.sleep(self.time)
 		self.auto()
