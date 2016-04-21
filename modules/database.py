@@ -53,14 +53,18 @@ class Database:
 		output = username.replace('@', '')
 		return output
 
-	def db_get_points_user(self, user):
+	def db_get_points_user(self, user, self_user):
 		user = self.bttv_parse(user)
 		points = self.db_get_user_points_int(user)
 
 		if(points < 0):
-			output = "{} has {} {} BabyRage".format(user, points, CURRENCY)
+			output = "{}, you have {} {} BabyRage".format(user, points, CURRENCY)
 		else:
-			output = "{} has {} {}".format(user, points, CURRENCY)
+			output = "{}, you have {} {}".format(user, points, CURRENCY)
+			print(user)
+			print(self.user)
+			if(user != self_user):
+				output = "{} has {} {}".format(user, points, CURRENCY)
 		return output
 
 	def db_get_user_points_int(self, user):

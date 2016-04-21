@@ -29,8 +29,8 @@ class Bot:
 			s.send(bytes("PASS {} \r\n".format(self.key), 'UTF-8'))
 			s.send(bytes("NICK {} \r\n".format(self.nick), 'UTF-8'))
 			s.send(bytes("JOIN #{} \r\n".format(self.channel), 'UTF-8'))
-			# s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
-			# s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
+			s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
+			s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
 			logging.info("Connecting to TWITCH IRC..")
 			return s
 		except socket.error as e:
@@ -132,15 +132,15 @@ def send_message(s, message):
 		logging.info("> {}".format(message))
 
 def send_message_whisper(s, message, user):
-	temp_message = "PRIVMSG #{} :/w kritzware {}".format(CHANNEL, message)
+	temp_message = "PRIVMSG #{} :/w {} {}".format(CHANNEL, user, message)
 	s.send(bytes("{}\r\n".format(temp_message), 'UTF-8'))
 	if(message == ""):
 		return
 	else:
 		logging.info("> {}".format(message))
 
-def bot_msg_whsp(message):
-	send_message_whisper(server_connection, message)
+def bot_msg_whsp(message, user):
+	send_message_whisper(server_connection, message, user)
 
 def bot_msg(message):
 	send_message(server_connection, message)

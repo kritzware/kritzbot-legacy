@@ -87,11 +87,14 @@ class Command:
 			return response
 
 	def advanced_command(self, cmd, var2, var3):
+		from modules.bot import bot_msg, bot_msg_whsp
+
 		if cmd == 'points':
 			if var2 is None:
-				return database.db_get_points_user(self.user)
+				bot_msg_whsp(database.db_get_points_user(self.user, self.user), self.user)
+				return ""
 			else:
-				return database.db_get_points_user(var2)
+				return database.db_get_points_user(var2, self.user)
 		if cmd == 'rank':
 			if var2 is None:
 				return database.db_get_user_rank(self.user)
@@ -123,8 +126,6 @@ class Command:
 		# 		return self.points.duel(var2, var3)
 		# if cmd == 'accept':
 		# 	return self.points.duel_outcome(self.user)
-
-
 
 		if cmd == 'songrequest':
 			database.db_minus_points_user(self.user, 200)
@@ -160,12 +161,14 @@ class Command:
 		# Entry Keywords
 		if cmd == 'join' and Raffle.RaffleActive and self.user not in Raffle.RaffleEntries:
 			Raffle.RaffleEntries.append(self.user)
-			print("Raffle Entries:", Raffle.RaffleEntries)
+			bot_msg_whsp("You have successfully entered the raffle!", self.user)
 			return ""
 		if cmd == 'join':
 			return ""
 
-		# if cmd == 'test':
+		if cmd == 'test':
+			bot_msg_whsp("Whisper message", "kritzware")
+			return ""
 		# 	print("Raffle Active:", Raffle.RaffleActive)
 		# 	print("Raffle Entries:", Raffle.RaffleEntries)
 		# 	return ""

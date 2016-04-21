@@ -24,6 +24,7 @@ class PlaySound:
 		self.cooldown_timer = Timer(self.user, 900, PlaySoundCooldown, "PlaySound")
 
 	def playsound(self, sound):
+		from modules.bot import bot_msg_whsp
 		if(self.user in self.cooldown_timer.timer_list):
 			return ""
 		else:
@@ -40,9 +41,11 @@ class PlaySound:
 
 					# Start timer to remove sound from JSON file
 					PlaySoundTimerRun()
-					return "{} just spent {} points on the audio clip {}!".format(self.user, self.cost, sound)
+					bot_msg_whsp("{}, you just spent {} points on the audio clip {}!".format(self.user, self.cost, sound), self.user)
+					return ""
 				else:
-					return "{}, you don't have enough points FailFish".format(self.user)
+					bot_msg_whsp("{}, you don't have enough points FailFish".format(self.user), self.user)
+					return ""
 			else:
 				logging.warning("No sound specified by {}".format(self.user))
 				return ""
