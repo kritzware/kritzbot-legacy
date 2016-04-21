@@ -151,7 +151,7 @@ def auto_message_send():
 	auto_message_send_run()
 
 def auto_message_send_run():
-	sleep(600)
+	sleep(1200)
 	auto_message_send()
 
 def return_user(chatter):
