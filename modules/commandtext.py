@@ -45,6 +45,9 @@ advanced_commands = ['rank',
 					 'ac',
 					 'rc',
 					 'ec',
+					 'addpoints',
+					 'enter',
+					 'giveaway'
 					]
 
 # friends = {

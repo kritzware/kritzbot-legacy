@@ -12,6 +12,7 @@ from modules.modules.time import Time
 from modules.modules.playsound import PlaySound
 from modules.modules.followalert import FollowAlert
 from modules.modules.raffle import Raffle
+from modules.modules.giveaway import Giveaway
 
 database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
 database.database_connection()
@@ -64,6 +65,8 @@ class Command:
 
 		return ""
 
+
+
 	# def text_command(self, cmd, var2, var3):
 	# 	try:
 	# 		output = cmd.replace('<user>', self.user)
@@ -95,6 +98,21 @@ class Command:
 				return ""
 			else:
 				return database.db_get_points_user(var2, self.user)
+
+		# Entry Keywords
+		if cmd == 'join' and Raffle.RaffleActive and self.user not in Raffle.RaffleEntries:
+			Raffle.RaffleEntries.append(self.user)
+			bot_msg_whsp("You have successfully entered the raffle!", self.user)
+			return ""
+		if cmd == 'join':
+			return ""
+		if cmd == 'enter' and Giveaway.GiveawayActive and self.user not in Giveaway.GiveawayEntries:
+			Giveaway.GiveawayEntries.append(self.user)
+			bot_msg_whsp("You have successfully entered the giveaway!", self.user)
+			return ""
+		if cmd == 'enter':
+			return ""
+
 		if cmd == 'rank':
 			if var2 is None:
 				return database.db_get_user_rank(self.user)
@@ -127,15 +145,28 @@ class Command:
 		# if cmd == 'accept':
 		# 	return self.points.duel_outcome(self.user)
 
-		if cmd == 'songrequest':
-			database.db_minus_points_user(self.user, 200)
-			return ""
+		# if cmd == 'songrequest':
+		# 	database.db_minus_points_user(self.user, 200)
+		# 	return ""
 
 		# Moderator Commands
 		if(self.api.check_user_class(self.user, 'moderators')):
 			if cmd == 'raffle':
 				raffle = Raffle(self.user, var2, 10)
 				return raffle.start_raffle()
+			
+			if cmd == 'giveaway':
+				command_text = self.line.replace(var2, '').replace(cmd, '')
+				giveaway = Giveaway(int(var2), command_text)
+				giveaway.start_giveaway()
+				return ""
+
+
+			if cmd == 'addpoints':
+				if var2 is None or var3 is None:
+					return ""
+				else:
+					return database.db_add_points_user(var2, var3)
 
 			# Add commands to Database
 			if cmd == 'ac':
@@ -158,17 +189,11 @@ class Command:
 				else:
 					return database.db_delete_command(var2)
 
-		# Entry Keywords
-		if cmd == 'join' and Raffle.RaffleActive and self.user not in Raffle.RaffleEntries:
-			Raffle.RaffleEntries.append(self.user)
-			bot_msg_whsp("You have successfully entered the raffle!", self.user)
-			return ""
-		if cmd == 'join':
-			return ""
+
 
 		if cmd == 'test':
-			bot_msg_whsp("Whisper message", "kritzware")
-			return ""
+			bot_msg_whsp("{} viewers detected".format(len(self.api.get_viewers_json('viewers'))), ADMIN)
+			return "Admin message sent to {}".format(ADMIN)
 		# 	print("Raffle Active:", Raffle.RaffleActive)
 		# 	print("Raffle Entries:", Raffle.RaffleEntries)
 		# 	return ""

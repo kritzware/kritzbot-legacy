@@ -20,11 +20,8 @@ class Raffle:
 		self.time = time
 
 	def start_raffle(self):
-		print("Amount:", self.amount)
-
 		if self.amount == None:
 			return "You didn't specifiy an amount {} FailFish".format(self.user)
-
 		if self.check_int():
 			Raffle.RaffleActive = True
 			Thread(target=self.raffle_win).start()
@@ -45,6 +42,9 @@ class Raffle:
 		sleep(30)
 		bot_msg("The raffle for {} {} ends in 30 seconds! Type !join to enter".format(self.amount, CURRENCY))
 		sleep(30)
+		if(len(Raffle.RaffleEntries) == 0):
+			bot_msg("Nobody entered the raffle. Guess I'll keep the points for myself MingLee")
+			return ""
 		winner = choice(Raffle.RaffleEntries)
 		database.db_add_points_user(winner, self.amount)
 		self.raffle_clear()

@@ -29,8 +29,8 @@ class Bot:
 			s.send(bytes("PASS {} \r\n".format(self.key), 'UTF-8'))
 			s.send(bytes("NICK {} \r\n".format(self.nick), 'UTF-8'))
 			s.send(bytes("JOIN #{} \r\n".format(self.channel), 'UTF-8'))
-			s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
-			s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
+			# s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
+			# s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
 			logging.info("Connecting to TWITCH IRC..")
 			return s
 		except socket.error as e:
