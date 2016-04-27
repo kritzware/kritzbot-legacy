@@ -13,6 +13,9 @@ from modules.modules.playsound import PlaySound
 from modules.modules.followalert import FollowAlert
 from modules.modules.raffle import Raffle
 from modules.modules.giveaway import Giveaway
+from modules.modules.duel import Duel
+
+from modules.modules.showemote import ShowEmote
 
 database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
 database.database_connection()
@@ -108,7 +111,6 @@ class Command:
 			return ""
 		if cmd == 'enter' and Giveaway.GiveawayActive and self.user not in Giveaway.GiveawayEntries:
 			Giveaway.GiveawayEntries.append(self.user)
-			bot_msg_whsp("You have successfully entered the giveaway!", self.user)
 			return ""
 		if cmd == 'enter':
 			return ""
@@ -122,11 +124,17 @@ class Command:
 			return self.time.uptime()
 		if cmd == 'localtime':
 			return self.time.local_time()
+		
 		if cmd == 'playsound':
 			if var2 is None:
 				return "{}, you didn't specify a sound. View them here {}".format(self.user, SOUNDS_LINK)
 			else:
 				return self.playsound.playsound(var2)
+
+		if cmd == 'showemote':
+			showemote = ShowEmote(self.user)
+			return showemote.showemote(var2)
+
 		if cmd == 'roulette':
 			return self.points.roulette(var2)
 		if cmd == 'give':
@@ -135,19 +143,23 @@ class Command:
 			else:
 				return self.points.givepoints(var2, var3)
 
+		duel = Duel(self.user)
+		if cmd == 'duel':
+			duel.start_duel(var2, var3)
+			return ""
 
-		
-		# if cmd == 'duel':
-		# 	if var2 is None or var3 is None:
-		# 		return ""
-		# 	else:
-		# 		return self.points.duel(var2, var3)
-		# if cmd == 'accept':
-		# 	return self.points.duel_outcome(self.user)
+		if cmd == 'accept':
+			duel.get_duel_win()
+			return ""
+		if cmd == 'reject':
+			duel.cancel_duel()
+			return ""
 
 		# if cmd == 'songrequest':
 		# 	database.db_minus_points_user(self.user, 200)
 		# 	return ""
+
+
 
 		# Moderator Commands
 		if(self.api.check_user_class(self.user, 'moderators')):

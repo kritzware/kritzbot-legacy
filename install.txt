@@ -1,2 +1,4 @@
 CREATE DB, tables table1 latest_follower
 CREATE TABLE commands (command VARCHAR(255), content VARCHAR(255));
+CREATE TABLE duels (user VARCHAR(255), opponent VARCHAR(255), amount INT(255),
+time TIMESTAMP DEFAULT '0000-00-00 00:00:00');

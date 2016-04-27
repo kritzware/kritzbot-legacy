@@ -144,3 +144,48 @@ class Database:
 		if '<user>' in str(parsed_response):
 			parsed_response = parsed_response.replace('<user>', user)
 		return parsed_response
+
+	# DUEL QUERIES
+
+	def db_add_duel(self, user, opponent, amount):
+		self.db.execute("INSERT INTO duels VALUES ('{}', '{}', {}, NOW())".format(user, opponent, amount))
+
+	def db_check_duel_exists_user(self, user):
+		check_duel = self.db.execute("SELECT user FROM duels WHERE user = '{}'".format(user))
+		check_duel_user = self.db.fetchone()
+		if(check_duel_user == None):
+			return False
+		else:
+			return True
+
+	def db_check_duel_exists_opponent(self, user):
+		check_duel = self.db.execute("SELECT opponent FROM duels WHERE opponent = '{}'".format(user))
+		check_duel_user = self.db.fetchone()
+		if(check_duel_user == None):
+			return False
+		else:
+			return True
+
+	def db_get_duel_user_from_opponent(self, user):
+		self.db.execute("SELECT user FROM duels WHERE opponent = '{}'".format(user))
+		opponent = self.db.fetchall()
+		opponent_parsed = self.db_tuple_to_string(opponent[0])
+		return opponent_parsed
+
+	def db_get_duel_opponent_from_user(self, user):
+		self.db.execute("SELECT opponent FROM duels WHERE user = '{}'".format(user))
+		opponent = self.db.fetchall()
+		opponent_parsed = self.db_tuple_to_string(opponent[0])
+		return opponent_parsed
+
+	def db_get_duel_amount(self, user):
+		self.db.execute("SELECT amount FROM duels WHERE opponent = '{}'".format(user))
+		get_amount = self.db.fetchone()
+		return int(self.db_format(get_amount))
+
+	def db_remove_duel(self, user):
+		self.db.execute("DELETE FROM duels WHERE opponent = '{}'".format(user))
+
+	def db_duel_expired(self):
+		val = int(DUEL_EXPIRE / 60)
+		self.db.execute("DELETE FROM duels WHERE time < (NOW() - INTERVAL {} MINUTE)".format(val))

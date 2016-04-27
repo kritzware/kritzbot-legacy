@@ -11,6 +11,10 @@ from modules.command import Command
 from modules.timer import Timer
 from modules.config import *
 from modules.commandtext import auto_messages
+from modules.database import Database
+
+database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
+database.database_connection()
 
 class Bot:
 
@@ -109,6 +113,9 @@ class Bot:
 		# Start auto message thread
 		Thread(target=auto_message_send_run).start()
 
+		# Start auto remove expired duels thread
+		Thread(target=auto_duel_expire_run).start()
+
 		while True:
 			readbuffer = readbuffer + server_connection.recv(1024).decode('UTF-8')
 			temp = str.split(readbuffer, "\n")
@@ -118,7 +125,7 @@ class Bot:
 				if(self.pong(server_connection, line)):
 					break
 				user = self.get_user(line)
-				return_user(user)
+				# return_user(user)
 				message = self.get_message(line)
 				logging.info("{}: {}".format(user, message))
 				self.bot_commands(user, message)
@@ -151,8 +158,13 @@ def auto_message_send():
 	auto_message_send_run()
 
 def auto_message_send_run():
-	sleep(1200)
+	sleep(AUTO_MESSAGES)
 	auto_message_send()
 
-def return_user(chatter):
-	return chatter
+def auto_duel_expire():
+	database.db_duel_expired()
+	auto_duel_expire_run()
+
+def auto_duel_expire_run():
+	sleep(DUEL_EXPIRE)
+	auto_duel_expire()

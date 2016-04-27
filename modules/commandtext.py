@@ -42,12 +42,14 @@ advanced_commands = ['rank',
 					 'give',
 					 'duel',
 					 'accept',
+					 'reject',
 					 'ac',
 					 'rc',
 					 'ec',
 					 'addpoints',
 					 'enter',
-					 'giveaway'
+					 'giveaway',
+					 #'showemote'
 					]
 
 # friends = {
