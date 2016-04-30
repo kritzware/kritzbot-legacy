@@ -87,7 +87,9 @@ class Command:
 			if var2 is None:
 				return output
 			else:
-				output = response.replace('<user>', self.user).replace('<param2>', var2)
+				command_text = self.line.replace(cmd, '')
+				print(command_text)
+				output = response.replace('<user>', self.user).replace('<param2>', command_text)
 				return output
 		except:
 			return response

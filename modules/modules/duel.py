@@ -37,7 +37,11 @@ class Duel:
 			return ""
 
 	def check(self, opponent, amount):
-		from modules.bot import bot_msg_whsp
+		from modules.bot import bot_msg, bot_msg_whsp
+
+		if(opponent == NICK):
+			bot_msg("I always win {} MingLee".format(self.user))
+			return False
 
 		if(opponent == self.user):
 			return False
