@@ -97,7 +97,7 @@ class Command:
 	def advanced_command(self, cmd, var2, var3):
 		from modules.bot import bot_msg, bot_msg_whsp
 
-		if cmd == 'points':
+		if cmd == '{}'.format(CURRENCY):
 			if var2 is None:
 				bot_msg_whsp(database.db_get_points_user(self.user, self.user), self.user)
 				return ""
