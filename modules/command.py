@@ -107,7 +107,6 @@ class Command:
 		# Entry Keywords
 		if cmd == 'join' and Raffle.RaffleActive and self.user not in Raffle.RaffleEntries:
 			Raffle.RaffleEntries.append(self.user)
-			bot_msg_whsp("You have successfully entered the raffle!", self.user)
 			return ""
 		if cmd == 'join':
 			return ""

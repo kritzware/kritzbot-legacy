@@ -35,4 +35,6 @@ class Time:
 			output = "Local time: {} EST".format(format_time)
 		if TIME_ZONE == 'Europe/London':
 			output = "Local time: {} GMT".format(format_time)
+		if TIME_ZONE == 'Europe/Oslo':
+			output = "Local time: {} CEST".format(format_time)
 		return output

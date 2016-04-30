@@ -20,15 +20,17 @@ class Raffle:
 		self.time = time
 
 	def start_raffle(self):
+		from modules.bot import bot_msg, bot_msg_whsp
 		if self.amount == None:
 			return "You didn't specifiy an amount {} FailFish".format(self.user)
 		if self.check_int():
 			Raffle.RaffleActive = True
 			Thread(target=self.raffle_win).start()
-			print(True)
-			return "A raffle has started for {} points! Type !join to enter PogChamp".format(self.amount)	
+			bot_msg("A raffle has started for {} {}! Type !join to enter PogChamp".format(self.amount, CURRENCY))
+			return ""
 		else:
-			return "You can only enter int values {} FailFish".format(self.user)
+			bot_msg_whsp("You can only enter int values {} FailFish".format(self.user), self.user)
+			return ""
 
 	def check_int(self):
 		try:
@@ -43,12 +45,12 @@ class Raffle:
 		bot_msg("The raffle for {} {} ends in 30 seconds! Type !join to enter".format(self.amount, CURRENCY))
 		sleep(30)
 		if(len(Raffle.RaffleEntries) == 0):
-			bot_msg("Nobody entered the raffle. Guess I'll keep the points for myself MingLee")
+			bot_msg("Nobody entered the raffle. Guess I'll keep the {} for myself MingLee".format(CURRENCY))
 			return ""
 		winner = choice(Raffle.RaffleEntries)
 		database.db_add_points_user(winner, self.amount)
 		self.raffle_clear()
-		bot_msg("{} won the raffle and gets {} points! FeelsGoodMan".format(winner, self.amount))
+		bot_msg("{} won the raffle and gets {} {}! FeelsGoodMan".format(winner, self.amount, CURRENCY))
 
 	def raffle_clear(self):
 		Raffle.RaffleActive = False

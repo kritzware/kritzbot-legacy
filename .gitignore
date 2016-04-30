@@ -98,4 +98,5 @@ jspm_packages
 
 # Twitch settings
 modules/config.py
+modules/commandtext.py
 version_1/modules/settings.py

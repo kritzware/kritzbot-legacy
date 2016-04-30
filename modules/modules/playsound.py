@@ -41,10 +41,10 @@ class PlaySound:
 
 					# Start timer to remove sound from JSON file
 					PlaySoundTimerRun()
-					bot_msg_whsp("{}, you just spent {} points on the audio clip {}!".format(self.user, self.cost, sound), self.user)
+					bot_msg_whsp("{}, you just spent {} {} on the audio clip {}!".format(self.user, self.cost, CURRENCY, sound), self.user)
 					return ""
 				else:
-					bot_msg_whsp("{}, you don't have enough points FailFish".format(self.user), self.user)
+					bot_msg_whsp("{}, you don't have enough {} FailFish".format(self.user, CURRENCY), self.user)
 					return ""
 			else:
 				logging.warning("No sound specified by {}".format(self.user))
