@@ -133,6 +133,10 @@ class Command:
 			else:
 				return self.playsound.playsound(var2)
 
+		if cmd == 'tweet':
+			self.api.get_latest_tweet()
+			return ""
+
 		if cmd == 'showemote':
 			showemote = ShowEmote(self.user)
 			return showemote.showemote(var2)

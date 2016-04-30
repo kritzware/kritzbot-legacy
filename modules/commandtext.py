@@ -50,6 +50,7 @@ advanced_commands = ['rank',
 					 'enter',
 					 'giveaway',
 					 #'showemote'
+					 'tweet'
 					]
 
 # friends = {

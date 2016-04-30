@@ -1,9 +1,10 @@
 import logging, coloredlogs
 import json
+import tweepy
 import urllib.request
 from datetime import datetime, timedelta, date, time
 
-from modules.config import CHANNEL
+from modules.config import *
 
 class API:
 
@@ -47,3 +48,13 @@ class API:
 		data = self.getJSON('https://api.twitch.tv/kraken/channels/{}/follows?limit=1'.format(CHANNEL))
 		return_data = data['follows'][0]['user']['name']
 		return return_data
+
+	def get_latest_tweet(self):
+		from modules.bot import bot_msg
+		auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+		auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+		api = tweepy.API(auth)
+		parsed_user = TWITTER[12:]
+		tweet = api.user_timeline(id = parsed_user, count = 1)[0]
+		content = tweet.text
+		bot_msg("Latest tweet from {}: {}".format(CHANNEL, content))
