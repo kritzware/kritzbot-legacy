@@ -20,7 +20,7 @@ class PlaySound:
 		self.user = user
 		self.api = API(1)
 		self.cost = cost
-		self.available_sounds = ['beans', 'bs', 'concentration', 'swearjar', 'toohard', 'killinit', 'dammit', 'unbreakable', 'wtf']
+		self.available_sounds = SOUNDS
 		self.cooldown_timer = Timer(self.user, 900, PlaySoundCooldown, "PlaySound")
 
 	def playsound(self, sound):
@@ -52,7 +52,7 @@ class PlaySound:
 
 	def get_filepath(self):
 		basepath = os.path.dirname(__file__)
-		filepath = os.path.abspath(os.path.join(basepath, "..", "..", "..", "kritzwareio", "views", "queue.json"))
+		filepath = os.path.abspath(os.path.join(basepath, "..", "..", "..", "kritzwareio", "views", SOUNDS_FILE))
 		return filepath
 
 	def add_sound_to_queue(self, sound, filepath):
