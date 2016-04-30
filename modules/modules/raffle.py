@@ -26,8 +26,7 @@ class Raffle:
 		if self.check_int():
 			Raffle.RaffleActive = True
 			Thread(target=self.raffle_win).start()
-			bot_msg("A raffle has started for {} {}! Type !join to enter PogChamp".format(self.amount, CURRENCY))
-			return ""
+			return "A raffle has started for {} {}! Type !join to enter PogChamp".format(self.amount, CURRENCY)
 		else:
 			bot_msg_whsp("You can only enter int values {} FailFish".format(self.user), self.user)
 			return ""
