@@ -3,7 +3,6 @@ from threading import Thread
 import logging, coloredlogs
 
 from modules.bot import Bot
-from modules.whisperconnection import WhisperConnection
 from modules.config import *
 from modules.timer import Timer
 
