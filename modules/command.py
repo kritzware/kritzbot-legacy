@@ -125,7 +125,11 @@ class Command:
 			return self.time.uptime()
 		if cmd == 'localtime':
 			return self.time.local_time()
-		
+	
+		if cmd == 'followage':
+			self.api.get_follow_age(self.user)
+			return ""
+
 		if cmd == 'playsound':
 			if var2 is None:
 				return "{}, you didn't specify a sound. View them here {}".format(self.user, SOUNDS_LINK)

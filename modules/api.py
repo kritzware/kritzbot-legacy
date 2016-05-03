@@ -19,6 +19,18 @@ class API:
 		except urllib.error.URLError as e:
 			logging.warning("Error: TWITCH API connection")
 
+	def getRawHTML(self, url):
+		try:	
+			print("Checking {}".format(url))
+			request = urllib.request.urlopen(url) 
+			data = request.read()
+			print("Before", data)
+			data_utf_8 = data.decode('UTF-8')
+			print("After", data_utf_8)
+			return data_utf_8
+		except urllib.error.URLError as e:
+			logging.warning("Error: URL API connection")
+
 	def check_stream_online(self):
 		data = self.getJSON('https://api.twitch.tv/kraken/streams?channel={}'.format(CHANNEL))
 		online = int(data['_total'])
@@ -58,3 +70,13 @@ class API:
 		tweet = api.user_timeline(id = parsed_user, count = 1)[0]
 		content = tweet.text
 		bot_msg("Latest tweet from {}: {}".format(CHANNEL, content))
+
+	def get_follow_age(self, user):
+		from modules.bot import bot_msg
+		follow_age_raw = self.getRawHTML('https://apis.rtainc.co/twitchbot/following?channel={}&user={}'.format(CHANNEL, user))
+		if(str(follow_age_raw) == '{} is not following'.format(user)):
+			bot_msg("{} isn't following the channel! FeelsBadMan".format(user))
+		else:
+			bot_msg("{} has been following for {}! FeelsGoodMan".format(user, follow_age_raw))
+
+
