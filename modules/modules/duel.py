@@ -11,13 +11,30 @@ database.database_connection()
 
 class Duel:
 
+	CommandMain = 'duel'
+	CommandMainOptions = []
+	CommandResponses = ['accept', 'reject']
+
 	DuelCooldown = []
 
-	def __init__(self, user):
+	def __init__(self, user, opponent, amount):
 		self.user = user
 		self.cooldown_timer = Timer(self.user, DUEL_COOLDOWN, Duel.DuelCooldown, "DuelCooldown")
 		# opponent = opponent
 		# amount = int(amount)
+		self.opponent = opponent
+		self.amount = amount
+
+	def execute_command(self, command):
+		print("duel started!")
+		self.start_duel(self.opponent, self.amount)
+
+	def execute_command_response(self, response):
+		if response == Duel.CommandResponses[0]:
+			print("duel accepted!")
+			self.get_duel_win()
+		if response == Duel.CommandResponses[1]:
+			self.cancel_duel()
 
 	def start_duel(self, opponent, amount):
 		from modules.bot import bot_msg_whsp

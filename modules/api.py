@@ -1,7 +1,9 @@
 import logging, coloredlogs
 import json
 import tweepy
-import urllib.request
+
+from urllib.request import Request, urlopen
+
 from datetime import datetime, timedelta, date, time
 
 from modules.config import *
@@ -13,8 +15,9 @@ class API:
 
 	def getJSON(self, url):
 		try:
-			request = urllib.request.urlopen(url)
-			data = json.loads(request.read().decode('UTF-8'))
+			request = Request(url)
+			request.add_header('Client-ID', '{}'.format(KRAKEN_CLIENT_ID))
+			data = json.loads(urlopen(request).read().decode('UTF-8'))
 			return data
 		except urllib.error.URLError as e:
 			logging.warning("Error: TWITCH API connection")
@@ -79,4 +82,5 @@ class API:
 		else:
 			bot_msg("{} has been following for {}! FeelsGoodMan".format(user, follow_age_raw))
 
-
+test = API(1)
+test.getJSON('https://api.twitch.tv/kraken/streams?channel=kritzware')

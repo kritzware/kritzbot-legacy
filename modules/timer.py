@@ -25,13 +25,15 @@ class Timer(Thread):
 		
 	def run(self):
 		if self.api.check_stream_online():
-			print("online")
+			logging.info("Stream detected as online")
 			for viewers in self.api.get_viewers_json('viewers'):
+				print(viewers)
 				if database.db_check_user_exists(viewers) == False:
 					database.db_add_user(viewers)
 				database.db_add_points_user(viewers, VIEWER_POINT_GAIN) 
 
 			for viewers in self.api.get_viewers_json('moderators'):
+				print(viewers)
 				if database.db_check_user_exists(viewers) == False:
 					database.db_add_user(viewers)
 				database.db_add_points_user(viewers, VIEWER_POINT_GAIN)

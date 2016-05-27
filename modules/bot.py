@@ -12,6 +12,7 @@ from modules.timer import Timer
 from modules.config import *
 from modules.commandtext import auto_messages
 from modules.database import Database
+from modules.message_parser import MessageParser
 
 database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
 database.database_connection()
@@ -33,8 +34,8 @@ class Bot:
 			s.send(bytes("PASS {} \r\n".format(self.key), 'UTF-8'))
 			s.send(bytes("NICK {} \r\n".format(self.nick), 'UTF-8'))
 			s.send(bytes("JOIN #{} \r\n".format(self.channel), 'UTF-8'))
-			# s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
-			# s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
+			s.send(bytes("CAP REQ :twitch.tv/commands", 'UTF-8'))
+			s.send(bytes("CAP REQ :twitch.tv/tags", 'UTF-8'))
 			logging.info("Connecting to TWITCH IRC..")
 			return s
 		except socket.error as e:
@@ -105,7 +106,7 @@ class Bot:
 		readbuffer = ""
 
 		# Announce to chat upon joining channel
-		# self.send_message(server_connection, "starting up (dev version 1.1.5) MrDestructoid")
+		send_message(server_connection, "starting up (dev version 3.0.0) MrDestructoid")
 
 		# Start auto points thread
 		Thread(target=self.points_timer.auto).start()
@@ -121,13 +122,20 @@ class Bot:
 			temp = str.split(readbuffer, "\n")
 			readbuffer = temp.pop()
 			for line in temp:
-				# print(line)
 				if(self.pong(server_connection, line)):
 					break
 				user = self.get_user(line)
-				# return_user(user)
 				message = self.get_message(line)
 				logging.info("{}: {}".format(user, message))
+
+				# Message parsing
+				try:
+					MainParser = MessageParser(message, user)
+					MainParser.start_parse()
+				except Exception as e:
+					logging.error(e)
+
+				# Check for commands
 				self.bot_commands(user, message)
 
 def send_message(s, message):
@@ -137,6 +145,14 @@ def send_message(s, message):
 		return
 	else:
 		logging.info("> {}".format(message))
+
+def send_message_raw(s, message):
+	temp_message = "PRIVMSG #{} :{}".format(CHANNEL, message)
+	s.send(bytes("{}\r\n".format(temp_message), 'UTF-8'))
+	if(message == ""):
+		return
+	else:
+		logging.info("RAW > {}".format(message))
 
 def send_message_whisper(s, message, user):
 	temp_message = "PRIVMSG #{} :/w {} {}".format(CHANNEL, user, message)
@@ -151,6 +167,9 @@ def bot_msg_whsp(message, user):
 
 def bot_msg(message):
 	send_message(server_connection, message)
+
+def bot_msg_raw(message):
+	send_message_raw(server_connection, message)
 
 def auto_message_send():
 	message = choice(auto_messages)

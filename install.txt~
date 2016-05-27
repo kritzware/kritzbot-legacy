@@ -1,2 +1,0 @@
-CREATE DB, tables table1 latest_follower
-CREATE TABLE commands (command VARCHAR(255), content VARCHAR(255));

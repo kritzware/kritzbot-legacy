@@ -14,7 +14,5 @@ logging.info("{} spawned: Hello world!".format(NICK))
 bot = Bot(HOST, PORT, PASS, NICK, CHANNEL)
 
 if __name__ == '__main__':
-	Thread(target=bot.connection).start()
-	# Thread(target=whisper_bot.connection).start()
-	# Thread(target=points_timer.run).start()
-	# points_timer.auto_message()
+	# Thread(target=bot.connection).start()
+	bot.connection()
