@@ -96,7 +96,8 @@ class Bot:
 				# self.send_message(server_connection, command.text_command())
 				# self.send_message(server_connection, command.user_check_command())
 				# self.send_message(server_connection, command.api_command())
-			except:
+			except Exception as e:
+				print(e)
 				pass
 
 	def connection(self):
