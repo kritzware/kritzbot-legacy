@@ -26,7 +26,7 @@ from modules.modules.zoltar import Zoltar
 from modules.modules.Twitter import Twitter
 from modules.modules.FollowAge import FollowAge
 
-from modules.Sockets.SongRequest import SongRequest
+# from modules.Sockets.SongRequest import SongRequest
 
 from modules.modules.showemote import ShowEmote
 
