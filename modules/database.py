@@ -1,5 +1,6 @@
 import pymysql
 import re
+import string
 import logging, coloredlogs
 from modules.config import *
 
@@ -37,16 +38,16 @@ class Database:
 		return ''.join(data)
 
 	def db_add_user(self, user):
-		self.db.execute("INSERT ignore into table1 VALUES ('{}', 0)".format(user))
+		self.db.execute("INSERT ignore into points VALUES ('{}', 0)".format(user))
 
 	def db_add_points_user(self, user, points):
-		self.db.execute("UPDATE table1 set points = points + {} where user_id = '{}'".format(points, user))
+		self.db.execute("UPDATE points set points = points + {} where user_id = '{}'".format(points, user))
 
 	def db_minus_points_user(self, user, points):
-		self.db.execute("UPDATE table1 set points = points - {} where user_id = '{}'".format(points, user))
+		self.db.execute("UPDATE points set points = points - {} where user_id = '{}'".format(points, user))
 
 	def db_check_user_exists(self, user):
-		points = self.db.execute("SELECT user_id FROM table1 where user_id = '{}'".format(user))
+		points = self.db.execute("SELECT user_id FROM points where user_id = '{}'".format(user))
 		check_user_exists = self.db.fetchone()
 		if(check_user_exists == None):
 			return False
@@ -65,23 +66,21 @@ class Database:
 			output = "{}, you have {} {} BabyRage".format(user, points, CURRENCY)
 		else:
 			output = "{}, you have {} {}".format(user, points, CURRENCY)
-			print(user)
-			print(self.user)
 			if(user != self_user):
 				output = "{} has {} {}".format(user, points, CURRENCY)
 		return output
 
 	def db_get_user_points_int(self, user):
-		points = self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
+		points = self.db.execute("SELECT points from points where user_id = '{}'".format(user))
 		get_points = self.db.fetchone()
 		#if(get_points == None):
 		#	self.db_add_user(user)
-		#	points = self.db.execute("SELECT points from table1 where user_id = '{}'".format(user))
+		#	points = self.db.execute("SELECT points from points where user_id = '{}'".format(user))
 		#	get_points = self.db.fetchone()
 		return int(self.db_format(get_points))
 
 	def db_get_user_total(self):
-		self.db.execute("SELECT COUNT(*) AS user_id FROM table1")
+		self.db.execute("SELECT COUNT(*) AS user_id FROM points")
 		user_total = self.db.fetchone()
 		format_user_total = self.db_format(str(user_total))
 		return(str(format_user_total))
@@ -89,7 +88,7 @@ class Database:
 	def db_get_user_rank(self, user):
 		user = self.bttv_parse(user)
 		#try:
-		self.db.execute("SELECT 1 + (SELECT count(*) FROM table1 a WHERE a.points > b.points ) AS rank FROM table1 b WHERE user_id = '{}' ORDER BY rank LIMIT 1".format(user))
+		self.db.execute("SELECT 1 + (SELECT count(*) FROM points a WHERE a.points > b.points ) AS rank FROM points b WHERE user_id = '{}' ORDER BY rank LIMIT 1".format(user))
 		ranking = self.db.fetchone()
 		format_ranking = self.db_format(ranking)
 		format_points = self.db_get_user_points_int(user)
@@ -170,7 +169,9 @@ class Database:
 		if(self.db_check_command_exists(command)):
 			return False
 		else:
-			self.db.execute("INSERT INTO commands VALUES ('{}', '{}')".format(command, content))
+			content = content.encode('unicode_escape')
+
+			self.db.execute("INSERT INTO commands VALUES ('{}', '{}')".format(command, str(content)))
 			return True
 
 	def db_edit_command(self, command, new_content, user):
