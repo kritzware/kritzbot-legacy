@@ -97,11 +97,7 @@ class Bot:
 				# self.send_message(server_connection, command.user_check_command())
 				# self.send_message(server_connection, command.api_command())
 			except:
-				# exc_type, exc_obj, exc_tb = sys.exc_info()
-				# fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-				# print(e)
-				# print(exc_type, fname, exc_tb.tb_lineno)
-    			pass
+				pass
 
 	def connection(self):
 		global server_connection
