@@ -169,8 +169,6 @@ class Database:
 		if(self.db_check_command_exists(command)):
 			return False
 		else:
-			content = content.encode('unicode_escape')
-
 			self.db.execute("INSERT INTO commands VALUES ('{}', '{}')".format(command, str(content)))
 			return True
 
