@@ -37,7 +37,7 @@ class Roulette:
 			return ""
 		if(int(amount) <= 0):
 			return ""
-		gamble = randrange(1, 4)
+		gamble = randrange(1, 3)
 		if(gamble == 1):
 			total_win = int(amount) * 2
 			database.db_add_points_user(self.user, total_win)

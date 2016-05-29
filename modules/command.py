@@ -25,6 +25,7 @@ from modules.modules.AdminCommands import AdminCommands
 from modules.modules.zoltar import Zoltar
 from modules.modules.Twitter import Twitter
 from modules.modules.FollowAge import FollowAge
+from modules.modules.RateMe import RateMe
 
 # from modules.Sockets.SongRequest import SongRequest
 
@@ -63,9 +64,7 @@ class Command:
 		try:
 		 	output = database.db_get_command(self.command, self.user)
 		 	response = self.response_parse(output, parameter_2, parameter_3)
-
-		 	print(str(response))
-
+		 	# print(str(response))
 		 	bot_msg(response)
 		 	return ""
 		except:
@@ -73,7 +72,7 @@ class Command:
 
 		# Create advanced command objects
 		command_objects = [Duel(self.user, parameter_2, parameter_3),
-						   Points(self.user, parameter_2),
+						   Points(self.user, parameter_2, parameter_3),
 						   Raffle(self.user, parameter_2, 10),
 						   Uptime(),
 						   LocalTime(),
@@ -82,11 +81,10 @@ class Command:
 						   Zoltar(self.user, self.line),
 						   Roulette(self.user, parameter_2),
 						   Twitter(self.user),
-						   FollowAge(self.user, parameter_2)
+						   FollowAge(self.user, parameter_2),
+						   RateMe(self.user)
 						   # SongRequest(self.user, parameter_2),
 						  ]
-
-		print('command:', self.command)
 
 		# Advanced commands
 		for command_object in command_objects:
@@ -100,7 +98,7 @@ class Command:
 					command_object.execute_command_response(self.command)
 					break
 			except Exception as e:
-				print(e)
+				logging.info(e)
 				pass
 		return ""
 

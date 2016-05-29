@@ -13,10 +13,11 @@ class Points:
 	CommandMainOptions = [CURRENCY, 'rank', 'give']
 	CommandResponses = []
 
-	def __init__(self, user, user_to_check):
+	def __init__(self, user, user_to_check, amount):
 		self.user = user
 		self.currency = CURRENCY
 		self.user_to_check = user_to_check
+		self.amount = amount
 		# self.cooldown_timer = Timer(self.user, 120, RouletteCooldown, "Roulette")
 
 	def execute_command(self, command):
@@ -31,7 +32,8 @@ class Points:
 			else:
 				self.get_user_rank(self.user_to_check)
 		if command == Points.CommandMainOptions[2]:
-			self.givepoints(self.user_to_check, self.user)
+			print('give')
+			self.givepoints(self.user_to_check, self.amount)
 
 	def get_user_points_self(self):
 		from modules.bot import bot_msg_whsp
@@ -46,17 +48,14 @@ class Points:
 		bot_msg(database.db_get_user_rank(user))
 
 	def givepoints(self, reciever, amount):
-		if self.user == reciever:
-			return ""
+		from modules.bot import bot_msg
 		if(database.db_check_user_exists(reciever)):
 			get_user_points = database.db_get_user_points_int(self.user)
 			if(int(amount) > get_user_points):
-				return "You don't have {} {} {} FailFish".format(amount, CURRENCY, self.user)
+				bot_msg("You don't have {} {} {} FailFish".format(amount, CURRENCY, self.user))
 			if(int(amount) <= 0):
 				return ""
 			else:
 				database.db_add_points_user(reciever, amount)
 				database.db_minus_points_user(self.user, amount)
-				return "{} gave {} {} to {}! <3".format(self.user, amount, CURRENCY, reciever)
-		else:
-			return ""
+				bot_msg("{} gave {} {} to {}! <3".format(self.user, amount, CURRENCY, reciever))

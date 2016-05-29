@@ -9,6 +9,7 @@ streamOnlineCheck = API(1)
 class Uptime:
 
 	CommandMain = 'uptime'
+	CommandMainOptions = []
 	CommandResponses = []
 	
 	def __init__(self):
