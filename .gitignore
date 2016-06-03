@@ -100,3 +100,5 @@ jspm_packages
 modules/config.py
 modules/commandtext.py
 version_1/modules/settings.py
+
+new_bot/bot_config.json

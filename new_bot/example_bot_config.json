@@ -1,0 +1,15 @@
+{
+	"twitch": {
+		"host": "irc.chat.twitch.tv",
+		"port": 6667,
+		"pass": "oauth:oauth_password_here",
+		"nick": "bot_twitch_name",
+		"channel": "twitch_channel"
+	},
+	"sql": {
+		"host": "database_host",
+		"user": "database_user",
+		"pass": "database_password",
+		"database": "database_name"
+	}
+}
