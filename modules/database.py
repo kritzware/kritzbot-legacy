@@ -169,7 +169,9 @@ class Database:
 		if(self.db_check_command_exists(command)):
 			return False
 		else:
-			self.db.execute("INSERT INTO commands VALUES ('{}', '{}')".format(command, str(content)))
+			print(content)
+			command = command.replace("'", "\'")
+			self.db.execute('INSERT INTO commands VALUES ("{}", "{}")'.format(command, str(content)))
 			return True
 
 	def db_edit_command(self, command, new_content, user):
