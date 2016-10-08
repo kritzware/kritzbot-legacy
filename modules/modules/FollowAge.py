@@ -24,8 +24,8 @@ class FollowAge:
 
 	def get_follow_age(self, follower):
 		from modules.bot import bot_msg
-		follow_age_raw = self.api.getRawHTML('https://apis.rtainc.co/twitchbot/following?channel={}&user={}'.format(CHANNEL, follower))
-		if(str(follow_age_raw) == '{} is not following'.format(follower)):
+		follow_age_raw = self.api.getRawHTML('https://api.rtainc.co/twitch/channels/{}/followers/{}'.format(CHANNEL, follower))
+		if(str(follow_age_raw) == "{} isn't following {}".format(follower, CHANNEL)):
 			bot_msg("{} isn't following the channel! FeelsBadMan".format(follower))
 		else:
-			bot_msg("{} has been following for {}! FeelsGoodMan".format(follower, follow_age_raw))
+			bot_msg("{}! FeelsGoodMan".format(follow_age_raw))

@@ -82,9 +82,29 @@ class Command:
 						   Roulette(self.user, parameter_2),
 						   Twitter(self.user),
 						   FollowAge(self.user, parameter_2),
-						   RateMe(self.user)
+						   RateMe(self.user),
+						   # Giveaway(2, parameter_2)
 						   # SongRequest(self.user, parameter_2),
 						  ]
+
+		if self.command == 'enter' and Giveaway.GiveawayActive and self.user not in Giveaway.GiveawayEntries:
+			user_points = database.db_get_user_points_int(self.user)
+			from modules.bot import bot_msg_whsp, bot_msg
+			if(int(Giveaway.GiveawayAmount) > user_points):
+				bot_msg_whsp("You don't have enough to enter the giveaway BabyRage", self.user)
+				return ""
+			Giveaway.GiveawayEntries.append(self.user)
+			bot_msg("{} entered the giveaway! Type !enter to join Kreygasm".format(self.user))
+			return ""
+		if self.command == 'enter':
+			return ""
+			
+		if self.command == 'giveaway':
+			# command_text = self.line.replace(var2, '').replace(cmd, '')
+			command_text = self.line.replace(self.command, '').replace(parameter_2, '')
+			giveaway = Giveaway(2, command_text, int(parameter_2))
+			giveaway.start_giveaway()
+			return ""
 
 		# Advanced commands
 		for command_object in command_objects:
@@ -112,15 +132,3 @@ class Command:
 				return output
 		except:
 			return response
-
-		# if cmd == 'enter' and Giveaway.GiveawayActive and self.user not in Giveaway.GiveawayEntries:
-		# 	Giveaway.GiveawayEntries.append(self.user)
-		# 	return ""
-		# if cmd == 'enter':
-		# 	return ""
-			
-			# if cmd == 'giveaway':
-			# 	command_text = self.line.replace(var2, '').replace(cmd, '')
-			# 	giveaway = Giveaway(int(var2), command_text)
-			# 	giveaway.start_giveaway()
-			# 	return ""

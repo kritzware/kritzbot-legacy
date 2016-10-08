@@ -8,24 +8,33 @@ from modules.api import API
 
 class Giveaway:
 
+	CommandMain = 'giveaway'
+	CommandResponses = ['enter']
 	GiveawayActive = False
 	GiveawayEntries = []
+	GiveawayAmount = 0
 
-	def __init__(self, time, prize):
+	def __init__(self, time, prize, amount):
 		self.time= time
 		self.prize = prize
 		self.api = API(1)
 		self.time_seconds = self.time * 60
+		Giveaway.GiveawayAmount = amount
+
+	def execute_command(self, command):
+		self.start_giveaway()
 
 	def start_giveaway(self):
 		from modules.bot import bot_msg, bot_msg_whsp
 		bot_msg("The giveaway for {} has started. Type !enter to join. You have {} minutes! PogChamp".format(self.prize, self.time))
+
+
 		
-		for viewers in self.api.get_viewers_json('viewers'):
-			print(viewers)
-			bot_msg_whsp("A giveaway has started for {}. Type !enter in the main chat to join. You have {} minutes!".format(self.prize, self.time), viewers)
-		for mods in self.api.get_viewers_json('moderators'):
-			bot_msg_whsp("A giveaway has started for {}. Type !enter in the main chat to join. You have {} minutes!".format(self.prize, self.time), mods)
+		# for viewers in self.api.get_viewers_json('viewers'):
+		# 	print(viewers)
+		# 	bot_msg_whsp("A giveaway has started for {}. Type !enter in the main chat to join. You have {} minutes!".format(self.prize, self.time), viewers)
+		# for mods in self.api.get_viewers_json('moderators'):
+		# 	bot_msg_whsp("A giveaway has started for {}. Type !enter in the main chat to join. You have {} minutes!".format(self.prize, self.time), mods)
 
 		Giveaway.GiveawayActive = True	
 		Thread(target=self.giveaway_win).start()
