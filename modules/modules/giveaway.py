@@ -6,6 +6,10 @@ from time import sleep
 from modules.config import *
 from modules.api import API
 
+# from modules.database import Database
+# database = Database(db_host, db_user, db_pass, db_name, db_autocommit)
+# database.database_connection()
+
 class Giveaway:
 
 	CommandMain = 'giveaway'
@@ -26,7 +30,7 @@ class Giveaway:
 
 	def start_giveaway(self):
 		from modules.bot import bot_msg, bot_msg_whsp
-		bot_msg("The giveaway for {} has started. Type !enter to join. You have {} minutes! PogChamp".format(self.prize, self.time))
+		bot_msg("The giveaway for {} has started. It costs {} points to enter. Type !enter to join. You have {} minutes! PogChamp".format(self.prize, Giveaway.GiveawayAmount, self.time))
 
 
 		
@@ -55,6 +59,7 @@ class Giveaway:
 		sleep(2)
 		bot_msg("PogChamp PogChamp {} PogChamp PogChamp".format(winner))
 		bot_msg_whsp("You won the giveaway, make sure you type someting in chat to prove you're still here!", winner)
+		# database.db_minus_points_user(winner, Giveaway)
 		self.giveaway_clear()
 
 	def giveaway_clear(self):

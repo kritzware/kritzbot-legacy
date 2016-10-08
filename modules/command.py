@@ -95,6 +95,7 @@ class Command:
 				return ""
 			Giveaway.GiveawayEntries.append(self.user)
 			bot_msg("{} entered the giveaway! Type !enter to join Kreygasm".format(self.user))
+			database.db_minus_points_user(self.user, Giveaway.GiveawayAmount)
 			return ""
 		if self.command == 'enter':
 			return ""
